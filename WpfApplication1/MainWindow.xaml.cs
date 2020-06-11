@@ -1,26 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
+﻿using System.Windows;
 using System.Windows.Shapes;
 using Excel = Microsoft.Office.Interop.Excel;
-using Microsoft.VisualStudio.Tools.Applications.Runtime;
 using БАРСШаблон.DataTypes;
-using БАРСШаблон.Properties;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
-using БАРСШаблон.Structure;
 using System.Collections.ObjectModel;
+using System;
 
 namespace БАРСШаблон
 {
@@ -69,38 +55,67 @@ namespace БАРСШаблон
 
             Excel.Range range = worksheet.UsedRange;
 
-            Мета мета = new Мета();
-            мета.ВерсияМетаописания = range.Rows.Count + "";
+            ОписаниеФормы описаниеФормы = new ОписаниеФормы();
+            описаниеФормы.Мета = new Мета(); 
+            описаниеФормы.Мета.ВерсияМетаописания = range.Rows.Count + "";
+            описаниеФормы.Справочники = new Справочник[] { };
+            описаниеФормы.Структура = new Структура();
+            описаниеФормы.Структура.СвободнаяЯчейка = 
+                new СвободнаяЯчейка[] {
+                    new СвободнаяЯчейка("Учреждение", typeof(Учреждение).ToString()),
+                    new СвободнаяЯчейка("Должность", typeof(Строковый).ToString()),
+                    new СвободнаяЯчейка("Ответственный", typeof(Строковый).ToString()),
+                    new СвободнаяЯчейка("Телефон", typeof(Строковый).ToString()),
+                };
 
-            Collection<СвободнаяЯчейка> свободныеЯчейки = new Collection<СвободнаяЯчейка>();
-            свободныеЯчейки.Add(new СвободнаяЯчейка("Учреждение", new Учреждение()));
-            свободныеЯчейки.Add(new СвободнаяЯчейка("Должность", new Строковый()));
-            свободныеЯчейки.Add(new СвободнаяЯчейка("Ответственный", new Строковый()));
-            свободныеЯчейки.Add(new СвободнаяЯчейка("Телефон", new Строковый()));
+            Столбец столбец1 = new Столбец("1", typeof(Целочисленный).ToString());
+            Столбец столбец2 = new Столбец("2", typeof(Финансовый).ToString());
 
-            string outputFilePath = "C:\\БАРС\\ШАблоныФормы\\" + мета.Идентификатор + "\\" + мета.ДатаНачалаДействия.Substring(0, 10) + "-" + мета.ДатаОкончанияДействия.Substring(0, 10);
+            Строка строка1 = new Строка() { Идентификатор = "001", Код = "001", НаименованиеЭлемента = "Охуеть", Тег = "Охт" };
+            Строка строка2 = new Строка() { Идентификатор = "002", Код = "002", НаименованиеЭлемента = "Заебись", Тег = "Збс" };
 
-            string outputFileName = мета.Идентификатор + ".xml";
-
-            XmlSerializer xmlSerializer = new XmlSerializer(мета.GetType());
-            
-            System.IO.Directory.CreateDirectory(outputFilePath);
-
-            XDocument xDocument = new XDocument();
-
-            using (XmlWriter xmlWriter = xDocument.CreateWriter())
+            Таблица таблица1 = new Таблица()
             {
-                xmlSerializer.Serialize(xmlWriter, мета);
+                Идентификатор = "Таблица1",
+                Код = "Тбл1",
+                Наименование = "Крутая ваще таблица",
+                РучноеДобавлениеСтрок = false,
+                Тег = "КртВщТабла",
+                Столбцы = new Столбец[] { столбец1, столбец2 },
+                Строки = new Строка[] { строка1, строка2},
+                СвободнаяЯчейка = new СвободнаяЯчейка[] { new СвободнаяЯчейка("Суки", typeof(Целочисленный).ToString()) },
+            };
+            
+            описаниеФормы.Структура.Таблица = new Таблица[]
+            {
+                таблица1,
+            };
+            
+            string outputFilePath = "C:\\БАРС\\ШАблоныФормы\\" + описаниеФормы.Мета.Идентификатор + "\\" + описаниеФормы.Мета.ДатаНачалаДействия.Substring(0, 10) + "-" + описаниеФормы.Мета.ДатаОкончанияДействия.Substring(0, 10);
+
+            string outputFileName = описаниеФормы.Мета.Идентификатор + ".xml";
+
+            try
+            {
+                XmlSerializer xmlSerializer = new XmlSerializer(описаниеФормы.GetType());
+
+                System.IO.Directory.CreateDirectory(outputFilePath);
+
+                XDocument xDocument = new XDocument();
+
+                using (XmlWriter xmlWriter = xDocument.CreateWriter())
+                {
+                    xmlSerializer.Serialize(xmlWriter, описаниеФормы);
+                }
+
+                XElement mainXmlStream = xDocument.Root;
+
+                mainXmlStream.Save(outputFilePath + "\\" + outputFileName);
             }
-
-            XElement mainXmlStream = xDocument.Root;
-            mainXmlStream =
-                new XElement("Описание",
-                    mainXmlStream,
-                    new XElement("Структура"));
-
-
-            mainXmlStream.Save(outputFilePath + "\\" + outputFileName);            
+            catch (System.Exception e)
+            {
+                Console.Write(e.ToString());
+            }           
         }
     }
 }
