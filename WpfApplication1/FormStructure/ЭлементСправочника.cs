@@ -6,6 +6,10 @@ namespace БАРСШаблон
     [XmlType(AnonymousType = true)]
     public partial class ЭлементСправочника
     {
+        public ЭлементСправочника()
+        {
+        }
+
         private string код;
         private string наименование;
 

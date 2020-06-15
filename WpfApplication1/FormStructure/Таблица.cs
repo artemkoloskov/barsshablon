@@ -1,5 +1,6 @@
 ﻿using System.Xml.Serialization;
 using System.Xml.Schema;
+using System.Configuration;
 
 namespace БАРСШаблон
 {
@@ -11,7 +12,14 @@ namespace БАРСШаблон
         {
         }
 
-        private СвободнаяЯчейка[] свободнаяЯчейка;
+        public Таблица(string кодТаблицы)
+        {
+            идентификатор = кодТаблицы;
+            код = кодТаблицы;
+            тег = ConfigurationManager.AppSettings.Get("ТаблицаТегПрефикс") + CommonMethods.GetTagName(идентификатор);
+        }
+
+        private СвободнаяЯчейка[] свободныеЯчейки;
         private Строка[] строки;
         private Столбец[] столбцы;
         private string идентификатор;
@@ -21,16 +29,17 @@ namespace БАРСШаблон
         private string ссылкаНаМетодическийСправочник;
         private bool ручноеДобавлениеСтрок = false;
 
-        [XmlElement("СвободнаяЯчейка", Form = XmlSchemaForm.Unqualified)]
-        public СвободнаяЯчейка[] СвободнаяЯчейка
+        [XmlArray(Form = XmlSchemaForm.Unqualified)]
+        [XmlArrayItem("СвободнаяЯчейка", typeof(СвободнаяЯчейка), Form = XmlSchemaForm.Unqualified, IsNullable = false)]
+        public СвободнаяЯчейка[] СвободныеЯчейки
         {
             get
             {
-                return свободнаяЯчейка;
+                return свободныеЯчейки;
             }
             set
             {
-                свободнаяЯчейка = value;
+                свободныеЯчейки = value;
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using System.Xml.Serialization;
 using System.Xml.Schema;
 using System;
+using System.Configuration;
 
 namespace БАРСШаблон
 {
@@ -13,24 +14,24 @@ namespace БАРСШаблон
             группа = группа + DateTime.Today.Year;
             датаНачалаДействия = датаНачалаДействия.Replace("0001", DateTime.Today.Year.ToString());
             датаОкончанияДействия = датаОкончанияДействия.Replace("9999", DateTime.Today.Year.ToString());
-            датаПоследнегоИзменения = DateTime.Today.ToString("dd.MM.yyyy HH:mm:ss");
+            датаПоследнегоИзменения = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss");
             хост = Environment.MachineName;
         }
 
-        private string версияМетаописания = "1.0";
-        private string идентификатор = "ДЗПК_";
+        private string версияМетаописания = ConfigurationManager.AppSettings.Get("МетаВерсияМетаописания");
+        private string идентификатор = ConfigurationManager.AppSettings.Get("МетаИдентификатор");
         private string наименование = "";
-        private string группа = "Региональный ";
-        private string датаНачалаДействия = "01.01.0001 0:00:00";
-        private string датаОкончанияДействия = "31.12.9999 0:00:00";
-        private string авторство = "ГАУЗ ПК МИАЦ";
+        private string группа = ConfigurationManager.AppSettings.Get("МетаГруппа");
+        private string датаНачалаДействия = ConfigurationManager.AppSettings.Get("МетаДатаНачалаДействия");
+        private string датаОкончанияДействия = ConfigurationManager.AppSettings.Get("МетаДатаОкончанияДействия");
+        private string авторство = ConfigurationManager.AppSettings.Get("МетаАвторство");
         private string датаПоследнегоИзменения = "";
-        private string номерВерсии = "1";
-        private string расположениеШапки = "Сверху";
+        private string номерВерсии = ConfigurationManager.AppSettings.Get("МетаНомерВерсии");
+        private string расположениеШапки = ConfigurationManager.AppSettings.Get("МетаРасположениеШапки");
         private string хост = "";
         private string ссылкаНаМетодическийСправочник = "";
         private string ссылкаНаВнешнююСправку = "";
-        private string версияФорматаМетаструктуры = "1,0";
+        private string версияФорматаМетаструктуры = ConfigurationManager.AppSettings.Get("МетаВерсияФорматаМетаструктуры");
         private string тег = "";
 
         [XmlElement(Form = XmlSchemaForm.Unqualified)]

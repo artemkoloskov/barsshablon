@@ -1,29 +1,39 @@
 ﻿using System.Xml.Serialization;
+using System.Configuration;
+using System;
+using БАРСШаблон.DataTypes;
 
 namespace БАРСШаблон
 {
     [System.Serializable()]
     [XmlType(AnonymousType = true)]
-    public partial class Столбец
+    public partial class СвободнаяЯчейка
     {
-        public Столбец()
+        public СвободнаяЯчейка()
         {
         }
 
-        public Столбец(string кодСтолбца, string типСтолбца)
+        public СвободнаяЯчейка(string кодЯчейки, string типЯчейки)
         {
-            идентификатор = кодСтолбца;
-            код = кодСтолбца;
-            тип = типСтолбца;
-            тег = "Гр" + кодСтолбца;
+            идентификатор = кодЯчейки;
+            код = кодЯчейки;
+            тип = типЯчейки;
+            тег = ConfigurationManager.AppSettings.Get("СвободнаяЯчейкаТегПрефикс") + CommonMethods.GetTagName(идентификатор);
+            описание = CommonMethods.GetSerializedType(тип);
+        }
+
+        private string Serialize(object датаВремя)
+        {
+
+            throw new NotImplementedException();
         }
 
         private string идентификатор;
         private string код;
         private string наименованиеЭлемента;
-        private string тег;
         private string тип;
         private string описание;
+        private string тег;
 
         [XmlAttribute()]
         public string Идентификатор
@@ -65,19 +75,6 @@ namespace БАРСШаблон
         }
 
         [XmlAttribute()]
-        public string Тег
-        {
-            get
-            {
-                return тег;
-            }
-            set
-            {
-                тег = value;
-            }
-        }
-
-        [XmlAttribute()]
         public string Тип
         {
             get
@@ -100,6 +97,19 @@ namespace БАРСШаблон
             set
             {
                 описание = value;
+            }
+        }
+
+        [XmlAttribute()]
+        public string Тег
+        {
+            get
+            {
+                return тег;
+            }
+            set
+            {
+                тег = value;
             }
         }
     }

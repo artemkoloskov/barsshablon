@@ -12,7 +12,7 @@ namespace БАРСШаблон
         }
 
         private СвободнаяЯчейка[] свободнаяЯчейка;
-        private Таблица[] таблица;
+        private Таблица[] таблицы;
 
         [XmlElement("СвободнаяЯчейка", Form = XmlSchemaForm.Unqualified)]
         public СвободнаяЯчейка[] СвободнаяЯчейка
@@ -27,17 +27,16 @@ namespace БАРСШаблон
             }
         }
 
-        [XmlArray(Form = XmlSchemaForm.Unqualified)]
-        [XmlArrayItem("Таблица", typeof(Таблица), Form = XmlSchemaForm.Unqualified, IsNullable = false)]
-        public Таблица[] Таблица
+        [XmlElement("Таблица", Form = XmlSchemaForm.Unqualified)]
+        public Таблица[] Таблицы
         {
             get
             {
-                return таблица;
+                return таблицы;
             }
             set
             {
-                таблица = value;
+                таблицы = value;
             }
         }
     }

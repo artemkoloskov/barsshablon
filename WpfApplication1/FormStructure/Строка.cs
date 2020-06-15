@@ -1,4 +1,5 @@
-﻿using System.Xml.Serialization;
+﻿using System.Configuration;
+using System.Xml.Serialization;
 
 namespace БАРСШаблон
 {
@@ -8,6 +9,13 @@ namespace БАРСШаблон
     {
         public Строка()
         {
+        }
+
+        public Строка(string кодСтроки)
+        {
+            идентификатор = кодСтроки;
+            код = кодСтроки;
+            тег = ConfigurationManager.AppSettings.Get("СтрокаТегПрефикс") + CommonMethods.GetTagName(идентификатор);
         }
 
         private string идентификатор;

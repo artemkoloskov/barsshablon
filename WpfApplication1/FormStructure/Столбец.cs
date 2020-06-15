@@ -1,29 +1,31 @@
-﻿using System.Xml.Serialization;
+﻿using System.Configuration;
+using System.Xml.Serialization;
 
 namespace БАРСШаблон
 {
     [System.Serializable()]
     [XmlType(AnonymousType = true)]
-    public partial class СвободнаяЯчейка
+    public partial class Столбец
     {
-        public СвободнаяЯчейка()
+        public Столбец()
         {
         }
 
-        public СвободнаяЯчейка(string кодЯчейки, string типЯчейки)
+        public Столбец(string кодСтолбца, string типСтолбца)
         {
-            идентификатор = кодЯчейки;
-            код = кодЯчейки;
-            тип = типЯчейки;
-            тег = "СвобЯч" + кодЯчейки;
+            идентификатор = кодСтолбца;
+            код = кодСтолбца;
+            тип = типСтолбца;
+            тег = ConfigurationManager.AppSettings.Get("СтолбецТегПрефикс") + CommonMethods.GetTagName(идентификатор);
+            описание = CommonMethods.GetSerializedType(тип);
         }
 
         private string идентификатор;
         private string код;
         private string наименованиеЭлемента;
+        private string тег;
         private string тип;
         private string описание;
-        private string тег;
 
         [XmlAttribute()]
         public string Идентификатор
@@ -65,6 +67,19 @@ namespace БАРСШаблон
         }
 
         [XmlAttribute()]
+        public string Тег
+        {
+            get
+            {
+                return тег;
+            }
+            set
+            {
+                тег = value;
+            }
+        }
+
+        [XmlAttribute()]
         public string Тип
         {
             get
@@ -87,19 +102,6 @@ namespace БАРСШаблон
             set
             {
                 описание = value;
-            }
-        }
-
-        [XmlAttribute()]
-        public string Тег
-        {
-            get
-            {
-                return тег;
-            }
-            set
-            {
-                тег = value;
             }
         }
     }

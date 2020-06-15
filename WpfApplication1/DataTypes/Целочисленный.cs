@@ -1,4 +1,6 @@
-﻿namespace БАРСШаблон.DataTypes
+﻿using System.Xml.Serialization;
+
+namespace БАРСШаблон.DataTypes
 {
     public class Целочисленный
     {
@@ -10,5 +12,15 @@
         public bool ЯвляетсяКлючевым = false;
         public string ЗначениеПоУмолчанию = "";
         public string ДействиеСПолем = "Суммировать";
+
+        public string ToXML()
+        {
+            using (var stringwriter = new System.IO.StringWriter())
+            {
+                var serializer = new XmlSerializer(this.GetType());
+                serializer.Serialize(stringwriter, this);
+                return stringwriter.ToString();
+            }
+        }
     }
 }
