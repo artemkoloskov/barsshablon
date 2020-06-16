@@ -2,6 +2,8 @@
 using System.Xml.Schema;
 using System;
 using System.Configuration;
+using Microsoft.Office.Interop.Excel;
+using System.Collections.Generic;
 
 namespace БАРСШаблон
 {
@@ -11,11 +13,36 @@ namespace БАРСШаблон
     {
         public Мета()
         {
+        }
+
+        public Мета(Workbook workbook)
+        {
+            наименование = ПолучитьНаименованиеИз(workbook.Sheets[1]);
+            идентификатор = идентификатор + CommonMethods.ПолчитьТег(наименование);
             группа = группа + DateTime.Today.Year;
             датаНачалаДействия = датаНачалаДействия.Replace("0001", DateTime.Today.Year.ToString());
             датаОкончанияДействия = датаОкончанияДействия.Replace("9999", DateTime.Today.Year.ToString());
             датаПоследнегоИзменения = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss");
-            хост = Environment.MachineName;
+            тег = идентификатор;
+        }
+        
+        private static string ПолучитьНаименованиеИз(Worksheet sheet)
+        {
+            Dictionary<string, double> возможныеНаименования = new Dictionary<string, double>();
+
+            Range usedRange = sheet.UsedRange;
+
+            foreach (Range column in usedRange.Columns)
+            {
+                возможныеНаименования.Add(column.Cells[1, column.Column].Value, ПолучитьВероятностьТогоЧтоВЯчейкеНаименование(column.Cells[1, column.Column], usedRange));
+            }
+
+            return "";
+        }
+
+        private static double ПолучитьВероятностьТогоЧтоВЯчейкеНаименование(Range dynamic, Range usedRange)
+        {
+            throw new NotImplementedException();
         }
 
         private string версияМетаописания = ConfigurationManager.AppSettings.Get("МетаВерсияМетаописания");
@@ -28,7 +55,7 @@ namespace БАРСШаблон
         private string датаПоследнегоИзменения = "";
         private string номерВерсии = ConfigurationManager.AppSettings.Get("МетаНомерВерсии");
         private string расположениеШапки = ConfigurationManager.AppSettings.Get("МетаРасположениеШапки");
-        private string хост = "";
+        private string хост = Environment.MachineName;
         private string ссылкаНаМетодическийСправочник = "";
         private string ссылкаНаВнешнююСправку = "";
         private string версияФорматаМетаструктуры = ConfigurationManager.AppSettings.Get("МетаВерсияФорматаМетаструктуры");

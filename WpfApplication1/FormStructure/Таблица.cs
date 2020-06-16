@@ -1,6 +1,9 @@
 ﻿using System.Xml.Serialization;
 using System.Xml.Schema;
 using System.Configuration;
+using Microsoft.Office.Interop.Excel;
+using System;
+using БАРСШаблон.DataTypes;
 
 namespace БАРСШаблон
 {
@@ -16,7 +19,7 @@ namespace БАРСШаблон
         {
             идентификатор = кодТаблицы;
             код = кодТаблицы;
-            тег = ConfigurationManager.AppSettings.Get("ТаблицаТегПрефикс") + CommonMethods.GetTagName(идентификатор);
+            тег = ConfigurationManager.AppSettings.Get("ТаблицаТегПрефикс") + CommonMethods.ПолчитьТег(идентификатор);
         }
 
         private СвободнаяЯчейка[] свободныеЯчейки;
@@ -82,6 +85,29 @@ namespace БАРСШаблон
             {
                 идентификатор = value;
             }
+        }
+
+        internal static Таблица ПолучитьТаблицуИз(Worksheet sheet)
+        {
+            Столбец столбец1 = new Столбец("1", typeof(Целочисленный).ToString().Split('.')[2]);
+            Столбец столбец2 = new Столбец("2", typeof(Финансовый).ToString().Split('.')[2]);
+
+            Строка строка1 = new Строка() { Идентификатор = "001", Код = "001", НаименованиеЭлемента = "Охуеть", Тег = "Охт" };
+            Строка строка2 = new Строка() { Идентификатор = "002", Код = "002", НаименованиеЭлемента = "Заебись", Тег = "Збс" };
+
+            Таблица таблица1 = new Таблица()
+            {
+                Идентификатор = "Таблица1",
+                Код = "Тбл1",
+                Наименование = "Крутая ваще таблица",
+                РучноеДобавлениеСтрок = false,
+                Тег = "КртВщТабла",
+                Столбцы = new Столбец[] { столбец1, столбец2 },
+                Строки = new Строка[] { строка1, строка2 },
+                СвободныеЯчейки = new СвободнаяЯчейка[] { new СвободнаяЯчейка("Суки", typeof(Целочисленный).ToString().Split('.')[2]) },
+            };
+
+            throw new NotImplementedException();
         }
 
         [XmlAttribute()]

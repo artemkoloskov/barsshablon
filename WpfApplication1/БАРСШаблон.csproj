@@ -99,6 +99,7 @@
     <Compile Include="DataTypes\Учреждение.cs" />
     <Compile Include="DataTypes\Финансовый.cs" />
     <Compile Include="DataTypes\Целочисленный.cs" />
+    <Compile Include="LevenshteinDistance.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

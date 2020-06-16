@@ -15,7 +15,7 @@ namespace БАРСШаблон
         {
             идентификатор = кодСтроки;
             код = кодСтроки;
-            тег = ConfigurationManager.AppSettings.Get("СтрокаТегПрефикс") + CommonMethods.GetTagName(идентификатор);
+            тег = ConfigurationManager.AppSettings.Get("СтрокаТегПрефикс") + CommonMethods.ПолчитьТег(идентификатор);
         }
 
         private string идентификатор;

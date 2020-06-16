@@ -16,8 +16,8 @@ namespace БАРСШаблон
             идентификатор = кодСтолбца;
             код = кодСтолбца;
             тип = типСтолбца;
-            тег = ConfigurationManager.AppSettings.Get("СтолбецТегПрефикс") + CommonMethods.GetTagName(идентификатор);
-            описание = CommonMethods.GetSerializedType(тип);
+            тег = ConfigurationManager.AppSettings.Get("СтолбецТегПрефикс") + CommonMethods.ПолчитьТег(идентификатор);
+            описание = CommonMethods.ПолучитьСриализованныйТип(тип);
         }
 
         private string идентификатор;

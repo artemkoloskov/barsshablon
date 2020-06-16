@@ -1,7 +1,6 @@
 ﻿using System.Xml.Serialization;
 using System.Configuration;
 using System;
-using БАРСШаблон.DataTypes;
 
 namespace БАРСШаблон
 {
@@ -18,14 +17,8 @@ namespace БАРСШаблон
             идентификатор = кодЯчейки;
             код = кодЯчейки;
             тип = типЯчейки;
-            тег = ConfigurationManager.AppSettings.Get("СвободнаяЯчейкаТегПрефикс") + CommonMethods.GetTagName(идентификатор);
-            описание = CommonMethods.GetSerializedType(тип);
-        }
-
-        private string Serialize(object датаВремя)
-        {
-
-            throw new NotImplementedException();
+            тег = ConfigurationManager.AppSettings.Get("СвободнаяЯчейкаТегПрефикс") + CommonMethods.ПолчитьТег(идентификатор);
+            описание = CommonMethods.ПолучитьСриализованныйТип(тип);
         }
 
         private string идентификатор;

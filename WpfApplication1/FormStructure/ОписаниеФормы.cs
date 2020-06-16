@@ -1,5 +1,6 @@
 ﻿using System.Xml.Serialization;
 using System.Xml.Schema;
+using System.Collections.Generic;
 
 namespace БАРСШаблон
 {
@@ -10,6 +11,13 @@ namespace БАРСШаблон
     {
         public ОписаниеФормы ()
         {
+        }
+
+        public ОписаниеФормы(Мета мета, List<Таблица> списокТаблиц, List<СвободнаяЯчейка> списокСвободныхЯчеек)
+        {
+            this.мета = мета;
+            справочники = new Справочник[] { };
+            структура = new Структура(списокТаблиц, списокСвободныхЯчеек);
         }
 
         private Мета мета;
