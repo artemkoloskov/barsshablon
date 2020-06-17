@@ -25,24 +25,127 @@ namespace БАРСШаблон
             датаПоследнегоИзменения = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss");
             тег = идентификатор;
         }
-        
+
         private static string ПолучитьНаименованиеИз(Worksheet sheet)
         {
             Dictionary<string, double> возможныеНаименования = new Dictionary<string, double>();
 
-            Range usedRange = sheet.UsedRange;
+            Range usedRange = (Range)sheet.UsedRange;
 
             foreach (Range column in usedRange.Columns)
             {
-                возможныеНаименования.Add(column.Cells[1, column.Column].Value, ПолучитьВероятностьТогоЧтоВЯчейкеНаименование(column.Cells[1, column.Column], usedRange));
+                Range topCellInColumn = НайтиВКолонкеВерхнююНеПустуюЯчейку(column);
+
+                if(!возможныеНаименования.ContainsKey(topCellInColumn.Value.ToString()))
+                {
+                    возможныеНаименования.Add(topCellInColumn.Value.ToString(), ПолучитьВероятностьТогоЧтоВЯчейкеНаименование(topCellInColumn));
+                }
             }
 
-            return "";
+            KeyValuePair<string, double> наиболееВероятноеНаименование = new KeyValuePair<string, double>("", 0);
+
+            foreach (var возможноеНаименование in возможныеНаименования)
+            {
+                if (возможноеНаименование.Value > наиболееВероятноеНаименование.Value)
+                {
+                    наиболееВероятноеНаименование = возможноеНаименование;
+                }
+            }
+
+            return наиболееВероятноеНаименование.Key;
         }
 
-        private static double ПолучитьВероятностьТогоЧтоВЯчейкеНаименование(Range dynamic, Range usedRange)
+        private static Range НайтиВКолонкеВерхнююНеПустуюЯчейку(Range column)
         {
-            throw new NotImplementedException();
+            foreach (Range cell in column.Cells)
+            {
+                if (cell.Value != null && cell.Value.ToString() != "" && cell.Value.ToString() != " ")
+                {
+                    return cell;
+                }
+            }
+
+            return null;
+        }
+
+        private static double ПолучитьВероятностьТогоЧтоВЯчейкеНаименование(Range cell)
+        {
+            double вероятность = 0;
+
+            double весДлины = double.Parse(ConfigurationManager.AppSettings.Get("МетаВесДлиныПотенциальногоНаименования"));
+            double весНомераСтроки = double.Parse(ConfigurationManager.AppSettings.Get("МетаВесНомераСтрокиПотенциальногоНаименования"));
+            double весНомераСтолбца = double.Parse(ConfigurationManager.AppSettings.Get("МетаВесНомераСтолбцаПотенциальногоНаименования"));
+            double весКолЯчеекВОбъедЯчейке = double.Parse(ConfigurationManager.AppSettings.Get("МетаВесКоличестваЯчеекВОбъединеннойЯчейкеПотенциальногоНаименования"));
+            double весГраницыВнизу = double.Parse(ConfigurationManager.AppSettings.Get("МетаВесГраницыВнизуПотенциальногоНаименования"));
+            double весГраницыВверху = double.Parse(ConfigurationManager.AppSettings.Get("МетаВесГраницыВверхуПотенциальногоНаименования"));
+            double весГраницыСлева = double.Parse(ConfigurationManager.AppSettings.Get("МетаВесГраницыСлеваПотенциальногоНаименования"));
+            double весГраницыСправа = double.Parse(ConfigurationManager.AppSettings.Get("МетаВесГраницыСправаПотенциальногоНаименования"));
+            double весВыравнПоСередине = double.Parse(ConfigurationManager.AppSettings.Get("МетаВесВыравниванияПоСерединеПотенциальногоНаименования"));
+            double весВыравнСлева = double.Parse(ConfigurationManager.AppSettings.Get("МетаВесВыравниванияСлеваПотенциальногоНаименования"));
+            double весВыравнСправа = double.Parse(ConfigurationManager.AppSettings.Get("МетаВесВыравниванияСправаПотенциальногоНаименования"));
+            double весЖирностиТекста = double.Parse(ConfigurationManager.AppSettings.Get("МетаВесЖирностиТекстаПотенциальногоНаименования"));
+            double весПустойСтроки = double.Parse(ConfigurationManager.AppSettings.Get("МетаВесПустойСтрокиПодЯчейкойПотенциальногоНаименования"));
+
+            вероятность += cell.Value.ToString().Length * весДлины;
+            вероятность += cell.Row * весНомераСтроки;
+            вероятность += cell.Column * весНомераСтолбца;
+            вероятность += ПолучитьКоличествоЯчеекВОбъединении(cell) * весКолЯчеекВОбъедЯчейке;
+            вероятность += cell.Borders[XlBordersIndex.xlEdgeBottom].LineStyle == (int)XlLineStyle.xlLineStyleNone ? 0 : 1 * весГраницыВнизу;
+            вероятность += cell.Borders[XlBordersIndex.xlEdgeTop].LineStyle == (int)XlLineStyle.xlLineStyleNone ? 0 : 1 * весГраницыВверху;
+            вероятность += cell.Borders[XlBordersIndex.xlEdgeLeft].LineStyle == (int)XlLineStyle.xlLineStyleNone ? 0 : 1 * весГраницыСлева;
+            вероятность += cell.Borders[XlBordersIndex.xlEdgeRight].LineStyle == (int)XlLineStyle.xlLineStyleNone ? 0 : 1 * весГраницыСправа;
+            вероятность += cell.HorizontalAlignment == (int)XlHAlign.xlHAlignCenter ? 1 : 0 * весВыравнПоСередине;
+            вероятность += cell.HorizontalAlignment == (int)XlHAlign.xlHAlignLeft ? 1 : 0 * весВыравнСлева;
+            вероятность += cell.HorizontalAlignment == (int)XlHAlign.xlHAlignRight ? 1 : 0 * весВыравнСправа;
+            вероятность += cell.Font.Bold ? 1 : 0 * весЖирностиТекста;
+            вероятность += ПолучитьКоличествоПустыхСтрокПодЯчейкой(cell) * весПустойСтроки;
+
+            return вероятность;
+        }
+
+        private static int ПолучитьКоличествоЯчеекВОбъединении(Range cell)
+        {
+            int количество = 0;
+
+            if (cell.MergeCells)
+            {
+                for (int i = 1; i < 10; i++)
+                {
+                    if (cell.Offset[i, 0].MergeCells)
+                    {
+                        for (int j = 1; j < 10; j++)
+                        {
+                            if (cell.Offset[i, j].MergeCells)
+                            {
+                                количество++;
+                            }
+                            else
+                            {
+                                return количество;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        return количество;
+                    }
+                }
+            }
+
+            return количество;
+        }
+
+        private static int ПолучитьКоличествоПустыхСтрокПодЯчейкой(Range cell)
+        {
+            int количество = 0;
+
+            do
+            {
+                количество++;
+            } while (количество < 10 && (cell.Offset[количество, 0].Value == null || cell.Offset[количество, 0].Value.ToString() == "" ||
+                    cell.Offset[количество, 0].Value.ToString() == " "));
+
+            return количество;
         }
 
         private string версияМетаописания = ConfigurationManager.AppSettings.Get("МетаВерсияМетаописания");
