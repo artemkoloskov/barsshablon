@@ -7,109 +7,116 @@ using System.Xml.Serialization;
 using System.Configuration;
 using System.Collections.Generic;
 using System;
+using Microsoft.Office.Interop.Excel;
 
 namespace БАРСШаблон
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
-    {
-        public MainWindow()
-        {
-            InitializeComponent();
+	/// <summary>
+	/// Interaction logic for MainWindow.xaml
+	/// </summary>
+	public partial class MainWindow : System.Windows.Window
+	{
+		public MainWindow()
+		{
+			InitializeComponent();
 
-            DropRectangle.AllowDrop = true;
-        }
+			DropRectangle.AllowDrop = true;
+		}
 
-        private void DropRectangle_PreviewDrop(object sender, DragEventArgs e)
-        {
-            object text = e.Data.GetData(DataFormats.FileDrop);
-            Rectangle dropRectangle = sender as Rectangle;
+		private void DropRectangle_PreviewDrop(object sender, DragEventArgs e)
+		{
+			object text = e.Data.GetData(DataFormats.FileDrop);
 
-            if (dropRectangle != null)
-            {
-                string путьКФайлу = string.Format("{0}", ((string[])text)[0]);
+			if (sender is System.Windows.Shapes.Rectangle)
+			{
+				string путьКФайлу = string.Format("{0}", ((string[])text)[0]);
 
-                DropHereTextBlock.Text = путьКФайлу;
-                DropHereTextBlock.Width = DropRectangle.Width;
-                DropHereTextBlock.Height = DropRectangle.Height;
+				DropHereTextBlock.Text = путьКФайлу;
+				DropHereTextBlock.Width = DropRectangle.Width;
+				DropHereTextBlock.Height = DropRectangle.Height;
 
-                КонвертироватьКнигуВШаблон(путьКФайлу);
-            }
-        }
+				КонвертироватьКнигуВШаблон(путьКФайлу);
+			}
+		}
 
-        private void DropRectangle_PreviewDragOver(object sender, DragEventArgs e)
-        {
-            e.Effects = DragDropEffects.Copy;
-            e.Handled = true;
-        }
+		private void DropRectangle_PreviewDragOver(object sender, DragEventArgs e)
+		{
+			e.Effects = DragDropEffects.Copy;
+			e.Handled = true;
+		}
 
-        private void КонвертироватьКнигуВШаблон(string путьККнигеExcel)
-        {
-            ОписаниеФормы описаниеФормы = ПолучитьОписаниеФормыИзКнигиExcel(путьККнигеExcel);
+		private void КонвертироватьКнигуВШаблон(string путьККнигеExcel)
+		{
+			ОписаниеФормы описаниеФормы = ПолучитьОписаниеФормыИзКнигиExcel(путьККнигеExcel);
 
-            СеарилизоватьВXMLИСохранить(описаниеФормы);
-        }
+			СеарилизоватьВXMLИСохранить(описаниеФормы);
+		}
 
-        private ОписаниеФормы ПолучитьОписаниеФормыИзКнигиExcel(string путьККнигеExcel)
-        {
-            Excel.Application excelApp = new Excel.Application();
+		private ОписаниеФормы ПолучитьОписаниеФормыИзКнигиExcel(string путьККнигеExcel)
+		{
+			Excel.Application excelApp = new Excel.Application();
 
-            Excel.Workbook workbook = excelApp.Workbooks.Open(путьККнигеExcel);
+			Workbook книгаExcel = excelApp.Workbooks.Open(путьККнигеExcel);
 
-            Мета мета = new Мета(workbook);
+			Мета мета = new Мета(книгаExcel);
 
-            List<Таблица> таблицы = new List<Таблица>(); 
- 
-            foreach (Excel.Worksheet sheet in workbook.Sheets)
-            {
-                Таблица таблица = Таблица.ПолучитьТаблицуИз(sheet);
+			List<Таблица> таблицы = ПолучитьТаблицыФормы(книгаExcel.Sheets);
 
-                if (таблица != null)
-                {
-                    таблицы.Add(таблица);
-                }
-            }
+			книгаExcel.Close();
 
-            workbook.Close();
+			List<СвободнаяЯчейка> свободныеЯчейки = ПолучитьСвободныеЯчейкиФормы();
 
-            List<СвободнаяЯчейка> свободныеЯчейки = ПолучитьСвободныеЯчейкиФормы();
+			ОписаниеФормы описаниеФормы = new ОписаниеФормы(мета, таблицы, свободныеЯчейки);
 
-            ОписаниеФормы описаниеФормы = new ОписаниеФормы(мета, таблицы, свободныеЯчейки);
+			return описаниеФормы;
+		}
 
-            return описаниеФормы;
-        }
+		private List<Таблица> ПолучитьТаблицыФормы(Sheets листыКниги)
+		{
+			List<Таблица> таблицы = new List<Таблица>();
 
-        private List<СвободнаяЯчейка> ПолучитьСвободныеЯчейкиФормы()
-        {
-            throw new NotImplementedException();
-        }
+			foreach (Worksheet листКниги in листыКниги)
+			{
+				Таблица таблица = new Таблица(листКниги);
 
-        private void СеарилизоватьВXMLИСохранить(ОписаниеФормы описаниеФормы)
-        {
-            string путьКПапкеШаблона =
-                ConfigurationManager.AppSettings.Get("ПутьКПапкеСгенерированныхШаблонов") +
-                описаниеФормы.Мета.Идентификатор + "\\" +
-                описаниеФормы.Мета.ДатаНачалаДействия.Substring(0, 10) + "-" +
-                описаниеФормы.Мета.ДатаОкончанияДействия.Substring(0, 10);
+				if (таблица != null)
+				{
+					таблицы.Add(таблица);
+				}
+			}
 
-            System.IO.Directory.CreateDirectory(путьКПапкеШаблона);
+			return таблицы;
+		}
 
-            string имяФайла = описаниеФормы.Мета.Идентификатор + ".xml";
+		private List<СвободнаяЯчейка> ПолучитьСвободныеЯчейкиФормы()
+		{
+			return new List<СвободнаяЯчейка>();
+		}
 
-            XmlSerializer xmlSerializer = new XmlSerializer(описаниеФормы.GetType());            
+		private void СеарилизоватьВXMLИСохранить(ОписаниеФормы описаниеФормы)
+		{
+			string путьКПапкеШаблона =
+				ConfigurationManager.AppSettings.Get("ПутьКПапкеСгенерированныхШаблонов") +
+				описаниеФормы.Мета.Идентификатор + "\\" +
+				описаниеФормы.Мета.ДатаНачалаДействия.Substring(0, 10) + "-" +
+				описаниеФормы.Мета.ДатаОкончанияДействия.Substring(0, 10);
 
-            XDocument xDocument = new XDocument();
+			System.IO.Directory.CreateDirectory(путьКПапкеШаблона);
 
-            using (XmlWriter xmlWriter = xDocument.CreateWriter())
-            {
-                xmlSerializer.Serialize(xmlWriter, описаниеФормы);
-            }
+			string имяФайла = описаниеФормы.Мета.Идентификатор + ".xml";
 
-            XElement mainXmlStream = xDocument.Root;
+			XmlSerializer xmlSerializer = new XmlSerializer(описаниеФормы.GetType());
 
-            mainXmlStream.Save(путьКПапкеШаблона + "\\" + имяФайла);
-        }
-    }
+			XDocument xDocument = new XDocument();
+
+			using (XmlWriter xmlWriter = xDocument.CreateWriter())
+			{
+				xmlSerializer.Serialize(xmlWriter, описаниеФормы);
+			}
+
+			XElement mainXmlStream = xDocument.Root;
+
+			mainXmlStream.Save(путьКПапкеШаблона + "\\" + имяФайла);
+		}
+	}
 }
