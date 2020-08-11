@@ -1,4 +1,6 @@
-﻿using System.Configuration;
+﻿using Microsoft.Office.Interop.Excel;
+using System;
+using System.Configuration;
 using System.Xml.Serialization;
 
 namespace БАРСШаблон
@@ -16,8 +18,26 @@ namespace БАРСШаблон
 			идентификатор = кодСтолбца;
 			код = кодСтолбца;
 			тип = типСтолбца;
-			тег = ConfigurationManager.AppSettings.Get("СтолбецТегПрефикс") + CommonMethods.ПолучитьТег(идентификатор);
-			описание = CommonMethods.ПолучитьСриализованныйТип(тип);
+			тег = ConfigurationManager.AppSettings.Get("СтолбецТегПрефикс") + ДопМетоды.ПолучитьТег(идентификатор);
+			описание = ДопМетоды.ПолучитьСриализованныйТип(тип);
+		}
+
+		public Столбец(Range клеткаСтрокиСКодамиСтолбцов)
+		{
+			идентификатор = клеткаСтрокиСКодамиСтолбцов.Value.ToString();
+			код = клеткаСтрокиСКодамиСтолбцов.Value.ToString();
+			наименованиеЭлемента =
+				ДопМетоды.КлеткаПустаИлиСодержитТег(клеткаСтрокиСКодамиСтолбцов.Offset[-1, 0]) ?
+				"" :
+				клеткаСтрокиСКодамиСтолбцов.Offset[-1, 0].Value.ToString();
+			тег = ConfigurationManager.AppSettings.Get("СтолбецТегПрефикс") + ДопМетоды.ПолучитьТег(идентификатор);
+			тип = ПолучитьТипСтолбца(клеткаСтрокиСКодамиСтолбцов);
+			описание = ДопМетоды.ПолучитьСриализованныйТип(тип);
+		}
+
+		private string ПолучитьТипСтолбца(Range клеткаСтрокиСКодамиСтолбцов)
+		{
+			return "Строковый";
 		}
 
 		private string идентификатор;
@@ -26,83 +46,28 @@ namespace БАРСШаблон
 		private string тег;
 		private string тип;
 		private string описание;
+		
+		private Range клеткаСтрокиСКодамиСтолбцов;
 
 		[XmlAttribute()]
-		public string Идентификатор
-		{
-			get
-			{
-				return идентификатор;
-			}
-			set
-			{
-				идентификатор = value;
-			}
-		}
+		public string Идентификатор { get => идентификатор; set => идентификатор = value; }
 
 		[XmlAttribute()]
-		public string Код
-		{
-			get
-			{
-				return код;
-			}
-			set
-			{
-				код = value;
-			}
-		}
+		public string Код { get => код; set => код = value; }
 
 		[XmlAttribute()]
-		public string НаименованиеЭлемента
-		{
-			get
-			{
-				return наименованиеЭлемента;
-			}
-			set
-			{
-				наименованиеЭлемента = value;
-			}
-		}
+		public string НаименованиеЭлемента { get => наименованиеЭлемента; set => наименованиеЭлемента = value; }
 
 		[XmlAttribute()]
-		public string Тег
-		{
-			get
-			{
-				return тег;
-			}
-			set
-			{
-				тег = value;
-			}
-		}
+		public string Тег { get => тег; set => тег = value; }
 
 		[XmlAttribute()]
-		public string Тип
-		{
-			get
-			{
-				return тип;
-			}
-			set
-			{
-				тип = value;
-			}
-		}
+		public string Тип { get => тип; set => тип = value; }
 
 		[XmlAttribute()]
-		public string Описание
-		{
-			get
-			{
-				return описание;
-			}
-			set
-			{
-				описание = value;
-			}
-		}
+		public string Описание { get => описание; set => описание = value; }
+
+		[XmlIgnore]
+		public Range КлеткаСтрокиСКодамиСтолбцов { get => клеткаСтрокиСКодамиСтолбцов; set => клеткаСтрокиСКодамиСтолбцов = value; }
 	}
 }

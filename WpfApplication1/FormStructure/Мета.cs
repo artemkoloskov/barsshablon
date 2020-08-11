@@ -18,7 +18,7 @@ namespace БАРСШаблон
 		public Мета(Workbook workbook)
 		{
 			наименование = ПолучитьНаименованиеИз(workbook.Sheets[1]);
-			идентификатор += CommonMethods.ПолучитьТег(наименование);
+			идентификатор += ДопМетоды.ПолучитьТег(наименование);
 			группа += DateTime.Today.Year;
 			датаНачалаДействия = датаНачалаДействия.Replace("0001", DateTime.Today.Year.ToString());
 			датаОкончанияДействия = датаОкончанияДействия.Replace("9999", DateTime.Today.Year.ToString());
@@ -62,7 +62,7 @@ namespace БАРСШаблон
 
 		private bool НаименованиеУказаноВШаблоне(out string наименование)
 		{
-			наименование = ЯчейкаСНаименованием == null ? "" : ЯчейкаСНаименованием.Value.ToString();
+			наименование = КлеткаСНаименованием == null ? "" : КлеткаСНаименованием.Value.ToString();
 
 			return наименование != "";
 		}
@@ -112,7 +112,7 @@ namespace БАРСШаблон
 			вероятность += cell.HorizontalAlignment == (int)XlHAlign.xlHAlignRight ? 1 : 0 * весВыравнСправа;
 			вероятность += (cell.Font.Bold ? 1 : 0) * весЖирностиТекста;
 			вероятность += ПолучитьКоличествоПустыхСтрокПодЯчейкой(cell) * весПустойСтроки;
-			вероятность += (CommonMethods.СтрокаЯвлетсяЧастоИспользуемой(cell.Value.ToString()) ? 1 : 0) * весЧастоИспользуемогоТермина;
+			вероятность += (ДопМетоды.СтрокаЯвлетсяЧастоИспользуемой(cell.Value.ToString()) ? 1 : 0) * весЧастоИспользуемогоТермина;
 
 			return вероятность;
 		}
@@ -157,214 +157,54 @@ namespace БАРСШаблон
 		private string версияФорматаМетаструктуры = ConfigurationManager.AppSettings.Get("МетаВерсияФорматаМетаструктуры");
 		private string тег = "";
 
-		private Range ячейкаСНаименованием;
+		private Range клеткаСНаименованием;
 
 		[XmlIgnore]
-		public Range ЯчейкаСНаименованием
-		{
-			get
-			{
-				return ячейкаСНаименованием;
-			}
-			set
-			{
-				ячейкаСНаименованием = value;
-			}
-		}
+		public Range КлеткаСНаименованием { get => клеткаСНаименованием; set => клеткаСНаименованием = value; }
 
 		[XmlElement(Form = XmlSchemaForm.Unqualified)]
-		public string ВерсияМетаописания
-		{
-			get
-			{
-				return версияМетаописания;
-			}
-			set
-			{
-				версияМетаописания = value;
-			}
-		}
+		public string ВерсияМетаописания { get => версияМетаописания; set => версияМетаописания = value; }
 
 		[XmlElement(Form = XmlSchemaForm.Unqualified)]
-		public string Идентификатор
-		{
-			get
-			{
-				return идентификатор;
-			}
-			set
-			{
-				идентификатор = value;
-			}
-		}
+		public string Идентификатор { get => идентификатор; set => идентификатор = value; }
 
 		[XmlElement(Form = XmlSchemaForm.Unqualified)]
-		public string Наименование
-		{
-			get
-			{
-				return наименование;
-			}
-			set
-			{
-				наименование = value;
-			}
-		}
+		public string Наименование { get => наименование; set => наименование = value; }
 
 		[XmlElement(Form = XmlSchemaForm.Unqualified)]
-		public string Группа
-		{
-			get
-			{
-				return группа;
-			}
-			set
-			{
-				группа = value;
-			}
-		}
+		public string Группа { get => группа; set => группа = value; }
 
 		[XmlElement(Form = XmlSchemaForm.Unqualified)]
-		public string ДатаНачалаДействия
-		{
-			get
-			{
-				return датаНачалаДействия;
-			}
-			set
-			{
-				датаНачалаДействия = value;
-			}
-		}
+		public string ДатаНачалаДействия { get => датаНачалаДействия; set => датаНачалаДействия = value; }
 
 		[XmlElement(Form = XmlSchemaForm.Unqualified)]
-		public string ДатаОкончанияДействия
-		{
-			get
-			{
-				return датаОкончанияДействия;
-			}
-			set
-			{
-				датаОкончанияДействия = value;
-			}
-		}
+		public string ДатаОкончанияДействия { get => датаОкончанияДействия; set => датаОкончанияДействия = value; }
 
 		[XmlElement(Form = XmlSchemaForm.Unqualified)]
-		public string Авторство
-		{
-			get
-			{
-				return авторство;
-			}
-			set
-			{
-				авторство = value;
-			}
-		}
+		public string Авторство { get => авторство; set => авторство = value; }
 
 		[XmlElement(Form = XmlSchemaForm.Unqualified)]
-		public string ДатаПоследнегоИзменения
-		{
-			get
-			{
-				return датаПоследнегоИзменения;
-			}
-			set
-			{
-				датаПоследнегоИзменения = value;
-			}
-		}
+		public string ДатаПоследнегоИзменения { get => датаПоследнегоИзменения; set => датаПоследнегоИзменения = value; }
 
 		[XmlElement(Form = XmlSchemaForm.Unqualified)]
-		public string НомерВерсии
-		{
-			get
-			{
-				return номерВерсии;
-			}
-			set
-			{
-				номерВерсии = value;
-			}
-		}
+		public string НомерВерсии { get => номерВерсии; set => номерВерсии = value; }
 
 		[XmlElement(Form = XmlSchemaForm.Unqualified)]
-		public string РасположениеШапки
-		{
-			get
-			{
-				return расположениеШапки;
-			}
-			set
-			{
-				расположениеШапки = value;
-			}
-		}
+		public string РасположениеШапки { get => расположениеШапки; set => расположениеШапки = value; }
 
 		[XmlElement(Form = XmlSchemaForm.Unqualified)]
-		public string Хост
-		{
-			get
-			{
-				return хост;
-			}
-			set
-			{
-				хост = value;
-			}
-		}
+		public string Хост { get => хост; set => хост = value; }
 
 		[XmlElement(Form = XmlSchemaForm.Unqualified)]
-		public string СсылкаНаМетодическийСправочник
-		{
-			get
-			{
-				return ссылкаНаМетодическийСправочник;
-			}
-			set
-			{
-				ссылкаНаМетодическийСправочник = value;
-			}
-		}
+		public string СсылкаНаМетодическийСправочник { get => ссылкаНаМетодическийСправочник; set => ссылкаНаМетодическийСправочник = value; }
 
 		[XmlElement(Form = XmlSchemaForm.Unqualified)]
-		public string СсылкаНаВнешнююСправку
-		{
-			get
-			{
-				return ссылкаНаВнешнююСправку;
-			}
-			set
-			{
-				ссылкаНаВнешнююСправку = value;
-			}
-		}
+		public string СсылкаНаВнешнююСправку { get => ссылкаНаВнешнююСправку; set => ссылкаНаВнешнююСправку = value; }
 
 		[XmlElement(Form = XmlSchemaForm.Unqualified)]
-		public string ВерсияФорматаМетаструктуры
-		{
-			get
-			{
-				return версияФорматаМетаструктуры;
-			}
-			set
-			{
-				версияФорматаМетаструктуры = value;
-			}
-		}
+		public string ВерсияФорматаМетаструктуры { get => версияФорматаМетаструктуры; set => версияФорматаМетаструктуры = value; }
 
 		[XmlElement(Form = XmlSchemaForm.Unqualified)]
-		public string Тег
-		{
-			get
-			{
-				return тег;
-			}
-			set
-			{
-				тег = value;
-			}
-		}
+		public string Тег { get => тег; set => тег = value; }
 	}
 }

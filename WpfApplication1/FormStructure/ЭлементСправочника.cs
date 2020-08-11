@@ -16,27 +16,15 @@ namespace БАРСШаблон
 		[XmlAttribute()]
 		public string Код
 		{
-			get
-			{
-				return код;
-			}
-			set
-			{
-				код = value;
-			}
+			get => код;
+			set => код = value;
 		}
 
 		[XmlAttribute()]
 		public string Наименование
 		{
-			get
-			{
-				return наименование;
-			}
-			set
-			{
-				наименование = value;
-			}
+			get => наименование;
+			set => наименование = value;
 		}
 	}
 }

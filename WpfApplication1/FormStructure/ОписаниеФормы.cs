@@ -28,54 +28,30 @@ namespace БАРСШаблон
 		[XmlElement("Мета", Form = XmlSchemaForm.Unqualified)]
 		public Мета Мета
 		{
-			get
-			{
-				return мета;
-			}
-			set
-			{
-				мета = value;
-			}
+			get => мета;
+			set => мета = value;
 		}
 
 		[XmlElement("Структура", Form = XmlSchemaForm.Unqualified)]
 		public Структура Структура
 		{
-			get
-			{
-				return структура;
-			}
-			set
-			{
-				структура = value;
-			}
+			get => структура;
+			set => структура = value;
 		}
 
 		[XmlElement(Form = XmlSchemaForm.Unqualified)]
 		public string Меню
 		{
-			get
-			{
-				return меню;
-			}
-			set
-			{
-				меню = value;
-			}
+			get => меню;
+			set => меню = value;
 		}
 
 		[XmlArray(Form = XmlSchemaForm.Unqualified)]
 		[XmlArrayItem("Справочник", typeof(Справочник), Form = XmlSchemaForm.Unqualified, IsNullable = false)]
 		public Справочник[] Справочники
 		{
-			get
-			{
-				return справочники;
-			}
-			set
-			{
-				справочники = value;
-			}
+			get => справочники;
+			set => справочники = value;
 		}
 	}
 }

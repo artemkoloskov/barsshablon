@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Excel;
+using System;
+using System.Collections.Generic;
 using System.Configuration;
 using БАРСШаблон.DataTypes;
 
 namespace БАРСШаблон
 {
-	public class CommonMethods
+	public class ДопМетоды
 	{
 		/// <summary>
 		/// Сокращает строку то приемлемого полю тег вида
@@ -89,6 +91,41 @@ namespace БАРСШаблон
 			}
 
 			return false;
+		}
+
+		/// <summary>
+		/// Определяет наличие содержимого в клетке таблицы Excel.
+		/// Пробел и два пробела не считаются содержимым.
+		/// </summary>
+		/// <param name="клетка"></param>
+		/// <returns></returns>
+		public static bool КлеткаПуста (Range клетка)
+		{
+			return
+				клетка.Value == null ||
+				string.IsNullOrEmpty(клетка.Value.ToString()) || 
+				клетка.Value.ToString() == " " || 
+				клетка.Value.ToString() == "  ";
+		}
+
+		public static bool КлеткаПустаИлиСодержитТег(Range клетка)
+		{
+			List<string> теги = new List<string>()
+			{
+				ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаТипТаблицыДинамическая"),
+				ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаТипТаблицыСтатическая"),
+				ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаКодыСтрок"),
+				ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаКодыСтрокИСтолбцов"),
+				ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаКодыСтолбцов"),
+				ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаНазвание"),
+				ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаТег"),
+				ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаКод"),
+			};
+
+			return
+				КлеткаПуста(клетка) ||
+				теги.Contains(клетка.Value.ToString());
+
 		}
 	}
 }

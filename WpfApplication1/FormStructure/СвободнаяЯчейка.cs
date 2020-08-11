@@ -17,8 +17,8 @@ namespace БАРСШаблон
 			идентификатор = кодЯчейки;
 			код = кодЯчейки;
 			тип = типЯчейки;
-			тег = ConfigurationManager.AppSettings.Get("СвободнаяЯчейкаТегПрефикс") + CommonMethods.ПолучитьТег(идентификатор);
-			описание = CommonMethods.ПолучитьСриализованныйТип(тип);
+			тег = ConfigurationManager.AppSettings.Get("СвободнаяЯчейкаТегПрефикс") + ДопМетоды.ПолучитьТег(идентификатор);
+			описание = ДопМетоды.ПолучитьСриализованныйТип(тип);
 		}
 
 		private string идентификатор;
@@ -31,79 +31,43 @@ namespace БАРСШаблон
 		[XmlAttribute()]
 		public string Идентификатор
 		{
-			get
-			{
-				return идентификатор;
-			}
-			set
-			{
-				идентификатор = value;
-			}
+			get => идентификатор;
+			set => идентификатор = value;
 		}
 
 		[XmlAttribute()]
 		public string Код
 		{
-			get
-			{
-				return код;
-			}
-			set
-			{
-				код = value;
-			}
+			get => код;
+			set => код = value;
 		}
 
 		[XmlAttribute()]
 		public string НаименованиеЭлемента
 		{
-			get
-			{
-				return наименованиеЭлемента;
-			}
-			set
-			{
-				наименованиеЭлемента = value;
-			}
+			get => наименованиеЭлемента;
+			set => наименованиеЭлемента = value;
 		}
 
 		[XmlAttribute()]
 		public string Тип
 		{
-			get
-			{
-				return тип;
-			}
-			set
-			{
-				тип = value;
-			}
+			get => тип;
+			set => тип = value;
 		}
 
 		[XmlAttribute()]
 		public string Описание
 		{
-			get
-			{
-				return описание;
-			}
-			set
-			{
-				описание = value;
-			}
+			get => описание;
+			set => описание = value;
 		}
 
 		[XmlAttribute()]
 		public string Тег
 		{
-			get
-			{
-				return тег;
-			}
-			set
-			{
-				тег = value;
-			}
+			get => тег;
+			set => тег = value;
 		}
 	}
 }

@@ -19,40 +19,22 @@ namespace БАРСШаблон
 		[XmlArrayItem("ЭлементСправочника", typeof(ЭлементСправочника), Form = XmlSchemaForm.Unqualified, IsNullable = false)]
 		public ЭлементСправочника[] Элементы
 		{
-			get
-			{
-				return элементы;
-			}
-			set
-			{
-				элементы = value;
-			}
+			get => элементы;
+			set => элементы = value;
 		}
 
 		[XmlAttribute()]
 		public string Код
 		{
-			get
-			{
-				return код;
-			}
-			set
-			{
-				код = value;
-			}
+			get => код;
+			set => код = value;
 		}
 
 		[XmlAttribute()]
 		public string Наименование
 		{
-			get
-			{
-				return наименование;
-			}
-			set
-			{
-				наименование = value;
-			}
+			get => наименование;
+			set => наименование = value;
 		}
 	}
 }

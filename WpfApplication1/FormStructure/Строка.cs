@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using Microsoft.Office.Interop.Excel;
+using System.Configuration;
 using System.Xml.Serialization;
 
 namespace БАРСШаблон
@@ -15,7 +16,18 @@ namespace БАРСШаблон
 		{
 			идентификатор = кодСтроки;
 			код = кодСтроки;
-			тег = ConfigurationManager.AppSettings.Get("СтрокаТегПрефикс") + CommonMethods.ПолучитьТег(идентификатор);
+			тег = ConfigurationManager.AppSettings.Get("СтрокаТегПрефикс") + ДопМетоды.ПолучитьТег(идентификатор);
+		}
+
+		public Строка(Range клеткаСтолбцаСКодамиСтрок)
+		{
+			идентификатор = клеткаСтолбцаСКодамиСтрок.Value.ToString();
+			код = клеткаСтолбцаСКодамиСтрок.Value.ToString();
+			наименованиеЭлемента =
+				ДопМетоды.КлеткаПустаИлиСодержитТег(клеткаСтолбцаСКодамиСтрок.Offset[0, -1]) ?
+				"" :
+				клеткаСтолбцаСКодамиСтрок.Offset[0, -1].Value.ToString();
+			тег = ConfigurationManager.AppSettings.Get("СтрокаТегПрефикс") + ДопМетоды.ПолучитьТег(Идентификатор);
 		}
 
 		private string идентификатор;
@@ -24,55 +36,15 @@ namespace БАРСШаблон
 		private string тег;
 
 		[XmlAttribute()]
-		public string Идентификатор
-		{
-			get
-			{
-				return идентификатор;
-			}
-			set
-			{
-				идентификатор = value;
-			}
-		}
+		public string Идентификатор { get => идентификатор; set => идентификатор = value; }
 
 		[XmlAttribute()]
-		public string Код
-		{
-			get
-			{
-				return код;
-			}
-			set
-			{
-				код = value;
-			}
-		}
+		public string Код { get => код; set => код = value; }
 
 		[XmlAttribute()]
-		public string НаименованиеЭлемента
-		{
-			get
-			{
-				return наименованиеЭлемента;
-			}
-			set
-			{
-				наименованиеЭлемента = value;
-			}
-		}
+		public string НаименованиеЭлемента { get => наименованиеЭлемента; set => наименованиеЭлемента = value; }
 
 		[XmlAttribute()]
-		public string Тег
-		{
-			get
-			{
-				return тег;
-			}
-			set
-			{
-				тег = value;
-			}
-		}
+		public string Тег { get => тег; set => тег = value; }
 	}
 }
