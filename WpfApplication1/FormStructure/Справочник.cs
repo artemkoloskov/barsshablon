@@ -1,5 +1,5 @@
-﻿using System.Xml.Serialization;
-using System.Xml.Schema;
+﻿using System.Xml.Schema;
+using System.Xml.Serialization;
 
 namespace БАРСШаблон
 {

@@ -1,9 +1,9 @@
-﻿using System.Xml.Serialization;
-using System.Xml.Schema;
+﻿using Microsoft.Office.Interop.Excel;
 using System;
-using System.Configuration;
-using Microsoft.Office.Interop.Excel;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 
 namespace БАРСШаблон
 {
@@ -15,9 +15,13 @@ namespace БАРСШаблон
 		{
 		}
 
-		public Мета(Workbook workbook)
+		public Мета(Workbook книгаExcel)
 		{
-			наименование = ПолучитьНаименованиеИз(workbook.Sheets[1]);
+			КнигаExcel = книгаExcel;
+
+			НаитиТегиВКниге();
+
+			наименование = ПолучитьНаименование();
 			идентификатор += ДопМетоды.ПолучитьТег(наименование);
 			группа += DateTime.Today.Year;
 			датаНачалаДействия = датаНачалаДействия.Replace("0001", DateTime.Today.Year.ToString());
@@ -26,11 +30,27 @@ namespace БАРСШаблон
 			тег = идентификатор;
 		}
 
-		private string ПолучитьНаименованиеИз(Worksheet sheet)
+		private void НаитиТегиВКниге()
+		{
+			string строкаТегаНаименование = ConfigurationManager.AppSettings.Get("МетаТегНаименование");
+
+			foreach (Range клеткаТаблицы in КнигаExcel.Worksheets[1].UsedRange.Cells)
+			{
+				if (клеткаТаблицы.Value != null)
+				{
+					if (клеткаТаблицы.Value.ToString() == строкаТегаНаименование)
+					{
+						тегНаименование = клеткаТаблицы;
+					}
+				}
+			}
+		}
+
+		private string ПолучитьНаименование()
 		{
 			Dictionary<string, double> возможныеНаименования = new Dictionary<string, double>();
 
-			Range usedRange = sheet.UsedRange;
+			Range usedRange = КнигаExcel.Worksheets[1].UsedRange;
 
 			if (!НаименованиеУказаноВШаблоне(out string наименование))
 			{
@@ -57,14 +77,12 @@ namespace БАРСШаблон
 				наименование = наиболееВероятноеНаименование.Key;
 			}
 
-			return наименование;
+			return наименование.Length > 240 ? наименование.Substring(0, 239) : наименование;
 		}
 
 		private bool НаименованиеУказаноВШаблоне(out string наименование)
 		{
-			наименование = КлеткаСНаименованием == null ? "" : КлеткаСНаименованием.Value.ToString();
-
-			return наименование != "";
+			return ДопМетоды.ПолучитьНаименованиеПоТегу(тегНаименование, out наименование);
 		}
 
 		private Range НайтиВКолонкеВерхнююНеПустуюЯчейку(Range column)
@@ -157,10 +175,8 @@ namespace БАРСШаблон
 		private string версияФорматаМетаструктуры = ConfigurationManager.AppSettings.Get("МетаВерсияФорматаМетаструктуры");
 		private string тег = "";
 
-		private Range клеткаСНаименованием;
-
-		[XmlIgnore]
-		public Range КлеткаСНаименованием { get => клеткаСНаименованием; set => клеткаСНаименованием = value; }
+		private Workbook книгаExcel;
+		private Range тегНаименование;
 
 		[XmlElement(Form = XmlSchemaForm.Unqualified)]
 		public string ВерсияМетаописания { get => версияМетаописания; set => версияМетаописания = value; }
@@ -206,5 +222,11 @@ namespace БАРСШаблон
 
 		[XmlElement(Form = XmlSchemaForm.Unqualified)]
 		public string Тег { get => тег; set => тег = value; }
+
+		[XmlIgnore]
+		public Workbook КнигаExcel { get => книгаExcel; set => книгаExcel = value; }
+
+		[XmlIgnore]
+		public Range ТегНаименование { get => тегНаименование; set => тегНаименование = value; }
 	}
 }

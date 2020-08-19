@@ -1,6 +1,6 @@
-﻿using System.Xml.Serialization;
+﻿using System.Collections.Generic;
 using System.Xml.Schema;
-using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace БАРСШаблон
 {
@@ -23,6 +23,8 @@ namespace БАРСШаблон
 				foreach (Таблица таблица in списокТаблиц)
 				{
 					таблицы[i] = таблица;
+
+					i++;
 				}
 			}
 
@@ -35,6 +37,8 @@ namespace БАРСШаблон
 				foreach (СвободнаяЯчейка cвободнаяЯчейка in списокСвободныхЯчеек)
 				{
 					свободныеЯчейки[i] = cвободнаяЯчейка;
+
+					i++;
 				}
 			}
 		}

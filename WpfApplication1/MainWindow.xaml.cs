@@ -1,13 +1,11 @@
-﻿using System.Windows;
-using System.Windows.Shapes;
-using Excel = Microsoft.Office.Interop.Excel;
+﻿using Microsoft.Office.Interop.Excel;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Windows;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
-using System.Configuration;
-using System.Collections.Generic;
-using System;
-using Microsoft.Office.Interop.Excel;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace БАРСШаблон
 {
@@ -75,9 +73,13 @@ namespace БАРСШаблон
 		{
 			List<Таблица> таблицы = new List<Таблица>();
 
+			int n = 1;
+
 			foreach (Worksheet листКниги in листыКниги)
 			{
-				Таблица таблица = new Таблица(листКниги);
+				Таблица таблица = new Таблица(листКниги, n);
+
+				n++;
 
 				if (таблица != null)
 				{

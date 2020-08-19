@@ -1,10 +1,9 @@
-﻿using System.Xml.Serialization;
-using System.Xml.Schema;
-using System.Configuration;
-using Microsoft.Office.Interop.Excel;
+﻿using Microsoft.Office.Interop.Excel;
 using System;
-using БАРСШаблон.DataTypes;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 
 namespace БАРСШаблон
 {
@@ -23,7 +22,7 @@ namespace БАРСШаблон
 			тег = ДопМетоды.ПолучитьТег(идентификатор);
 		}
 
-		public Таблица (Worksheet листКниги)
+		public Таблица(Worksheet листКниги, int n)
 		{
 			ЛистКниги = листКниги;
 
@@ -32,13 +31,25 @@ namespace БАРСШаблон
 			строки = ПолучитьСтрокиТаблицы();
 
 			столбцы = ПолучитьСтолбцыТаблицы();
-			
-			идентификатор = "Таблица1";
-			код = "Тбл1";
-			наименование = "Крутая ваще таблица";
+
+			идентификатор = "Таблица" + n;
+			код = "Таблица" + n;
+			наименование = ПолучитьНаименованиеТаблицы(n);
 			ручноеДобавлениеСтрок = false;
-			тег = "КртВщТабла";
-			свободныеЯчейки = new СвободнаяЯчейка[] { new СвободнаяЯчейка("Суки", typeof(Целочисленный).ToString().Split('.')[2]) };
+			тег = "Таблица" + n;
+		}
+
+		private string ПолучитьНаименованиеТаблицы(int n)
+		{
+			if (тегНаименование != null)
+			{
+				if (ДопМетоды.ПолучитьНаименованиеПоТегу(тегНаименование, out string наименование))
+				{
+					return наименование;
+				}
+			}
+
+			return "Таблица" + n;
 		}
 
 		private Строка[] ПолучитьСтрокиТаблицы()
@@ -49,7 +60,7 @@ namespace БАРСШаблон
 
 				foreach (Range клеткаСтолбцаСКодамиСтрок in ЛистКниги.Application.Intersect(тегКодыСтрок.EntireColumn, ЛистКниги.UsedRange).Cells)
 				{
-					if (!ДопМетоды.КлеткаПустаИлиСодержитТег(клеткаСтолбцаСКодамиСтрок) && 
+					if (!ДопМетоды.КлеткаПустаИлиСодержитТег(клеткаСтолбцаСКодамиСтрок) &&
 						клеткаСтолбцаСКодамиСтрок.Row > тегКодыСтрок.Row)
 					{
 						списокСтрок.Add(new Строка(клеткаСтолбцаСКодамиСтрок));
@@ -116,7 +127,7 @@ namespace БАРСШаблон
 			string строкаТегаКодыСтрок = ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаКодыСтрок");
 			string строкаТегаКодыСтрокИСтолбцов = ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаКодыСтрокИСтолбцов");
 			string строкаТегаКодыСтолбцов = ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаКодыСтолбцов");
-			string строкаТегаНазвание = ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаНазвание");
+			string строкаТегаНаименование = ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаНаименование");
 			string строкаТегаТег = ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаТег");
 			string строкаТегаКод = ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаКод");
 
@@ -140,9 +151,9 @@ namespace БАРСШаблон
 						тегКодыСтолбцов = клеткаТаблицы;
 					}
 
-					if (клеткаТаблицы.Value.ToString() == строкаТегаНазвание)
+					if (клеткаТаблицы.Value.ToString() == строкаТегаНаименование)
 					{
-						тегНазвание = клеткаТаблицы;
+						тегНаименование = клеткаТаблицы;
 					}
 
 					if (клеткаТаблицы.Value.ToString() == строкаТегаТег)
@@ -160,7 +171,7 @@ namespace БАРСШаблон
 						тегКодыСтрок = клеткаТаблицы;
 
 						тегКодыСтолбцов = клеткаТаблицы;
-					} 
+					}
 				}
 			}
 		}
@@ -178,7 +189,7 @@ namespace БАРСШаблон
 		private Range тегТипТаблицы;
 		private Range тегКодыСтолбцов;
 		private Range тегКодыСтрок;
-		private Range тегНазвание;
+		private Range тегНаименование;
 		private Range тегКод;
 		private Range тегТег;
 

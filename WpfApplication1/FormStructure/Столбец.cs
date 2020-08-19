@@ -1,5 +1,4 @@
 ﻿using Microsoft.Office.Interop.Excel;
-using System;
 using System.Configuration;
 using System.Xml.Serialization;
 
@@ -26,10 +25,7 @@ namespace БАРСШаблон
 		{
 			идентификатор = клеткаСтрокиСКодамиСтолбцов.Value.ToString();
 			код = клеткаСтрокиСКодамиСтолбцов.Value.ToString();
-			наименованиеЭлемента =
-				ДопМетоды.КлеткаПустаИлиСодержитТег(клеткаСтрокиСКодамиСтолбцов.Offset[-1, 0]) ?
-				"" :
-				клеткаСтрокиСКодамиСтолбцов.Offset[-1, 0].Value.ToString();
+			наименованиеЭлемента = ДопМетоды.ПолучитьНаименованиеСтрокиИлиСтолбца(клеткаСтрокиСКодамиСтолбцов, false);
 			тег = ConfigurationManager.AppSettings.Get("СтолбецТегПрефикс") + ДопМетоды.ПолучитьТег(идентификатор);
 			тип = ПолучитьТипСтолбца(клеткаСтрокиСКодамиСтолбцов);
 			описание = ДопМетоды.ПолучитьСриализованныйТип(тип);
@@ -46,7 +42,7 @@ namespace БАРСШаблон
 		private string тег;
 		private string тип;
 		private string описание;
-		
+
 		private Range клеткаСтрокиСКодамиСтолбцов;
 
 		[XmlAttribute()]

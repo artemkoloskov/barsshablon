@@ -11,11 +11,37 @@ namespace БАРСШаблон
 		/// <summary>
 		/// Сокращает строку то приемлемого полю тег вида
 		/// </summary>
-		/// <param name="идентификатор"></param>
+		/// <param name="наименование"></param>
 		/// <returns></returns>
-		public static string ПолучитьТег(string идентификатор)
+		public static string ПолучитьТег(string наименование)
 		{
-			return идентификатор; //TODO
+			string тег = "";
+
+			string[] словаНаименования = наименование.Split(' ');
+
+			int количествоСловВТеге = int.Parse(ConfigurationManager.AppSettings.Get("КоличествоСловВТеге"));
+			int количествоСимволовВТеге = int.Parse(ConfigurationManager.AppSettings.Get("КоличествоСимволовВТеге"));
+
+			int i = 1;
+
+			foreach (string слово in словаНаименования)
+			{
+				if (i > количествоСловВТеге || тег.Length >= количествоСимволовВТеге)
+				{
+					break;
+				}
+
+				тег += слово.Substring(0, 1).ToUpper() + слово.Substring(1).ToLower();
+
+				i++;
+			}
+
+			if(тег.Length > количествоСимволовВТеге)
+			{
+				тег = тег.Substring(0, количествоСимволовВТеге);
+			}
+
+			return тег; //TODO
 		}
 
 		/// <summary>
@@ -99,12 +125,12 @@ namespace БАРСШаблон
 		/// </summary>
 		/// <param name="клетка"></param>
 		/// <returns></returns>
-		public static bool КлеткаПуста (Range клетка)
+		public static bool КлеткаПуста(Range клетка)
 		{
 			return
 				клетка.Value == null ||
-				string.IsNullOrEmpty(клетка.Value.ToString()) || 
-				клетка.Value.ToString() == " " || 
+				string.IsNullOrEmpty(клетка.Value.ToString()) ||
+				клетка.Value.ToString() == " " ||
 				клетка.Value.ToString() == "  ";
 		}
 
@@ -117,15 +143,47 @@ namespace БАРСШаблон
 				ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаКодыСтрок"),
 				ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаКодыСтрокИСтолбцов"),
 				ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаКодыСтолбцов"),
-				ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаНазвание"),
+				ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаНаименование"),
 				ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаТег"),
 				ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаКод"),
+				ConfigurationManager.AppSettings.Get("МетаТегНаименование"),
 			};
 
 			return
 				КлеткаПуста(клетка) ||
 				теги.Contains(клетка.Value.ToString());
 
+		}
+
+		public static string ПолучитьНаименованиеСтрокиИлиСтолбца(Range клеткаОбластиСКодами, bool ищемДляСтроки)
+		{
+			return КлеткаПустаИлиСодержитТег(клеткаОбластиСКодами.Offset[ищемДляСтроки ? 0 : -1, ищемДляСтроки ? -1 : 0]) ?
+			"" :
+			клеткаОбластиСКодами.Offset[ищемДляСтроки ? 0 : -1, ищемДляСтроки ? -1 : 0].Value.ToString();
+		}
+
+		public static bool ПолучитьНаименованиеПоТегу(Range тег, out string наименвание)
+		{
+			if (тег != null)
+			{
+				if (!КлеткаПустаИлиСодержитТег(тег.Offset[1, 0]))
+				{
+					наименвание = тег.Offset[1, 0].Value.ToString();
+
+					return true;
+				}
+
+				if (!КлеткаПустаИлиСодержитТег(тег.Offset[0, 1]))
+				{
+					наименвание = тег.Offset[0, 1].Value.ToString();
+
+					return true;
+				} 
+			}
+
+			наименвание = "";
+
+			return false;
 		}
 	}
 }

@@ -1,6 +1,6 @@
-﻿using System.Xml.Serialization;
+﻿using System;
 using System.Configuration;
-using System;
+using System.Xml.Serialization;
 
 namespace БАРСШаблон
 {
