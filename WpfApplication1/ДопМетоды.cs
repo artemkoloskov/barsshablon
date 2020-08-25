@@ -6,7 +6,7 @@ using БАРСШаблон.DataTypes;
 
 namespace БАРСШаблон
 {
-	public class ДопМетоды
+	public static class ДопМетоды
 	{
 		/// <summary>
 		/// Сокращает строку то приемлемого полю тег вида
@@ -19,8 +19,8 @@ namespace БАРСШаблон
 
 			string[] словаНаименования = наименование.Split(' ');
 
-			int количествоСловВТеге = int.Parse(ConfigurationManager.AppSettings["КоличествоСловВТеге"]);
-			int количествоСимволовВТеге = int.Parse(ConfigurationManager.AppSettings["КоличествоСимволовВТеге"]);
+			int количествоСловВТеге = ConfigManager.КоличествоСловВТеге;
+			int количествоСимволовВТеге = ConfigManager.КоличествоСимволовВТеге;
 
 			int i = 1;
 
@@ -36,7 +36,7 @@ namespace БАРСШаблон
 				i++;
 			}
 
-			if(тег.Length > количествоСимволовВТеге)
+			if (тег.Length > количествоСимволовВТеге)
 			{
 				тег = тег.Substring(0, количествоСимволовВТеге);
 			}
@@ -106,9 +106,7 @@ namespace БАРСШаблон
 		/// <returns></returns>
 		public static bool СтрокаЯвлетсяЧастоИспользуемой(string строка)
 		{
-			string[] частоИсспользуемыТермины = ConfigurationManager.AppSettings["ЧастоИспользуемыеТермины"].Split(',');
-
-			foreach (string термин in частоИсспользуемыТермины)
+			foreach (string термин in ConfigManager.ЧастоИспользуемыеТермины)
 			{
 				if (СтрокиПриблизительноСовпадают(строка, термин))
 				{
@@ -138,16 +136,16 @@ namespace БАРСШаблон
 		{
 			List<string> теги = new List<string>()
 			{
-				ConfigurationManager.AppSettings["ТаблицаСтрокаТегаТипТаблицыДинамическая"],
-				ConfigurationManager.AppSettings["ТаблицаСтрокаТегаТипТаблицыСтатическая"],
-				ConfigurationManager.AppSettings["ТаблицаСтрокаТегаКодыСтрок"],
-				ConfigurationManager.AppSettings["ТаблицаСтрокаТегаКодыСтрокИСтолбцов"],
-				ConfigurationManager.AppSettings["ТаблицаСтрокаТегаКодыСтолбцов"],
-				ConfigurationManager.AppSettings["ТаблицаСтрокаТегаНаименование"],
-				ConfigurationManager.AppSettings["ТаблицаСтрокаТегаТег"],
-				ConfigurationManager.AppSettings["ТаблицаСтрокаТегаКод"],
-				ConfigurationManager.AppSettings["МетаТегНаименование"],
-				ConfigurationManager.AppSettings["СвободнаяЯчейкаСтрокаТегаКодыЯчеек"],
+				ConfigManager.ТаблицаСтрокаТегаТипТаблицыДинамическая,
+				ConfigManager.ТаблицаСтрокаТегаТипТаблицыСтатическая,
+				ConfigManager.ТаблицаСтрокаТегаКодыСтрок,
+				ConfigManager.ТаблицаСтрокаТегаКодыСтрокИСтолбцов,
+				ConfigManager.ТаблицаСтрокаТегаКодыСтолбцов,
+				ConfigManager.ТаблицаСтрокаТегаНаименование,
+				ConfigManager.ТаблицаСтрокаТегаТег,
+				ConfigManager.ТаблицаСтрокаТегаКод,
+				ConfigManager.МетаТегНаименование,
+				ConfigManager.СвободнаяЯчейкаСтрокаТегаКодыЯчеек,
 		};
 
 			return
@@ -179,7 +177,7 @@ namespace БАРСШаблон
 					наименвание = тег.Offset[0, 1].Value.ToString();
 
 					return true;
-				} 
+				}
 			}
 
 			наименвание = "";

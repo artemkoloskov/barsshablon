@@ -1,5 +1,4 @@
 ﻿using Microsoft.Office.Interop.Excel;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Windows;
 using System.Xml;
@@ -61,7 +60,7 @@ namespace БАРСШаблон
 		private void СеарилизоватьВXMLИСохранить(ОписаниеФормы описаниеФормы)
 		{
 			string путьКПапкеШаблона =
-				ConfigurationManager.AppSettings["ПутьКПапкеСгенерированныхШаблонов"] +
+				ConfigManager.ПутьКПапкеСгенерированныхШаблонов +
 				описаниеФормы.Мета.Идентификатор + "\\" +
 				описаниеФормы.Мета.ДатаНачалаДействия.Substring(0, 10) + "-" +
 				описаниеФормы.Мета.ДатаОкончанияДействия.Substring(0, 10);

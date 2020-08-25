@@ -143,14 +143,14 @@ namespace БАРСШаблон
 		/// <param name="ЛистКниги"></param>
 		private void НайтиТэгиНаЛисте()
 		{
-			string строкаТегаТипТаблицыДинамическая = ConfigurationManager.AppSettings["ТаблицаСтрокаТегаТипТаблицыДинамическая"];
-			string строкаТегаТипТаблицыСтатическая = ConfigurationManager.AppSettings["ТаблицаСтрокаТегаТипТаблицыСтатическая"];
-			string строкаТегаКодыСтрок = ConfigurationManager.AppSettings["ТаблицаСтрокаТегаКодыСтрок"];
-			string строкаТегаКодыСтрокИСтолбцов = ConfigurationManager.AppSettings["ТаблицаСтрокаТегаКодыСтрокИСтолбцов"];
-			string строкаТегаКодыСтолбцов = ConfigurationManager.AppSettings["ТаблицаСтрокаТегаКодыСтолбцов"];
-			string строкаТегаНаименование = ConfigurationManager.AppSettings["ТаблицаСтрокаТегаНаименование"];
-			string строкаТегаТег = ConfigurationManager.AppSettings["ТаблицаСтрокаТегаТег"];
-			string строкаТегаКод = ConfigurationManager.AppSettings["ТаблицаСтрокаТегаКод"];
+			string строкаТегаТипТаблицыДинамическая = ConfigManager.ТаблицаСтрокаТегаТипТаблицыДинамическая;
+			string строкаТегаТипТаблицыСтатическая = ConfigManager.ТаблицаСтрокаТегаТипТаблицыСтатическая;
+			string строкаТегаКодыСтрок = ConfigManager.ТаблицаСтрокаТегаКодыСтрок;
+			string строкаТегаКодыСтрокИСтолбцов = ConfigManager.ТаблицаСтрокаТегаКодыСтрокИСтолбцов;
+			string строкаТегаКодыСтолбцов = ConfigManager.ТаблицаСтрокаТегаКодыСтолбцов;
+			string строкаТегаНаименование = ConfigManager.ТаблицаСтрокаТегаНаименование;
+			string строкаТегаТег = ConfigManager.ТаблицаСтрокаТегаТег;
+			string строкаТегаКод = ConfigManager.ТаблицаСтрокаТегаКод;
 
 			foreach (Range клеткаТаблицы in ЛистКниги.UsedRange.Cells)
 			{

@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Windows.Documents;
 using System.Xml.Serialization;
 
 namespace БАРСШаблон
@@ -20,7 +19,7 @@ namespace БАРСШаблон
 			идентификатор = кодЯчейки;
 			код = кодЯчейки;
 			тип = типЯчейки;
-			тег = ConfigurationManager.AppSettings["СвободнаяЯчейкаТегПрефикс"] + ДопМетоды.ПолучитьТег(идентификатор);
+			тег = ConfigManager.СвободнаяЯчейкаТегПрефикс + ДопМетоды.ПолучитьТег(идентификатор);
 			описание = ДопМетоды.ПолучитьСриализованныйТип(тип);
 		}
 
@@ -51,7 +50,7 @@ namespace БАРСШаблон
 							}
 						}
 					}
-				} 
+				}
 			}
 
 			return свободныеЯчейки;
@@ -68,7 +67,7 @@ namespace БАРСШаблон
 		/// <param name="ЛистКниги"></param>
 		private static Range ПолучитьТегИзЛиста(Worksheet лист)
 		{
-			string строкаТегаКодыЯчеек = ConfigurationManager.AppSettings["СвободнаяЯчейкаСтрокаТегаКодыЯчеек"];
+			string строкаТегаКодыЯчеек = ConfigManager.СвободнаяЯчейкаСтрокаТегаКодыЯчеек;
 
 			foreach (Range клеткаТаблицы in лист.UsedRange.Cells)
 			{

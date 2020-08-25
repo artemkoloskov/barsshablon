@@ -17,7 +17,7 @@ namespace БАРСШаблон.DataTypes
 		{
 			using (var stringwriter = new System.IO.StringWriter())
 			{
-				var serializer = new XmlSerializer(this.GetType());
+				var serializer = new XmlSerializer(GetType());
 				serializer.Serialize(stringwriter, this);
 				return stringwriter.ToString();
 			}

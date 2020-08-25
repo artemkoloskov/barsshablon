@@ -32,7 +32,7 @@ namespace БАРСШаблон
 
 		private void НаитиТегиВКниге()
 		{
-			string строкаТегаНаименование = ConfigurationManager.AppSettings["МетаТегНаименование"];
+			string строкаТегаНаименование = ConfigManager.МетаТегНаименование;
 
 			foreach (Range клеткаТаблицы in КнигаExcel.Worksheets[1].UsedRange.Cells)
 			{
@@ -102,35 +102,65 @@ namespace БАРСШаблон
 		{
 			double вероятность = 0;
 
-			double весДлины = double.Parse(ConfigurationManager.AppSettings["МетаВесДлиныПотенциальногоНаименования"]);
-			double весНомераСтроки = double.Parse(ConfigurationManager.AppSettings["МетаВесНомераСтрокиПотенциальногоНаименования"]);
-			double весНомераСтолбца = double.Parse(ConfigurationManager.AppSettings["МетаВесНомераСтолбцаПотенциальногоНаименования"]);
-			double весКолЯчеекВОбъедЯчейке = double.Parse(ConfigurationManager.AppSettings["МетаВесКоличестваЯчеекВОбъединеннойЯчейкеПотенциальногоНаименования"]);
-			double весГраницыВнизу = double.Parse(ConfigurationManager.AppSettings["МетаВесГраницыВнизуПотенциальногоНаименования"]);
-			double весГраницыВверху = double.Parse(ConfigurationManager.AppSettings["МетаВесГраницыВверхуПотенциальногоНаименования"]);
-			double весГраницыСлева = double.Parse(ConfigurationManager.AppSettings["МетаВесГраницыСлеваПотенциальногоНаименования"]);
-			double весГраницыСправа = double.Parse(ConfigurationManager.AppSettings["МетаВесГраницыСправаПотенциальногоНаименования"]);
-			double весВыравнПоСередине = double.Parse(ConfigurationManager.AppSettings["МетаВесВыравниванияПоСерединеПотенциальногоНаименования"]);
-			double весВыравнСлева = double.Parse(ConfigurationManager.AppSettings["МетаВесВыравниванияСлеваПотенциальногоНаименования"]);
-			double весВыравнСправа = double.Parse(ConfigurationManager.AppSettings["МетаВесВыравниванияСправаПотенциальногоНаименования"]);
-			double весЖирностиТекста = double.Parse(ConfigurationManager.AppSettings["МетаВесЖирностиТекстаПотенциальногоНаименования"]);
-			double весПустойСтроки = double.Parse(ConfigurationManager.AppSettings["МетаВесПустойСтрокиПодЯчейкойПотенциальногоНаименования"]);
-			double весЧастоИспользуемогоТермина = double.Parse(ConfigurationManager.AppSettings["МетаВесЧастоИспользуемогоТермина"]);
+			вероятность += 
+				cell.Value.ToString().Length * ConfigManager.МетаВесДлиныПотенциальногоНаименования;
 
-			вероятность += cell.Value.ToString().Length * весДлины;
-			вероятность += cell.Row * весНомераСтроки;
-			вероятность += cell.Column * весНомераСтолбца;
-			вероятность += ПолучитьКоличествоЯчеекВОбъединении(cell) * весКолЯчеекВОбъедЯчейке;
-			вероятность += cell.Borders[XlBordersIndex.xlEdgeBottom].LineStyle == (int)XlLineStyle.xlLineStyleNone ? 0 : 1 * весГраницыВнизу;
-			вероятность += cell.Borders[XlBordersIndex.xlEdgeTop].LineStyle == (int)XlLineStyle.xlLineStyleNone ? 0 : 1 * весГраницыВверху;
-			вероятность += cell.Borders[XlBordersIndex.xlEdgeLeft].LineStyle == (int)XlLineStyle.xlLineStyleNone ? 0 : 1 * весГраницыСлева;
-			вероятность += cell.Borders[XlBordersIndex.xlEdgeRight].LineStyle == (int)XlLineStyle.xlLineStyleNone ? 0 : 1 * весГраницыСправа;
-			вероятность += cell.HorizontalAlignment == (int)XlHAlign.xlHAlignCenter ? 1 : 0 * весВыравнПоСередине;
-			вероятность += cell.HorizontalAlignment == (int)XlHAlign.xlHAlignLeft ? 1 : 0 * весВыравнСлева;
-			вероятность += cell.HorizontalAlignment == (int)XlHAlign.xlHAlignRight ? 1 : 0 * весВыравнСправа;
-			вероятность += (cell.Font.Bold ? 1 : 0) * весЖирностиТекста;
-			вероятность += ПолучитьКоличествоПустыхСтрокПодЯчейкой(cell) * весПустойСтроки;
-			вероятность += (ДопМетоды.СтрокаЯвлетсяЧастоИспользуемой(cell.Value.ToString()) ? 1 : 0) * весЧастоИспользуемогоТермина;
+			вероятность += 
+				cell.Row * ConfigManager.МетаВесНомераСтрокиПотенциальногоНаименования;
+
+			вероятность += 
+				cell.Column * ConfigManager.МетаВесНомераСтолбцаПотенциальногоНаименования;
+
+			вероятность += 
+				ПолучитьКоличествоЯчеекВОбъединении(cell) * ConfigManager.МетаВесКоличестваЯчеекВОбъединеннойЯчейкеПотенциальногоНаименования;
+
+			вероятность += 
+				cell.Borders[XlBordersIndex.xlEdgeBottom].LineStyle == (int)XlLineStyle.xlLineStyleNone ? 
+				0 : 
+				ConfigManager.МетаВесГраницыВнизуПотенциальногоНаименования;
+
+			вероятность += 
+				cell.Borders[XlBordersIndex.xlEdgeTop].LineStyle == (int)XlLineStyle.xlLineStyleNone ? 
+				0 : 
+				ConfigManager.МетаВесГраницыВверхуПотенциальногоНаименования;
+
+			вероятность += 
+				cell.Borders[XlBordersIndex.xlEdgeLeft].LineStyle == (int)XlLineStyle.xlLineStyleNone ? 
+				0 : 
+				ConfigManager.МетаВесГраницыСлеваПотенциальногоНаименования;
+
+			вероятность += 
+				cell.Borders[XlBordersIndex.xlEdgeRight].LineStyle == (int)XlLineStyle.xlLineStyleNone ? 
+				0 : 
+				ConfigManager.МетаВесГраницыСправаПотенциальногоНаименования;
+
+			вероятность += 
+				cell.HorizontalAlignment == (int)XlHAlign.xlHAlignCenter ? 
+				0 : 
+				ConfigManager.МетаВесВыравниванияПоСерединеПотенциальногоНаименования;
+			
+			вероятность += 
+				cell.HorizontalAlignment == (int)XlHAlign.xlHAlignLeft ? 
+				0 : 
+				ConfigManager.МетаВесВыравниванияСлеваПотенциальногоНаименования;
+
+			вероятность += 
+				cell.HorizontalAlignment == (int)XlHAlign.xlHAlignRight ? 
+				0 : 
+				ConfigManager.МетаВесВыравниванияСправаПотенциальногоНаименования;
+
+			вероятность += 
+				cell.Font.Bold ?
+				ConfigManager.МетаВесЖирностиТекстаПотенциальногоНаименования:
+				0;
+
+			вероятность += 
+				ПолучитьКоличествоПустыхСтрокПодЯчейкой(cell) * ConfigManager.МетаВесПустойСтрокиПодЯчейкойПотенциальногоНаименования;
+
+			вероятность += 
+				ДопМетоды.СтрокаЯвлетсяЧастоИспользуемой(cell.Value.ToString()) ? 
+				ConfigManager.МетаВесЧастоИспользуемогоТермина :
+				0;
 
 			return вероятность;
 		}
@@ -159,20 +189,20 @@ namespace БАРСШаблон
 			return количество;
 		}
 
-		private string версияМетаописания = ConfigurationManager.AppSettings["МетаВерсияМетаописания"];
-		private string идентификатор = ConfigurationManager.AppSettings["МетаИдентификатор"];
+		private string версияМетаописания = ConfigManager.МетаВерсияМетаописания;
+		private string идентификатор = ConfigManager.МетаИдентификатор;
 		private string наименование = "";
-		private string группа = ConfigurationManager.AppSettings["МетаГруппа"];
-		private string датаНачалаДействия = ConfigurationManager.AppSettings["МетаДатаНачалаДействия"];
-		private string датаОкончанияДействия = ConfigurationManager.AppSettings["МетаДатаОкончанияДействия"];
-		private string авторство = ConfigurationManager.AppSettings["МетаАвторство"];
+		private string группа = ConfigManager.МетаГруппа;
+		private string датаНачалаДействия = ConfigManager.МетаДатаНачалаДействия;
+		private string датаОкончанияДействия = ConfigManager.МетаДатаОкончанияДействия;
+		private string авторство = ConfigManager.МетаАвторство;
 		private string датаПоследнегоИзменения = "";
-		private string номерВерсии = ConfigurationManager.AppSettings["МетаНомерВерсии"];
-		private string расположениеШапки = ConfigurationManager.AppSettings["МетаРасположениеШапки"];
+		private string номерВерсии = ConfigManager.МетаНомерВерсии;
+		private string расположениеШапки = ConfigManager.МетаРасположениеШапки;
 		private string хост = Environment.MachineName;
 		private string ссылкаНаМетодическийСправочник = "";
 		private string ссылкаНаВнешнююСправку = "";
-		private string версияФорматаМетаструктуры = ConfigurationManager.AppSettings["МетаВерсияФорматаМетаструктуры"];
+		private string версияФорматаМетаструктуры = ConfigManager.МетаВерсияФорматаМетаструктуры;
 		private string тег = "";
 
 		private Workbook книгаExcel;

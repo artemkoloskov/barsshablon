@@ -14,17 +14,9 @@ namespace БАРСШаблон
 		private string наименование;
 
 		[XmlAttribute()]
-		public string Код
-		{
-			get => код;
-			set => код = value;
-		}
+		public string Код { get => код; set => код = value; }
 
 		[XmlAttribute()]
-		public string Наименование
-		{
-			get => наименование;
-			set => наименование = value;
-		}
+		public string Наименование { get => наименование; set => наименование = value; }
 	}
 }
