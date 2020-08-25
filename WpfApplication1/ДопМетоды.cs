@@ -1,7 +1,7 @@
 ﻿using Microsoft.Office.Interop.Excel;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
+using System.Linq;
 using БАРСШаблон.DataTypes;
 
 namespace БАРСШаблон
@@ -44,28 +44,55 @@ namespace БАРСШаблон
 			return тег; //TODO
 		}
 
+		public static dynamic ПолучитьТип(string форматКлетки, bool являетсяКлючевым)
+		{
+			foreach (var типДанных in ConfigManager.ТипыДанных)
+			{
+				if (типДанных.Key.Contains(форматКлетки))
+				{
+					dynamic ass = Activator.CreateInstance(типДанных.Value);
+
+					ass.ЯвляетсяКлючевым = являетсяКлючевым;
+
+					if (типДанных.Value == typeof(Числовой))
+					{
+						ass.Точность = форматКлетки.Split('.').Length;
+					}
+
+					return ass;
+				}
+			}
+
+			Финансовый финансовыйТип = new Финансовый
+			{
+				ЯвляетсяКлючевым = являетсяКлючевым
+			};
+
+			return финансовыйТип;
+		}
+
 		/// <summary>
 		/// Возвращает сериализованный в XML тип ячейки или столбца, соответствующий
 		/// строке переданной методу аргументом
 		/// </summary>
 		/// <param name="тип"></param>
 		/// <returns></returns>
-		public static string ПолучитьСриализованныйТип(string тип)
+		public static string ПолучитьСриализованныйТип(object тип)
 		{
 			switch (тип)
 			{
-				case "ДатаВремя":
-					return new ДатаВремя().ToXML();
-				case "Логический":
-					return new Логический().ToXML();
-				case "Строковый":
-					return new Строковый().ToXML();
-				case "Учреждение":
-					return new Учреждение().ToXML();
-				case "Финансовый":
-					return new Финансовый().ToXML();
-				case "Целочисленный":
-					return new Целочисленный().ToXML();
+				case ДатаВремя датаВремя:
+					return датаВремя.ToXML();
+				case Логический логический:
+					return логический.ToXML();
+				case Строковый строковый:
+					return строковый.ToXML();
+				case Учреждение учреждение:
+					return учреждение.ToXML();
+				case Финансовый финансовый:
+					return финансовый.ToXML();
+				case Целочисленный целочисленный:
+					return целочисленный.ToXML();
 				default:
 					return "";
 			}

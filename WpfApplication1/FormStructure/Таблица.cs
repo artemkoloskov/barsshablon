@@ -1,7 +1,6 @@
 ﻿using Microsoft.Office.Interop.Excel;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
@@ -116,7 +115,7 @@ namespace БАРСШаблон
 					if (!ДопМетоды.КлеткаПустаИлиСодержитТег(клеткаСтрокиСКодамиСтолбцов) &&
 						клеткаСтрокиСКодамиСтолбцов.Column > тегКодыСтолбцов.Column)
 					{
-						списокСтолбцов.Add(new Столбец(клеткаСтрокиСКодамиСтолбцов));
+						списокСтолбцов.Add(new Столбец(клеткаСтрокиСКодамиСтолбцов, Динамическая));
 					}
 				}
 
@@ -247,5 +246,11 @@ namespace БАРСШаблон
 
 		[XmlIgnore]
 		public Worksheet ЛистКниги { get => листКниги; set => листКниги = value; }
+
+		[XmlIgnore]
+		public bool Динамическая =>
+			!((Строки != null && Строки.Length > 0) ||
+			(тегТипТаблицы != null && тегТипТаблицы.Value.toString() == ConfigManager.ТаблицаСтрокаТегаТипТаблицыСтатическая)) ||
+			(тегТипТаблицы != null && тегТипТаблицы.Value.toString() == ConfigManager.ТаблицаСтрокаТегаТипТаблицыДинамическая);
 	}
 }

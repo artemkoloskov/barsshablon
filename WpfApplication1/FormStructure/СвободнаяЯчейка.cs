@@ -1,8 +1,8 @@
 ﻿using Microsoft.Office.Interop.Excel;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Xml.Serialization;
+using БАРСШаблон.DataTypes;
 
 namespace БАРСШаблон
 {
@@ -14,13 +14,14 @@ namespace БАРСШаблон
 		{
 		}
 
-		public СвободнаяЯчейка(string кодЯчейки, string типЯчейки)
+		public СвободнаяЯчейка(string кодЯчейки, object типЯчейки)
 		{
 			идентификатор = кодЯчейки;
 			код = кодЯчейки;
-			тип = типЯчейки;
+			объектТипаЯчейки = типЯчейки;
+			тип = объектТипаЯчейки.GetType().Name;
 			тег = ConfigManager.СвободнаяЯчейкаТегПрефикс + ДопМетоды.ПолучитьТег(идентификатор);
-			описание = ДопМетоды.ПолучитьСриализованныйТип(тип);
+			описание = ДопМетоды.ПолучитьСриализованныйТип(объектТипаЯчейки);
 		}
 
 		public static List<СвободнаяЯчейка> ПолучитьСвободныеЯчейки(Worksheet лист)
@@ -56,9 +57,9 @@ namespace БАРСШаблон
 			return свободныеЯчейки;
 		}
 
-		private static string ПолучитьТипЯчейки(Range клеткаСтолбцаСКодамиЯчеек)
+		private static object ПолучитьТипЯчейки(Range клеткаСтолбцаСКодамиЯчеек)
 		{
-			return "Строковый"; //TODO
+			return ДопМетоды.ПолучитьТип(клеткаСтолбцаСКодамиЯчеек.Offset[0, 1].NumberFormat, false);
 		}
 
 		/// <summary>
@@ -89,6 +90,8 @@ namespace БАРСШаблон
 		private string тип;
 		private string описание;
 		private string тег;
+
+		private object объектТипаЯчейки;
 
 		[XmlAttribute()]
 		public string Идентификатор { get => идентификатор; set => идентификатор = value; }

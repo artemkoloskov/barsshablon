@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Configuration;
+using БАРСШаблон.DataTypes;
 
 namespace БАРСШаблон
 {
@@ -59,5 +57,22 @@ namespace БАРСШаблон
 		public static int КоличествоСимволовВТеге => int.Parse(ConfigurationManager.AppSettings["КоличествоСимволовВТеге"]);
 
 		public static string[] ЧастоИспользуемыеТермины => ConfigurationManager.AppSettings["ЧастоИспользуемыеТермины"].Split(',');
+
+		public static Dictionary<string[], Type> ТипыДанных => new Dictionary<string[], Type>()
+		{
+			{ МаскаТипаДанныхОбщий, typeof(Финансовый) },
+			{ МаскаТипаДанныхЧисловой, typeof(Числовой) },
+			{ МаскаТипаДанныхЦелочисленный, typeof(Целочисленный) },
+			{ МаскаТипаДанныхФинансовый, typeof(Финансовый) },
+			{ МаскаТипаДанныхДатаВремя, typeof(ДатаВремя) },
+			{ МаскаТипаДанныхСтроковый, typeof(Строковый) },
+		};
+
+		public static string[] МаскаТипаДанныхОбщий => ConfigurationManager.AppSettings["МаскаТипаДанныхОбщий"].Split('|');
+		public static string[] МаскаТипаДанныхЧисловой => ConfigurationManager.AppSettings["МаскаТипаДанныхЧисловой"].Split('|');
+		public static string[] МаскаТипаДанныхЦелочисленный => ConfigurationManager.AppSettings["МаскаТипаДанныхЦелочисленный"].Split('|');
+		public static string[] МаскаТипаДанныхФинансовый => ConfigurationManager.AppSettings["МаскаТипаДанныхФинансовый"].Split('|');
+		public static string[] МаскаТипаДанныхДатаВремя => ConfigurationManager.AppSettings["МаскаТипаДанныхДатаВремя"].Split('|');
+		public static string[] МаскаТипаДанныхСтроковый => ConfigurationManager.AppSettings["МаскаТипаДанныхСтроковый"].Split('|');
 	}
 }
