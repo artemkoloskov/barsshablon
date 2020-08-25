@@ -47,17 +47,9 @@ namespace БАРСШаблон
 		private Таблица[] таблицы;
 
 		[XmlElement("СвободнаяЯчейка", Form = XmlSchemaForm.Unqualified)]
-		public СвободнаяЯчейка[] СвободныеЯчейки
-		{
-			get => свободныеЯчейки;
-			set => свободныеЯчейки = value;
-		}
+		public СвободнаяЯчейка[] СвободныеЯчейки { get => свободныеЯчейки; set => свободныеЯчейки = value; }
 
 		[XmlElement("Таблица", Form = XmlSchemaForm.Unqualified)]
-		public Таблица[] Таблицы
-		{
-			get => таблицы;
-			set => таблицы = value;
-		}
+		public Таблица[] Таблицы { get => таблицы; set => таблицы = value; }
 	}
 }

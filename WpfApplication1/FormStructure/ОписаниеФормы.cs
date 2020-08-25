@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Office.Interop.Excel;
+using System.Collections.Generic;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
@@ -20,38 +21,35 @@ namespace БАРСШаблон
 			структура = new Структура(списокТаблиц, списокСвободныхЯчеек);
 		}
 
+		public static ОписаниеФормы ПолучитьОписаниеФормыИзКнигиExcel(Workbook книгаExcel)
+		{
+			Мета мета = new Мета(книгаExcel);
+
+			List<Таблица> таблицы = Таблица.ПолучитьТаблицыФормы(книгаExcel.Sheets);
+
+			List<СвободнаяЯчейка> свободныеЯчейки = СвободнаяЯчейка.ПолучитьСвободныеЯчейки(книгаExcel.Worksheets[1]);
+
+			ОписаниеФормы описаниеФормы = new ОписаниеФормы(мета, таблицы, свободныеЯчейки);
+
+			return описаниеФормы;
+		}
+
 		private Мета мета;
 		private Структура структура;
 		private string меню = "";
 		private Справочник[] справочники;
 
 		[XmlElement("Мета", Form = XmlSchemaForm.Unqualified)]
-		public Мета Мета
-		{
-			get => мета;
-			set => мета = value;
-		}
+		public Мета Мета { get => мета; set => мета = value; }
 
 		[XmlElement("Структура", Form = XmlSchemaForm.Unqualified)]
-		public Структура Структура
-		{
-			get => структура;
-			set => структура = value;
-		}
+		public Структура Структура { get => структура; set => структура = value; }
 
 		[XmlElement(Form = XmlSchemaForm.Unqualified)]
-		public string Меню
-		{
-			get => меню;
-			set => меню = value;
-		}
+		public string Меню { get => меню; set => меню = value; }
 
 		[XmlArray(Form = XmlSchemaForm.Unqualified)]
 		[XmlArrayItem("Справочник", typeof(Справочник), Form = XmlSchemaForm.Unqualified, IsNullable = false)]
-		public Справочник[] Справочники
-		{
-			get => справочники;
-			set => справочники = value;
-		}
+		public Справочник[] Справочники { get => справочники; set => справочники = value; }
 	}
 }

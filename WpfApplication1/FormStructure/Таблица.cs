@@ -22,6 +22,27 @@ namespace БАРСШаблон
 			тег = ДопМетоды.ПолучитьТег(идентификатор);
 		}
 
+		public static List<Таблица> ПолучитьТаблицыФормы(Sheets листыКниги)
+		{
+			List<Таблица> таблицы = new List<Таблица>();
+
+			int n = 1;
+
+			foreach (Worksheet листКниги in листыКниги)
+			{
+				Таблица таблица = new Таблица(листКниги, n);
+
+				n++;
+
+				if (таблица != null)
+				{
+					таблицы.Add(таблица);
+				}
+			}
+
+			return таблицы;
+		}
+
 		public Таблица(Worksheet листКниги, int n)
 		{
 			ЛистКниги = листКниги;
@@ -122,14 +143,14 @@ namespace БАРСШаблон
 		/// <param name="ЛистКниги"></param>
 		private void НайтиТэгиНаЛисте()
 		{
-			string строкаТегаТипТаблицыДинамическая = ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаТипТаблицыДинамическая");
-			string строкаТегаТипТаблицыСтатическая = ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаТипТаблицыСтатическая");
-			string строкаТегаКодыСтрок = ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаКодыСтрок");
-			string строкаТегаКодыСтрокИСтолбцов = ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаКодыСтрокИСтолбцов");
-			string строкаТегаКодыСтолбцов = ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаКодыСтолбцов");
-			string строкаТегаНаименование = ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаНаименование");
-			string строкаТегаТег = ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаТег");
-			string строкаТегаКод = ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаКод");
+			string строкаТегаТипТаблицыДинамическая = ConfigurationManager.AppSettings["ТаблицаСтрокаТегаТипТаблицыДинамическая"];
+			string строкаТегаТипТаблицыСтатическая = ConfigurationManager.AppSettings["ТаблицаСтрокаТегаТипТаблицыСтатическая"];
+			string строкаТегаКодыСтрок = ConfigurationManager.AppSettings["ТаблицаСтрокаТегаКодыСтрок"];
+			string строкаТегаКодыСтрокИСтолбцов = ConfigurationManager.AppSettings["ТаблицаСтрокаТегаКодыСтрокИСтолбцов"];
+			string строкаТегаКодыСтолбцов = ConfigurationManager.AppSettings["ТаблицаСтрокаТегаКодыСтолбцов"];
+			string строкаТегаНаименование = ConfigurationManager.AppSettings["ТаблицаСтрокаТегаНаименование"];
+			string строкаТегаТег = ConfigurationManager.AppSettings["ТаблицаСтрокаТегаТег"];
+			string строкаТегаКод = ConfigurationManager.AppSettings["ТаблицаСтрокаТегаКод"];
 
 			foreach (Range клеткаТаблицы in ЛистКниги.UsedRange.Cells)
 			{
@@ -192,6 +213,7 @@ namespace БАРСШаблон
 		private Range тегНаименование;
 		private Range тегКод;
 		private Range тегТег;
+		private Worksheet листКниги;
 
 		[XmlArray(Form = XmlSchemaForm.Unqualified)]
 		[XmlArrayItem("СвободнаяЯчейка", typeof(СвободнаяЯчейка), Form = XmlSchemaForm.Unqualified, IsNullable = false)]
@@ -224,6 +246,6 @@ namespace БАРСШаблон
 		public bool РучноеДобавлениеСтрок { get => ручноеДобавлениеСтрок; set => ручноеДобавлениеСтрок = value; }
 
 		[XmlIgnore]
-		public Worksheet ЛистКниги { get; set; }
+		public Worksheet ЛистКниги { get => листКниги; set => листКниги = value; }
 	}
 }

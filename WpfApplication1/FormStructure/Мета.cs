@@ -32,7 +32,7 @@ namespace БАРСШаблон
 
 		private void НаитиТегиВКниге()
 		{
-			string строкаТегаНаименование = ConfigurationManager.AppSettings.Get("МетаТегНаименование");
+			string строкаТегаНаименование = ConfigurationManager.AppSettings["МетаТегНаименование"];
 
 			foreach (Range клеткаТаблицы in КнигаExcel.Worksheets[1].UsedRange.Cells)
 			{
@@ -60,7 +60,7 @@ namespace БАРСШаблон
 
 					if (topCellInColumn != null && !возможныеНаименования.ContainsKey(topCellInColumn.Value.ToString()))
 					{
-						возможныеНаименования.Add(topCellInColumn.Value.ToString(), ПолучитьВероятностьТогоЧтоВЯчейкеНаименование(topCellInColumn));
+						возможныеНаименования.Add(topCellInColumn.Value.ToString(), ПолучитьВероятностьНаименованиеВЯчейке(topCellInColumn));
 					}
 				}
 
@@ -98,24 +98,24 @@ namespace БАРСШаблон
 			return null;
 		}
 
-		private double ПолучитьВероятностьТогоЧтоВЯчейкеНаименование(Range cell)
+		private double ПолучитьВероятностьНаименованиеВЯчейке(Range cell)
 		{
 			double вероятность = 0;
 
-			double весДлины = double.Parse(ConfigurationManager.AppSettings.Get("МетаВесДлиныПотенциальногоНаименования"));
-			double весНомераСтроки = double.Parse(ConfigurationManager.AppSettings.Get("МетаВесНомераСтрокиПотенциальногоНаименования"));
-			double весНомераСтолбца = double.Parse(ConfigurationManager.AppSettings.Get("МетаВесНомераСтолбцаПотенциальногоНаименования"));
-			double весКолЯчеекВОбъедЯчейке = double.Parse(ConfigurationManager.AppSettings.Get("МетаВесКоличестваЯчеекВОбъединеннойЯчейкеПотенциальногоНаименования"));
-			double весГраницыВнизу = double.Parse(ConfigurationManager.AppSettings.Get("МетаВесГраницыВнизуПотенциальногоНаименования"));
-			double весГраницыВверху = double.Parse(ConfigurationManager.AppSettings.Get("МетаВесГраницыВверхуПотенциальногоНаименования"));
-			double весГраницыСлева = double.Parse(ConfigurationManager.AppSettings.Get("МетаВесГраницыСлеваПотенциальногоНаименования"));
-			double весГраницыСправа = double.Parse(ConfigurationManager.AppSettings.Get("МетаВесГраницыСправаПотенциальногоНаименования"));
-			double весВыравнПоСередине = double.Parse(ConfigurationManager.AppSettings.Get("МетаВесВыравниванияПоСерединеПотенциальногоНаименования"));
-			double весВыравнСлева = double.Parse(ConfigurationManager.AppSettings.Get("МетаВесВыравниванияСлеваПотенциальногоНаименования"));
-			double весВыравнСправа = double.Parse(ConfigurationManager.AppSettings.Get("МетаВесВыравниванияСправаПотенциальногоНаименования"));
-			double весЖирностиТекста = double.Parse(ConfigurationManager.AppSettings.Get("МетаВесЖирностиТекстаПотенциальногоНаименования"));
-			double весПустойСтроки = double.Parse(ConfigurationManager.AppSettings.Get("МетаВесПустойСтрокиПодЯчейкойПотенциальногоНаименования"));
-			double весЧастоИспользуемогоТермина = double.Parse(ConfigurationManager.AppSettings.Get("МетаВесЧастоИспользуемогоТермина"));
+			double весДлины = double.Parse(ConfigurationManager.AppSettings["МетаВесДлиныПотенциальногоНаименования"]);
+			double весНомераСтроки = double.Parse(ConfigurationManager.AppSettings["МетаВесНомераСтрокиПотенциальногоНаименования"]);
+			double весНомераСтолбца = double.Parse(ConfigurationManager.AppSettings["МетаВесНомераСтолбцаПотенциальногоНаименования"]);
+			double весКолЯчеекВОбъедЯчейке = double.Parse(ConfigurationManager.AppSettings["МетаВесКоличестваЯчеекВОбъединеннойЯчейкеПотенциальногоНаименования"]);
+			double весГраницыВнизу = double.Parse(ConfigurationManager.AppSettings["МетаВесГраницыВнизуПотенциальногоНаименования"]);
+			double весГраницыВверху = double.Parse(ConfigurationManager.AppSettings["МетаВесГраницыВверхуПотенциальногоНаименования"]);
+			double весГраницыСлева = double.Parse(ConfigurationManager.AppSettings["МетаВесГраницыСлеваПотенциальногоНаименования"]);
+			double весГраницыСправа = double.Parse(ConfigurationManager.AppSettings["МетаВесГраницыСправаПотенциальногоНаименования"]);
+			double весВыравнПоСередине = double.Parse(ConfigurationManager.AppSettings["МетаВесВыравниванияПоСерединеПотенциальногоНаименования"]);
+			double весВыравнСлева = double.Parse(ConfigurationManager.AppSettings["МетаВесВыравниванияСлеваПотенциальногоНаименования"]);
+			double весВыравнСправа = double.Parse(ConfigurationManager.AppSettings["МетаВесВыравниванияСправаПотенциальногоНаименования"]);
+			double весЖирностиТекста = double.Parse(ConfigurationManager.AppSettings["МетаВесЖирностиТекстаПотенциальногоНаименования"]);
+			double весПустойСтроки = double.Parse(ConfigurationManager.AppSettings["МетаВесПустойСтрокиПодЯчейкойПотенциальногоНаименования"]);
+			double весЧастоИспользуемогоТермина = double.Parse(ConfigurationManager.AppSettings["МетаВесЧастоИспользуемогоТермина"]);
 
 			вероятность += cell.Value.ToString().Length * весДлины;
 			вероятность += cell.Row * весНомераСтроки;
@@ -159,20 +159,20 @@ namespace БАРСШаблон
 			return количество;
 		}
 
-		private string версияМетаописания = ConfigurationManager.AppSettings.Get("МетаВерсияМетаописания");
-		private string идентификатор = ConfigurationManager.AppSettings.Get("МетаИдентификатор");
+		private string версияМетаописания = ConfigurationManager.AppSettings["МетаВерсияМетаописания"];
+		private string идентификатор = ConfigurationManager.AppSettings["МетаИдентификатор"];
 		private string наименование = "";
-		private string группа = ConfigurationManager.AppSettings.Get("МетаГруппа");
-		private string датаНачалаДействия = ConfigurationManager.AppSettings.Get("МетаДатаНачалаДействия");
-		private string датаОкончанияДействия = ConfigurationManager.AppSettings.Get("МетаДатаОкончанияДействия");
-		private string авторство = ConfigurationManager.AppSettings.Get("МетаАвторство");
+		private string группа = ConfigurationManager.AppSettings["МетаГруппа"];
+		private string датаНачалаДействия = ConfigurationManager.AppSettings["МетаДатаНачалаДействия"];
+		private string датаОкончанияДействия = ConfigurationManager.AppSettings["МетаДатаОкончанияДействия"];
+		private string авторство = ConfigurationManager.AppSettings["МетаАвторство"];
 		private string датаПоследнегоИзменения = "";
-		private string номерВерсии = ConfigurationManager.AppSettings.Get("МетаНомерВерсии");
-		private string расположениеШапки = ConfigurationManager.AppSettings.Get("МетаРасположениеШапки");
+		private string номерВерсии = ConfigurationManager.AppSettings["МетаНомерВерсии"];
+		private string расположениеШапки = ConfigurationManager.AppSettings["МетаРасположениеШапки"];
 		private string хост = Environment.MachineName;
 		private string ссылкаНаМетодическийСправочник = "";
 		private string ссылкаНаВнешнююСправку = "";
-		private string версияФорматаМетаструктуры = ConfigurationManager.AppSettings.Get("МетаВерсияФорматаМетаструктуры");
+		private string версияФорматаМетаструктуры = ConfigurationManager.AppSettings["МетаВерсияФорматаМетаструктуры"];
 		private string тег = "";
 
 		private Workbook книгаExcel;

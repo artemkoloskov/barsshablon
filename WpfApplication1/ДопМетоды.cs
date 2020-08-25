@@ -19,8 +19,8 @@ namespace БАРСШаблон
 
 			string[] словаНаименования = наименование.Split(' ');
 
-			int количествоСловВТеге = int.Parse(ConfigurationManager.AppSettings.Get("КоличествоСловВТеге"));
-			int количествоСимволовВТеге = int.Parse(ConfigurationManager.AppSettings.Get("КоличествоСимволовВТеге"));
+			int количествоСловВТеге = int.Parse(ConfigurationManager.AppSettings["КоличествоСловВТеге"]);
+			int количествоСимволовВТеге = int.Parse(ConfigurationManager.AppSettings["КоличествоСимволовВТеге"]);
 
 			int i = 1;
 
@@ -106,7 +106,7 @@ namespace БАРСШаблон
 		/// <returns></returns>
 		public static bool СтрокаЯвлетсяЧастоИспользуемой(string строка)
 		{
-			string[] частоИсспользуемыТермины = ConfigurationManager.AppSettings.Get("ЧастоИспользуемыеТермины").Split(',');
+			string[] частоИсспользуемыТермины = ConfigurationManager.AppSettings["ЧастоИспользуемыеТермины"].Split(',');
 
 			foreach (string термин in частоИсспользуемыТермины)
 			{
@@ -138,16 +138,17 @@ namespace БАРСШаблон
 		{
 			List<string> теги = new List<string>()
 			{
-				ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаТипТаблицыДинамическая"),
-				ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаТипТаблицыСтатическая"),
-				ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаКодыСтрок"),
-				ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаКодыСтрокИСтолбцов"),
-				ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаКодыСтолбцов"),
-				ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаНаименование"),
-				ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаТег"),
-				ConfigurationManager.AppSettings.Get("ТаблицаСтрокаТегаКод"),
-				ConfigurationManager.AppSettings.Get("МетаТегНаименование"),
-			};
+				ConfigurationManager.AppSettings["ТаблицаСтрокаТегаТипТаблицыДинамическая"],
+				ConfigurationManager.AppSettings["ТаблицаСтрокаТегаТипТаблицыСтатическая"],
+				ConfigurationManager.AppSettings["ТаблицаСтрокаТегаКодыСтрок"],
+				ConfigurationManager.AppSettings["ТаблицаСтрокаТегаКодыСтрокИСтолбцов"],
+				ConfigurationManager.AppSettings["ТаблицаСтрокаТегаКодыСтолбцов"],
+				ConfigurationManager.AppSettings["ТаблицаСтрокаТегаНаименование"],
+				ConfigurationManager.AppSettings["ТаблицаСтрокаТегаТег"],
+				ConfigurationManager.AppSettings["ТаблицаСтрокаТегаКод"],
+				ConfigurationManager.AppSettings["МетаТегНаименование"],
+				ConfigurationManager.AppSettings["СвободнаяЯчейкаСтрокаТегаКодыЯчеек"],
+		};
 
 			return
 				КлеткаПуста(клетка) ||
