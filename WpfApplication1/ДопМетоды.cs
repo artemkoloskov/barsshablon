@@ -9,7 +9,7 @@ namespace БАРСШаблон
 	public static class ДопМетоды
 	{
 		/// <summary>
-		/// Сокращает строку то приемлемого полю тег вида
+		/// Сокращает строку до приемлемого полю тег вида
 		/// </summary>
 		/// <param name="наименование"></param>
 		/// <returns></returns>
@@ -50,16 +50,19 @@ namespace БАРСШаблон
 			{
 				if (типДанных.Key.Contains(форматКлетки))
 				{
-					dynamic ass = Activator.CreateInstance(типДанных.Value);
+					dynamic результирующийТип = Activator.CreateInstance(типДанных.Value);
 
-					ass.ЯвляетсяКлючевым = являетсяКлючевым;
+					if (типДанных.Value != typeof(Учреждение) && типДанных.Value != typeof(Логический) && типДанных.Value != typeof(ДатаВремя))
+					{
+						результирующийТип.ЯвляетсяКлючевым = являетсяКлючевым;
+					}
 
 					if (типДанных.Value == typeof(Числовой))
 					{
-						ass.Точность = форматКлетки.Split('.').Length;
+						результирующийТип.Точность = форматКлетки.Split('.')[1].Length;
 					}
 
-					return ass;
+					return результирующийТип;
 				}
 			}
 
@@ -93,6 +96,8 @@ namespace БАРСШаблон
 					return финансовый.ToXML();
 				case Целочисленный целочисленный:
 					return целочисленный.ToXML();
+				case Числовой числовой:
+					return числовой.ToXML();
 				default:
 					return "";
 			}

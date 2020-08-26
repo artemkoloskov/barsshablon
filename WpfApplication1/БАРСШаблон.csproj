@@ -76,6 +76,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ConfigManager.cs" />
+    <Compile Include="DataTypes\ОписаниеТипаЯчейки.cs" />
     <Compile Include="DataTypes\Числовой.cs" />
     <Compile Include="ДопМетоды.cs" />
     <Compile Include="FormStructure\Мета.cs" />

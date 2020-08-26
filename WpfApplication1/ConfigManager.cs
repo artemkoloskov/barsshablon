@@ -33,6 +33,8 @@ namespace БАРСШаблон
 		public static double МетаВесЧастоИспользуемогоТермина => double.Parse(ConfigurationManager.AppSettings["МетаВесЧастоИспользуемогоТермина"]);
 
 		public static string МетаТегНаименование => ConfigurationManager.AppSettings["МетаТегНаименование"];
+		public static bool МетаЯвляетсяЗапросом => bool.Parse(ConfigurationManager.AppSettings["МетаЯвляетсяЗапросом"]);
+
 
 		public static string СвободнаяЯчейкаТегПрефикс => ConfigurationManager.AppSettings["СвободнаяЯчейкаТегПрефикс"];
 		public static string СвободнаяЯчейкаСтрокаТегаКодыЯчеек => ConfigurationManager.AppSettings["СвободнаяЯчейкаСтрокаТегаКодыЯчеек"];

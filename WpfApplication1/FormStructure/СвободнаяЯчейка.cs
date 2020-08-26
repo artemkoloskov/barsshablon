@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
-using БАРСШаблон.DataTypes;
 
 namespace БАРСШаблон
 {
@@ -16,12 +15,17 @@ namespace БАРСШаблон
 
 		public СвободнаяЯчейка(string кодЯчейки, object типЯчейки)
 		{
-			идентификатор = кодЯчейки;
-			код = кодЯчейки;
-			объектТипаЯчейки = типЯчейки;
-			тип = объектТипаЯчейки.GetType().Name;
-			тег = ConfigManager.СвободнаяЯчейкаТегПрефикс + ДопМетоды.ПолучитьТег(идентификатор);
-			описание = ДопМетоды.ПолучитьСриализованныйТип(объектТипаЯчейки);
+			Идентификатор = кодЯчейки;
+
+			Код = кодЯчейки;
+
+			ТипЯчейки = типЯчейки;
+
+			тип = ТипЯчейки.GetType().Name;
+
+			Тег = ConfigManager.СвободнаяЯчейкаТегПрефикс + ДопМетоды.ПолучитьТег(Идентификатор);
+
+			Описание = ДопМетоды.ПолучитьСриализованныйТип(ТипЯчейки);
 		}
 
 		public static List<СвободнаяЯчейка> ПолучитьСвободныеЯчейки(Worksheet лист)
@@ -84,31 +88,27 @@ namespace БАРСШаблон
 			return null;
 		}
 
-		private string идентификатор;
-		private string код;
-		private string наименованиеЭлемента;
 		private string тип;
-		private string описание;
-		private string тег;
-
-		private object объектТипаЯчейки;
 
 		[XmlAttribute()]
-		public string Идентификатор { get => идентификатор; set => идентификатор = value; }
+		public string Идентификатор { get; set; }
 
 		[XmlAttribute()]
-		public string Код { get => код; set => код = value; }
+		public string Код { get; set; }
 
 		[XmlAttribute()]
-		public string НаименованиеЭлемента { get => наименованиеЭлемента; set => наименованиеЭлемента = value; }
+		public string НаименованиеЭлемента { get; set; }
 
 		[XmlAttribute()]
 		public string Тип { get => тип; set => тип = value; }
 
 		[XmlAttribute()]
-		public string Описание { get => описание; set => описание = value; }
+		public string Описание { get; set; }
 
 		[XmlAttribute()]
-		public string Тег { get => тег; set => тег = value; }
+		public string Тег { get; set; }
+
+		[XmlIgnore()]
+		public object ТипЯчейки { get; }
 	}
 }

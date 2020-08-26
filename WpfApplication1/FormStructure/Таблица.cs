@@ -14,13 +14,6 @@ namespace БАРСШаблон
 		{
 		}
 
-		public Таблица(string кодТаблицы)
-		{
-			идентификатор = кодТаблицы;
-			код = кодТаблицы;
-			тег = ДопМетоды.ПолучитьТег(идентификатор);
-		}
-
 		public static List<Таблица> ПолучитьТаблицыФормы(Sheets листыКниги)
 		{
 			List<Таблица> таблицы = new List<Таблица>();
@@ -46,17 +39,19 @@ namespace БАРСШаблон
 		{
 			ЛистКниги = листКниги;
 
-			НайтиТэгиНаЛисте();
+			НайтиТегиНаЛисте();
 
-			строки = ПолучитьСтрокиТаблицы();
+			Строки = ПолучитьСтрокиТаблицы();
 
-			столбцы = ПолучитьСтолбцыТаблицы();
+			Столбцы = ПолучитьСтолбцыТаблицы();
 
-			идентификатор = "Таблица" + n;
-			код = "Таблица" + n;
-			наименование = ПолучитьНаименованиеТаблицы(n);
-			ручноеДобавлениеСтрок = false;
-			тег = "Таблица" + n;
+			Наименование = ПолучитьНаименованиеТаблицы(n);
+
+			Идентификатор = "Таблица" + n;
+
+			Код = "Таблица" + n;
+
+			Тег = ConfigManager.ТаблицаПрефиксТега + ДопМетоды.ПолучитьТег(Наименование);
 		}
 
 		private string ПолучитьНаименованиеТаблицы(int n)
@@ -140,53 +135,44 @@ namespace БАРСШаблон
 		/// Просматривает все используемые клетки листа и запоминает ячейки с тегами
 		/// </summary>
 		/// <param name="ЛистКниги"></param>
-		private void НайтиТэгиНаЛисте()
+		private void НайтиТегиНаЛисте()
 		{
-			string строкаТегаТипТаблицыДинамическая = ConfigManager.ТаблицаСтрокаТегаТипТаблицыДинамическая;
-			string строкаТегаТипТаблицыСтатическая = ConfigManager.ТаблицаСтрокаТегаТипТаблицыСтатическая;
-			string строкаТегаКодыСтрок = ConfigManager.ТаблицаСтрокаТегаКодыСтрок;
-			string строкаТегаКодыСтрокИСтолбцов = ConfigManager.ТаблицаСтрокаТегаКодыСтрокИСтолбцов;
-			string строкаТегаКодыСтолбцов = ConfigManager.ТаблицаСтрокаТегаКодыСтолбцов;
-			string строкаТегаНаименование = ConfigManager.ТаблицаСтрокаТегаНаименование;
-			string строкаТегаТег = ConfigManager.ТаблицаСтрокаТегаТег;
-			string строкаТегаКод = ConfigManager.ТаблицаСтрокаТегаКод;
-
 			foreach (Range клеткаТаблицы in ЛистКниги.UsedRange.Cells)
 			{
 				if (клеткаТаблицы.Value != null)
 				{
-					if (клеткаТаблицы.Value.ToString() == строкаТегаТипТаблицыДинамическая ||
-								клеткаТаблицы.Value.ToString() == строкаТегаТипТаблицыСтатическая)
+					if (клеткаТаблицы.Value.ToString() == ConfigManager.ТаблицаСтрокаТегаТипТаблицыДинамическая ||
+								клеткаТаблицы.Value.ToString() == ConfigManager.ТаблицаСтрокаТегаТипТаблицыСтатическая)
 					{
 						тегТипТаблицы = клеткаТаблицы;
 					}
 
-					if (клеткаТаблицы.Value.ToString() == строкаТегаКодыСтрок)
+					if (клеткаТаблицы.Value.ToString() == ConfigManager.ТаблицаСтрокаТегаКодыСтрок)
 					{
 						тегКодыСтрок = клеткаТаблицы;
 					}
 
-					if (клеткаТаблицы.Value.ToString() == строкаТегаКодыСтолбцов)
+					if (клеткаТаблицы.Value.ToString() == ConfigManager.ТаблицаСтрокаТегаКодыСтолбцов)
 					{
 						тегКодыСтолбцов = клеткаТаблицы;
 					}
 
-					if (клеткаТаблицы.Value.ToString() == строкаТегаНаименование)
+					if (клеткаТаблицы.Value.ToString() == ConfigManager.ТаблицаСтрокаТегаНаименование)
 					{
 						тегНаименование = клеткаТаблицы;
 					}
 
-					if (клеткаТаблицы.Value.ToString() == строкаТегаТег)
+					if (клеткаТаблицы.Value.ToString() == ConfigManager.ТаблицаСтрокаТегаТег)
 					{
 						тегТег = клеткаТаблицы;
 					}
 
-					if (клеткаТаблицы.Value.ToString() == строкаТегаКод)
+					if (клеткаТаблицы.Value.ToString() == ConfigManager.ТаблицаСтрокаТегаКод)
 					{
 						тегКод = клеткаТаблицы;
 					}
 
-					if (клеткаТаблицы.Value.ToString() == строкаТегаКодыСтрокИСтолбцов)
+					if (клеткаТаблицы.Value.ToString() == ConfigManager.ТаблицаСтрокаТегаКодыСтрокИСтолбцов)
 					{
 						тегКодыСтрок = клеткаТаблицы;
 
@@ -196,61 +182,63 @@ namespace БАРСШаблон
 			}
 		}
 
-		private СвободнаяЯчейка[] свободныеЯчейки;
-		private Строка[] строки;
-		private Столбец[] столбцы;
-		private string идентификатор;
-		private string код;
-		private string наименование;
-		private string тег;
-		private string ссылкаНаМетодическийСправочник;
-		private bool ручноеДобавлениеСтрок = false;
-
 		private Range тегТипТаблицы;
 		private Range тегКодыСтолбцов;
 		private Range тегКодыСтрок;
 		private Range тегНаименование;
 		private Range тегКод;
 		private Range тегТег;
-		private Worksheet листКниги;
 
 		[XmlArray(Form = XmlSchemaForm.Unqualified)]
 		[XmlArrayItem("СвободнаяЯчейка", typeof(СвободнаяЯчейка), Form = XmlSchemaForm.Unqualified, IsNullable = false)]
-		public СвободнаяЯчейка[] СвободныеЯчейки { get => свободныеЯчейки; set => свободныеЯчейки = value; }
+		public СвободнаяЯчейка[] СвободныеЯчейки { get; set; }
 
 		[XmlArray(Form = XmlSchemaForm.Unqualified)]
 		[XmlArrayItem("Строка", typeof(Строка), Form = XmlSchemaForm.Unqualified, IsNullable = false)]
-		public Строка[] Строки { get => строки; set => строки = value; }
+		public Строка[] Строки { get; set; }
 
 		[XmlArray(Form = XmlSchemaForm.Unqualified)]
 		[XmlArrayItem("Столбец", typeof(Столбец), Form = XmlSchemaForm.Unqualified, IsNullable = false)]
-		public Столбец[] Столбцы { get => столбцы; set => столбцы = value; }
+		public Столбец[] Столбцы { get; set; }
 
 		[XmlAttribute()]
-		public string Идентификатор { get => идентификатор; set => идентификатор = value; }
+		public string Идентификатор { get; set; }
 
 		[XmlAttribute()]
-		public string Код { get => код; set => код = value; }
+		public string Код { get; set; }
 
 		[XmlAttribute()]
-		public string Наименование { get => наименование; set => наименование = value; }
+		public string Наименование { get; set; }
 
 		[XmlAttribute()]
-		public string Тег { get => тег; set => тег = value; }
+		public string Тег { get; set; }
 
 		[XmlAttribute()]
-		public string СсылкаНаМетодическийСправочник { get => ссылкаНаМетодическийСправочник; set => ссылкаНаМетодическийСправочник = value; }
+		public string СсылкаНаМетодическийСправочник { get; set; }
 
 		[XmlAttribute()]
-		public bool РучноеДобавлениеСтрок { get => ручноеДобавлениеСтрок; set => ручноеДобавлениеСтрок = value; }
+		public bool РучноеДобавлениеСтрок { get; set; } = false;
 
 		[XmlIgnore]
-		public Worksheet ЛистКниги { get => листКниги; set => листКниги = value; }
+		public Worksheet ЛистКниги { get; set; }
 
 		[XmlIgnore]
 		public bool Динамическая =>
 			!((Строки != null && Строки.Length > 0) ||
 			(тегТипТаблицы != null && тегТипТаблицы.Value.toString() == ConfigManager.ТаблицаСтрокаТегаТипТаблицыСтатическая)) ||
 			(тегТипТаблицы != null && тегТипТаблицы.Value.toString() == ConfigManager.ТаблицаСтрокаТегаТипТаблицыДинамическая);
+
+		[XmlIgnore]
+		public Range ТегТипТаблицы { get => тегТипТаблицы; set => тегТипТаблицы = value; }
+		[XmlIgnore]
+		public Range ТегКодыСтолбцов { get => тегКодыСтолбцов; set => тегКодыСтолбцов = value; }
+		[XmlIgnore]
+		public Range ТегКодыСтрок { get => тегКодыСтрок; set => тегКодыСтрок = value; }
+		[XmlIgnore]
+		public Range ТегНаименование { get => тегНаименование; set => тегНаименование = value; }
+		[XmlIgnore]
+		public Range ТегКод { get => тегКод; set => тегКод = value; }
+		[XmlIgnore]
+		public Range ТегТег { get => тегТег; set => тегТег = value; }
 	}
 }

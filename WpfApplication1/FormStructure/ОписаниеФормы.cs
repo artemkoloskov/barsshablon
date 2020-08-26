@@ -16,9 +16,11 @@ namespace БАРСШаблон
 
 		public ОписаниеФормы(Мета мета, List<Таблица> списокТаблиц, List<СвободнаяЯчейка> списокСвободныхЯчеек)
 		{
-			this.мета = мета;
-			справочники = new Справочник[] { };
-			структура = new Структура(списокТаблиц, списокСвободныхЯчеек);
+			Мета = мета;
+
+			Справочники = new Справочник[] { };
+
+			Структура = new Структура(списокТаблиц, списокСвободныхЯчеек);
 		}
 
 		public static ОписаниеФормы ПолучитьОписаниеФормыИзКнигиExcel(Workbook книгаExcel)
@@ -34,22 +36,17 @@ namespace БАРСШаблон
 			return описаниеФормы;
 		}
 
-		private Мета мета;
-		private Структура структура;
-		private string меню = "";
-		private Справочник[] справочники;
-
 		[XmlElement("Мета", Form = XmlSchemaForm.Unqualified)]
-		public Мета Мета { get => мета; set => мета = value; }
+		public Мета Мета { get; set; }
 
 		[XmlElement("Структура", Form = XmlSchemaForm.Unqualified)]
-		public Структура Структура { get => структура; set => структура = value; }
+		public Структура Структура { get; set; }
 
 		[XmlElement(Form = XmlSchemaForm.Unqualified)]
-		public string Меню { get => меню; set => меню = value; }
+		public string Меню { get; set; } = "";
 
 		[XmlArray(Form = XmlSchemaForm.Unqualified)]
 		[XmlArrayItem("Справочник", typeof(Справочник), Form = XmlSchemaForm.Unqualified, IsNullable = false)]
-		public Справочник[] Справочники { get => справочники; set => справочники = value; }
+		public Справочник[] Справочники { get; set; }
 	}
 }
