@@ -164,49 +164,49 @@ namespace БАРСШаблон
 				клетка.Value.ToString() == "  ";
 		}
 
-		public static bool КлеткаПустаИлиСодержитТег(Range клетка)
+		public static bool КлеткаПустаИлиСодержитМетку(Range клетка)
 		{
-			List<string> теги = new List<string>()
+			List<string> метки = new List<string>()
 			{
-				ConfigManager.ТаблицаСтрокаТегаТипТаблицыДинамическая,
-				ConfigManager.ТаблицаСтрокаТегаТипТаблицыСтатическая,
-				ConfigManager.ТаблицаСтрокаТегаКодыСтрок,
-				ConfigManager.ТаблицаСтрокаТегаКодыСтрокИСтолбцов,
-				ConfigManager.ТаблицаСтрокаТегаКодыСтолбцов,
-				ConfigManager.ТаблицаСтрокаТегаНаименование,
-				ConfigManager.ТаблицаСтрокаТегаТег,
-				ConfigManager.ТаблицаСтрокаТегаКод,
-				ConfigManager.МетаТегНаименование,
-				ConfigManager.СвободнаяЯчейкаСтрокаТегаКодыЯчеек,
+				ConfigManager.ТаблицаМеткаТипТаблицыДинамическая,
+				ConfigManager.ТаблицаМеткаТипТаблицыСтатическая,
+				ConfigManager.ТаблицаМеткаКодыСтрок,
+				ConfigManager.ТаблицаМеткаКодыСтрокИСтолбцов,
+				ConfigManager.ТаблицаМеткаКодыСтолбцов,
+				ConfigManager.ТаблицаМеткаНаименование,
+				ConfigManager.ТаблицаМеткаТег,
+				ConfigManager.ТаблицаМеткаКод,
+				ConfigManager.МетаМеткаНаименование,
+				ConfigManager.СвободнаяЯчейкаМеткаКодыЯчеек,
 		};
 
 			return
 				КлеткаПуста(клетка) ||
-				теги.Contains(клетка.Value.ToString());
+				метки.Contains(клетка.Value.ToString());
 
 		}
 
 		public static string ПолучитьНаименованиеСтрокиИлиСтолбца(Range клеткаОбластиСКодами, bool ищемДляСтроки)
 		{
-			return КлеткаПустаИлиСодержитТег(клеткаОбластиСКодами.Offset[ищемДляСтроки ? 0 : -1, ищемДляСтроки ? -1 : 0]) ?
+			return КлеткаПустаИлиСодержитМетку(клеткаОбластиСКодами.Offset[ищемДляСтроки ? 0 : -1, ищемДляСтроки ? -1 : 0]) ?
 			"" :
 			клеткаОбластиСКодами.Offset[ищемДляСтроки ? 0 : -1, ищемДляСтроки ? -1 : 0].Value.ToString();
 		}
 
-		public static bool ПолучитьНаименованиеПоТегу(Range тег, out string наименвание)
+		public static bool ПолучитьНаименованиеПоМетке(Range метка, out string наименвание)
 		{
-			if (тег != null)
+			if (метка != null)
 			{
-				if (!КлеткаПустаИлиСодержитТег(тег.Offset[1, 0]))
+				if (!КлеткаПустаИлиСодержитМетку(метка.Offset[1, 0]))
 				{
-					наименвание = тег.Offset[1, 0].Value.ToString();
+					наименвание = метка.Offset[1, 0].Value.ToString();
 
 					return true;
 				}
 
-				if (!КлеткаПустаИлиСодержитТег(тег.Offset[0, 1]))
+				if (!КлеткаПустаИлиСодержитМетку(метка.Offset[0, 1]))
 				{
-					наименвание = тег.Offset[0, 1].Value.ToString();
+					наименвание = метка.Offset[0, 1].Value.ToString();
 
 					return true;
 				}

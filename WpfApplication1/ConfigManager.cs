@@ -32,26 +32,26 @@ namespace БАРСШаблон
 		public static double МетаВесПустойСтрокиПодЯчейкойПотенциальногоНаименования => double.Parse(ConfigurationManager.AppSettings["МетаВесПустойСтрокиПодЯчейкойПотенциальногоНаименования"]);
 		public static double МетаВесЧастоИспользуемогоТермина => double.Parse(ConfigurationManager.AppSettings["МетаВесЧастоИспользуемогоТермина"]);
 
-		public static string МетаТегНаименование => ConfigurationManager.AppSettings["МетаТегНаименование"];
+		public static string МетаМеткаНаименование => ConfigurationManager.AppSettings["МетаМеткаНаименование"];
 		public static bool МетаЯвляетсяЗапросом => bool.Parse(ConfigurationManager.AppSettings["МетаЯвляетсяЗапросом"]);
 
 
 		public static string СвободнаяЯчейкаТегПрефикс => ConfigurationManager.AppSettings["СвободнаяЯчейкаТегПрефикс"];
-		public static string СвободнаяЯчейкаСтрокаТегаКодыЯчеек => ConfigurationManager.AppSettings["СвободнаяЯчейкаСтрокаТегаКодыЯчеек"];
+		public static string СвободнаяЯчейкаМеткаКодыЯчеек => ConfigurationManager.AppSettings["СвободнаяЯчейкаМеткаКодыЯчеек"];
 
 		public static string СтолбецТегПрефикс => ConfigurationManager.AppSettings["СтолбецТегПрефикс"];
 
 		public static string СтрокаТегПрефикс => ConfigurationManager.AppSettings["СтрокаТегПрефикс"];
 
 		public static string ТаблицаПрефиксТега => ConfigurationManager.AppSettings["ТаблицаПрефиксТега"];
-		public static string ТаблицаСтрокаТегаТипТаблицыДинамическая => ConfigurationManager.AppSettings["ТаблицаСтрокаТегаТипТаблицыДинамическая"];
-		public static string ТаблицаСтрокаТегаТипТаблицыСтатическая => ConfigurationManager.AppSettings["ТаблицаСтрокаТегаТипТаблицыСтатическая"];
-		public static string ТаблицаСтрокаТегаКодыСтрокИСтолбцов => ConfigurationManager.AppSettings["ТаблицаСтрокаТегаКодыСтрокИСтолбцов"];
-		public static string ТаблицаСтрокаТегаКодыСтрок => ConfigurationManager.AppSettings["ТаблицаСтрокаТегаКодыСтрок"];
-		public static string ТаблицаСтрокаТегаКодыСтолбцов => ConfigurationManager.AppSettings["ТаблицаСтрокаТегаКодыСтолбцов"];
-		public static string ТаблицаСтрокаТегаНаименование => ConfigurationManager.AppSettings["ТаблицаСтрокаТегаНаименование"];
-		public static string ТаблицаСтрокаТегаТег => ConfigurationManager.AppSettings["ТаблицаСтрокаТегаТег"];
-		public static string ТаблицаСтрокаТегаКод => ConfigurationManager.AppSettings["ТаблицаСтрокаТегаКод"];
+		public static string ТаблицаМеткаТипТаблицыДинамическая => ConfigurationManager.AppSettings["ТаблицаМеткаТипТаблицыДинамическая"];
+		public static string ТаблицаМеткаТипТаблицыСтатическая => ConfigurationManager.AppSettings["ТаблицаМеткаТипТаблицыСтатическая"];
+		public static string ТаблицаМеткаКодыСтрокИСтолбцов => ConfigurationManager.AppSettings["ТаблицаМеткаКодыСтрокИСтолбцов"];
+		public static string ТаблицаМеткаКодыСтрок => ConfigurationManager.AppSettings["ТаблицаМеткаКодыСтрок"];
+		public static string ТаблицаМеткаКодыСтолбцов => ConfigurationManager.AppSettings["ТаблицаМеткаКодыСтолбцов"];
+		public static string ТаблицаМеткаНаименование => ConfigurationManager.AppSettings["ТаблицаМеткаНаименование"];
+		public static string ТаблицаМеткаТег => ConfigurationManager.AppSettings["ТаблицаМеткаТег"];
+		public static string ТаблицаМеткаКод => ConfigurationManager.AppSettings["ТаблицаМеткаКод"];
 
 		public static string ПутьКПапкеСгенерированныхШаблонов => ConfigurationManager.AppSettings["ПутьКПапкеСгенерированныхШаблонов"];
 
