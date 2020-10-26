@@ -18,7 +18,7 @@
             </TextBlock>
         </Grid>
         <Grid HorizontalAlignment="Center" VerticalAlignment="Bottom">
-            <Button x:Name="SettingsButton" Content="⚙️" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Top" Width="20" RenderTransformOrigin="0.435,0.532"/>
+            <Button x:Name="SettingsButton" Content="⚙️" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Top" Width="20" RenderTransformOrigin="0.435,0.532" Click="SettingsButton_Click"/>
         </Grid>
     </Grid>
 </Window>

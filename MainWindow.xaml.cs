@@ -90,5 +90,13 @@ namespace БАРСШаблон
 
 			mainXmlStream.Save(путьКПапкеШаблона + "\\" + имяФайла);
 		}
+
+		private void SettingsButton_Click(object sender, RoutedEventArgs e)
+		{
+			SettingsWindow settingsWindow = new SettingsWindow();
+			settingsWindow.Show();
+
+			Close();
+		}
 	}
 }
