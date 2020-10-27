@@ -75,7 +75,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ConfigManager.cs" />
     <Compile Include="DataTypes\ОписаниеТипаЯчейки.cs" />
     <Compile Include="DataTypes\Числовой.cs" />
     <Compile Include="SettingsWindow.xaml.cs">
@@ -91,6 +90,7 @@
     <Compile Include="FormStructure\Структура.cs" />
     <Compile Include="FormStructure\Таблица.cs" />
     <Compile Include="FormStructure\ЭлементСправочника.cs" />
+    <Compile Include="МенеджерНастроек.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

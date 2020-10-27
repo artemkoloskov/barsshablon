@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,36 +20,42 @@ namespace БАРСШаблон
 	/// </summary>
 	public partial class SettingsWindow : Window
 	{
+		private Настройки настройки;
+
+		private Configuration configApp = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
 		public SettingsWindow()
 		{
 			InitializeComponent();
 
-			МетаВерсияTextBox.Text = ConfigManager.МетаВерсияМетаописания;
-			МетаИдентификаторTextBox.Text = ConfigManager.МетаИдентификатор;
-			МетаГруппаTextBox.Text = ConfigManager.МетаГруппа;
-			МетаДатаНачалаTextBox.Text = ConfigManager.МетаДатаНачалаДействия;
-			МетаДатаОкончанияTextBox.Text = ConfigManager.МетаДатаОкончанияДействия;
-			МетаАвторствоTextBox.Text = ConfigManager.МетаАвторство;
-			МетаНомерВерсииTextBox.Text = ConfigManager.МетаНомерВерсии;
-			МетаРасположениеШапкиTextBox.Text = ConfigManager.МетаРасположениеШапки;
-			МетаВерсияФорматаTextBox.Text = ConfigManager.МетаВерсияФорматаМетаструктуры;
-			МетаМеткаНаименованиеTextBox.Text = ConfigManager.МетаМеткаНаименование;
+			настройки = (Настройки)configApp.GetSection("барсШаблонНастройки");
 
-			ПрефиксыТаблицаTextBox.Text = ConfigManager.ТаблицаПрефиксТега;
-			ПрефиксыСвободнаяЯчейкаTextBox.Text = ConfigManager.СвободнаяЯчейкаТегПрефикс;
-			ПрефиксыСтолбецTextBox.Text = ConfigManager.СтолбецТегПрефикс;
-			ПрефиксыСтрокаTextBox.Text = ConfigManager.СтрокаТегПрефикс;
-			КоличествоСловТегаTextBox.Text = ConfigManager.КоличествоСловВТеге.ToString();
-			КоличествоСимволовТегаTextBox.Text = ConfigManager.КоличествоСимволовВТеге.ToString();
+			МетаВерсияTextBox.Text = настройки.Мета.ВерсияМетаописания.Value;
+			МетаИдентификаторTextBox.Text = настройки.Мета.Идентификатор.Value;
+			МетаГруппаTextBox.Text = настройки.Мета.Группа.Value;
+			МетаДатаНачалаTextBox.Text = настройки.Мета.ДатаНачалаДействия.Value;
+			МетаДатаОкончанияTextBox.Text = настройки.Мета.ДатаОкончанияДействия.Value;
+			МетаАвторствоTextBox.Text = настройки.Мета.Авторство.Value;
+			МетаНомерВерсииTextBox.Text = настройки.Мета.НомерВерсии.Value;
+			МетаРасположениеШапкиTextBox.Text = настройки.Мета.РасположениеШапки.Value;
+			МетаВерсияФорматаTextBox.Text = настройки.Мета.ВерсияФорматаМетаструктуры.Value;
+			МетаМеткаНаименованиеTextBox.Text = настройки.Мета.МеткаНаименование.Value;
 
-			МеткаДинамическаяTextBox.Text = ConfigManager.ТаблицаМеткаТипТаблицыДинамическая;
-			МеткаСтатическаяTextBox.Text = ConfigManager.ТаблицаМеткаТипТаблицыСтатическая;
-			МеткаКодыСтрокИСтолбцовTextBox.Text = ConfigManager.ТаблицаМеткаКодыСтрокИСтолбцов;
-			МеткаКодыСтолбцовTextBox.Text = ConfigManager.ТаблицаМеткаКодыСтолбцов;
-			МеткаКодыСтрокTextBox.Text = ConfigManager.ТаблицаМеткаКодыСтрок;
-			МеткаНаименованиеТаблицыTextBox.Text = ConfigManager.ТаблицаМеткаНаименование;
-			МеткаТегТаблицыTextBox.Text = ConfigManager.ТаблицаМеткаТег;
-			МеткаКодТаблицыTextBox.Text = ConfigManager.ТаблицаМеткаКод;
+			ПрефиксыТаблицаTextBox.Text = настройки.Теги.ПрефиксТаблицы.Value;
+			ПрефиксыСвободнаяЯчейкаTextBox.Text = настройки.Теги.ПрефиксСвободнойЯчейки.Value;
+			ПрефиксыСтолбецTextBox.Text = настройки.Теги.ПрефиксСтолбца.Value;
+			ПрефиксыСтрокаTextBox.Text = настройки.Теги.ПрефиксСтроки.Value;
+			КоличествоСловТегаTextBox.Text = настройки.Теги.КоличествоСловВТеге.Value;
+			КоличествоСимволовТегаTextBox.Text = настройки.Теги.КоличествоСимволовВТеге.Value;
+
+			МеткаДинамическаяTextBox.Text = настройки.Разметка.МеткаТипТаблицыДинамическая.Value;
+			МеткаСтатическаяTextBox.Text = настройки.Разметка.МеткаТипТаблицыСтатическая.Value;
+			МеткаКодыСтрокИСтолбцовTextBox.Text = настройки.Разметка.МеткаКодыСтрокИСтолбцов.Value;
+			МеткаКодыСтолбцовTextBox.Text = настройки.Разметка.МеткаКодыСтолбцов.Value;
+			МеткаКодыСтрокTextBox.Text = настройки.Разметка.МеткаКодыСтрок.Value;
+			МеткаНаименованиеТаблицыTextBox.Text = настройки.Разметка.МеткаНаименование.Value;
+			МеткаТегТаблицыTextBox.Text = настройки.Разметка.МеткаТег.Value;
+			МеткаКодТаблицыTextBox.Text = настройки.Разметка.МеткаКод.Value;
 
 		}
 
@@ -65,36 +72,66 @@ namespace БАРСШаблон
 
 		private void SaveButton_Click(object sender, RoutedEventArgs e)
 		{
-			ConfigManager.МетаВерсияМетаописания = МетаВерсияTextBox.Text;
-			ConfigManager.МетаИдентификатор = МетаИдентификаторTextBox.Text;
-			ConfigManager.МетаГруппа = МетаГруппаTextBox.Text;
-			ConfigManager.МетаДатаНачалаДействия = МетаДатаНачалаTextBox.Text;
-			ConfigManager.МетаДатаОкончанияДействия = МетаДатаОкончанияTextBox.Text;
-			ConfigManager.МетаАвторство = МетаАвторствоTextBox.Text;
-			ConfigManager.МетаНомерВерсии = МетаНомерВерсииTextBox.Text;
-			ConfigManager.МетаРасположениеШапки = МетаРасположениеШапкиTextBox.Text;
-			ConfigManager.МетаВерсияФорматаМетаструктуры = МетаВерсияФорматаTextBox.Text;
-			ConfigManager.МетаМеткаНаименование = МетаМеткаНаименованиеTextBox.Text;
+			настройки.Мета.ВерсияМетаописания.Value = МетаВерсияTextBox.Text;
+			настройки.Мета.Идентификатор.Value = МетаИдентификаторTextBox.Text;
+			настройки.Мета.Группа.Value = МетаГруппаTextBox.Text;
+			настройки.Мета.ДатаНачалаДействия.Value = МетаДатаНачалаTextBox.Text;
+			настройки.Мета.ДатаОкончанияДействия.Value = МетаДатаОкончанияTextBox.Text;
+			настройки.Мета.Авторство.Value = МетаАвторствоTextBox.Text;
+			настройки.Мета.НомерВерсии.Value = МетаНомерВерсииTextBox.Text;
+			настройки.Мета.РасположениеШапки.Value = МетаРасположениеШапкиTextBox.Text;
+			настройки.Мета.ВерсияФорматаМетаструктуры.Value = МетаВерсияФорматаTextBox.Text;
+			настройки.Мета.МеткаНаименование.Value = МетаМеткаНаименованиеTextBox.Text;
 
-			ConfigManager.ТаблицаПрефиксТега = ПрефиксыТаблицаTextBox.Text;
-			ConfigManager.СвободнаяЯчейкаТегПрефикс = ПрефиксыСвободнаяЯчейкаTextBox.Text;
-			ConfigManager.СтолбецТегПрефикс = ПрефиксыСтолбецTextBox.Text;
-			ConfigManager.СтрокаТегПрефикс = ПрефиксыСтрокаTextBox.Text;
-			ConfigManager.КоличествоСловВТеге = int.Parse(КоличествоСловТегаTextBox.Text);
-			ConfigManager.КоличествоСимволовВТеге = int.Parse(КоличествоСимволовТегаTextBox.Text);
+			настройки.Теги.ПрефиксТаблицы.Value = ПрефиксыТаблицаTextBox.Text;
+			настройки.Теги.ПрефиксСвободнойЯчейки.Value = ПрефиксыСвободнаяЯчейкаTextBox.Text;
+			настройки.Теги.ПрефиксСтолбца.Value = ПрефиксыСтолбецTextBox.Text;
+			настройки.Теги.ПрефиксСтроки.Value = ПрефиксыСтрокаTextBox.Text;
+			настройки.Теги.КоличествоСловВТеге.Value = КоличествоСловТегаTextBox.Text;
+			настройки.Теги.КоличествоСимволовВТеге.Value = КоличествоСимволовТегаTextBox.Text;
 
-			ConfigManager.ТаблицаМеткаТипТаблицыДинамическая = МеткаДинамическаяTextBox.Text;
-			ConfigManager.ТаблицаМеткаТипТаблицыСтатическая = МеткаСтатическаяTextBox.Text;
-			ConfigManager.ТаблицаМеткаКодыСтрокИСтолбцов = МеткаКодыСтрокИСтолбцовTextBox.Text;
-			ConfigManager.ТаблицаМеткаКодыСтолбцов = МеткаКодыСтолбцовTextBox.Text;
-			ConfigManager.ТаблицаМеткаКодыСтрок = МеткаКодыСтрокTextBox.Text;
-			ConfigManager.ТаблицаМеткаНаименование = МеткаНаименованиеТаблицыTextBox.Text;
-			ConfigManager.ТаблицаМеткаТег = МеткаТегТаблицыTextBox.Text;
-			ConfigManager.ТаблицаМеткаКод = МеткаКодТаблицыTextBox.Text;
+			настройки.Разметка.МеткаТипТаблицыДинамическая.Value = МеткаДинамическаяTextBox.Text;
+			настройки.Разметка.МеткаТипТаблицыСтатическая.Value = МеткаСтатическаяTextBox.Text;
+			настройки.Разметка.МеткаКодыСтрокИСтолбцов.Value = МеткаКодыСтрокИСтолбцовTextBox.Text;
+			настройки.Разметка.МеткаКодыСтолбцов.Value = МеткаКодыСтолбцовTextBox.Text;
+			настройки.Разметка.МеткаКодыСтрок.Value = МеткаКодыСтрокTextBox.Text;
+			настройки.Разметка.МеткаНаименование.Value = МеткаНаименованиеТаблицыTextBox.Text;
+			настройки.Разметка.МеткаТег.Value = МеткаТегТаблицыTextBox.Text;
+			настройки.Разметка.МеткаКод.Value = МеткаКодТаблицыTextBox.Text;
 
-			ConfigManager.SaveConfig();
+			configApp.Save(ConfigurationSaveMode.Full);
 
 			Close();
+		}
+
+		private void ResetSettingsButton_Click(object sender, RoutedEventArgs e)
+		{
+			МетаВерсияTextBox.Text = настройки.Мета.ВерсияМетаописания.Default;
+			МетаИдентификаторTextBox.Text = настройки.Мета.Идентификатор.Default;
+			МетаГруппаTextBox.Text = настройки.Мета.Группа.Default;
+			МетаДатаНачалаTextBox.Text = настройки.Мета.ДатаНачалаДействия.Default;
+			МетаДатаОкончанияTextBox.Text = настройки.Мета.ДатаОкончанияДействия.Default;
+			МетаАвторствоTextBox.Text = настройки.Мета.Авторство.Default;
+			МетаНомерВерсииTextBox.Text = настройки.Мета.НомерВерсии.Default;
+			МетаРасположениеШапкиTextBox.Text = настройки.Мета.РасположениеШапки.Default;
+			МетаВерсияФорматаTextBox.Text = настройки.Мета.ВерсияФорматаМетаструктуры.Default;
+			МетаМеткаНаименованиеTextBox.Text = настройки.Мета.МеткаНаименование.Default;
+
+			ПрефиксыТаблицаTextBox.Text = настройки.Теги.ПрефиксТаблицы.Default;
+			ПрефиксыСвободнаяЯчейкаTextBox.Text = настройки.Теги.ПрефиксСвободнойЯчейки.Default;
+			ПрефиксыСтолбецTextBox.Text = настройки.Теги.ПрефиксСтолбца.Default;
+			ПрефиксыСтрокаTextBox.Text = настройки.Теги.ПрефиксСтроки.Default;
+			КоличествоСловТегаTextBox.Text = настройки.Теги.КоличествоСловВТеге.Default;
+			КоличествоСимволовТегаTextBox.Text = настройки.Теги.КоличествоСимволовВТеге.Default;
+
+			МеткаДинамическаяTextBox.Text = настройки.Разметка.МеткаТипТаблицыДинамическая.Default;
+			МеткаСтатическаяTextBox.Text = настройки.Разметка.МеткаТипТаблицыСтатическая.Default;
+			МеткаКодыСтрокИСтолбцовTextBox.Text = настройки.Разметка.МеткаКодыСтрокИСтолбцов.Default;
+			МеткаКодыСтолбцовTextBox.Text = настройки.Разметка.МеткаКодыСтолбцов.Default;
+			МеткаКодыСтрокTextBox.Text = настройки.Разметка.МеткаКодыСтрок.Default;
+			МеткаНаименованиеТаблицыTextBox.Text = настройки.Разметка.МеткаНаименование.Default;
+			МеткаТегТаблицыTextBox.Text = настройки.Разметка.МеткаТег.Default;
+			МеткаКодТаблицыTextBox.Text = настройки.Разметка.МеткаКод.Default;
 		}
 	}
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Office.Interop.Excel;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
@@ -22,7 +23,7 @@ namespace БАРСШаблон
 
 			Наименование = ПолучитьНаименование();
 
-			Идентификатор += $"{(ConfigManager.МетаЯвляетсяЗапросом ? "З_" : "М_")}{ДопМетоды.ПолучитьТег(Наименование)}";
+			Идентификатор += $"{(МенеджерНастроек.Настройки.Мета.ЯвляетсяЗапросом.Value ? "З_" : "М_")}{ДопМетоды.ПолучитьТег(Наименование)}";
 
 			Группа += DateTime.Today.Year;
 
@@ -37,7 +38,7 @@ namespace БАРСШаблон
 
 		private void НаитиМеткиВКниге()
 		{
-			string меткаНаименование = ConfigManager.МетаМеткаНаименование;
+			string меткаНаименование = МенеджерНастроек.Настройки.Мета.МеткаНаименование.Value;
 
 			foreach (Range клеткаТаблицы in КнигаExcel.Worksheets[1].UsedRange.Cells)
 			{
@@ -108,63 +109,63 @@ namespace БАРСШаблон
 			double вероятность = 0;
 
 			вероятность +=
-				cell.Value.ToString().Length * ConfigManager.МетаВесДлиныПотенциальногоНаименования;
+				cell.Value.ToString().Length * МенеджерНастроек.Настройки.Вес.Длина.Value;
 
 			вероятность +=
-				cell.Row * ConfigManager.МетаВесНомераСтрокиПотенциальногоНаименования;
+				cell.Row * МенеджерНастроек.Настройки.Вес.НомерСтроки.Value;
 
 			вероятность +=
-				cell.Column * ConfigManager.МетаВесНомераСтолбцаПотенциальногоНаименования;
+				cell.Column * МенеджерНастроек.Настройки.Вес.НомерСтолбца.Value;
 
 			вероятность +=
-				ПолучитьКоличествоЯчеекВОбъединении(cell) * ConfigManager.МетаВесКоличестваЯчеекВОбъединеннойЯчейкеПотенциальногоНаименования;
+				ПолучитьКоличествоЯчеекВОбъединении(cell) * МенеджерНастроек.Настройки.Вес.КоличествоЯчеекВОбъединеннойЯчейке.Value;
 
 			вероятность +=
 				cell.Borders[XlBordersIndex.xlEdgeBottom].LineStyle == (int)XlLineStyle.xlLineStyleNone ?
 				0 :
-				ConfigManager.МетаВесГраницыВнизуПотенциальногоНаименования;
+				МенеджерНастроек.Настройки.Вес.ГраницаВнизу.Value;
 
 			вероятность +=
 				cell.Borders[XlBordersIndex.xlEdgeTop].LineStyle == (int)XlLineStyle.xlLineStyleNone ?
 				0 :
-				ConfigManager.МетаВесГраницыВверхуПотенциальногоНаименования;
+				МенеджерНастроек.Настройки.Вес.ГраницаВверху.Value;
 
 			вероятность +=
 				cell.Borders[XlBordersIndex.xlEdgeLeft].LineStyle == (int)XlLineStyle.xlLineStyleNone ?
 				0 :
-				ConfigManager.МетаВесГраницыСлеваПотенциальногоНаименования;
+				МенеджерНастроек.Настройки.Вес.ГраницаСлева.Value;
 
 			вероятность +=
 				cell.Borders[XlBordersIndex.xlEdgeRight].LineStyle == (int)XlLineStyle.xlLineStyleNone ?
 				0 :
-				ConfigManager.МетаВесГраницыСправаПотенциальногоНаименования;
+				МенеджерНастроек.Настройки.Вес.ГраницаСправа.Value;
 
 			вероятность +=
 				cell.HorizontalAlignment == (int)XlHAlign.xlHAlignCenter ?
 				0 :
-				ConfigManager.МетаВесВыравниванияПоСерединеПотенциальногоНаименования;
+				МенеджерНастроек.Настройки.Вес.ВыравниваниеПоСередине.Value;
 
 			вероятность +=
 				cell.HorizontalAlignment == (int)XlHAlign.xlHAlignLeft ?
 				0 :
-				ConfigManager.МетаВесВыравниванияСлеваПотенциальногоНаименования;
+				МенеджерНастроек.Настройки.Вес.ВыравниваниеСлева.Value;
 
 			вероятность +=
 				cell.HorizontalAlignment == (int)XlHAlign.xlHAlignRight ?
 				0 :
-				ConfigManager.МетаВесВыравниванияСправаПотенциальногоНаименования;
+				МенеджерНастроек.Настройки.Вес.ВыравниваниеСправа.Value;
 
 			вероятность +=
 				cell.Font.Bold ?
-				ConfigManager.МетаВесЖирностиТекстаПотенциальногоНаименования :
+				МенеджерНастроек.Настройки.Вес.ЖирностьТекста.Value :
 				0;
 
 			вероятность +=
-				ПолучитьКоличествоПустыхСтрокПодЯчейкой(cell) * ConfigManager.МетаВесПустойСтрокиПодЯчейкойПотенциальногоНаименования;
+				ПолучитьКоличествоПустыхСтрокПодЯчейкой(cell) * МенеджерНастроек.Настройки.Вес.ПустаяСтрокаПодЯчейкой.Value;
 
 			вероятность +=
 				ДопМетоды.СтрокаЯвлетсяЧастоИспользуемой(cell.Value.ToString()) ?
-				ConfigManager.МетаВесЧастоИспользуемогоТермина :
+				МенеджерНастроек.Настройки.Вес.ЧастоИспользуемыйТермин.Value :
 				0;
 
 			return вероятность;
@@ -195,36 +196,36 @@ namespace БАРСШаблон
 
 			return количество;
 		}
-		
-		[XmlElement(Form = XmlSchemaForm.Unqualified)]
-		public string ВерсияМетаописания { get; set; } = ConfigManager.МетаВерсияМетаописания;
 
 		[XmlElement(Form = XmlSchemaForm.Unqualified)]
-		public string Идентификатор { get; set; } = ConfigManager.МетаИдентификатор;
+		public string ВерсияМетаописания { get; set; } = МенеджерНастроек.Настройки.Мета.ВерсияМетаописания.Value;
+
+		[XmlElement(Form = XmlSchemaForm.Unqualified)]
+		public string Идентификатор { get; set; } = МенеджерНастроек.Настройки.Мета.Идентификатор.Value;
 
 		[XmlElement(Form = XmlSchemaForm.Unqualified)]
 		public string Наименование { get; set; } = "";
 
 		[XmlElement(Form = XmlSchemaForm.Unqualified)]
-		public string Группа { get; set; } = ConfigManager.МетаГруппа;
+		public string Группа { get; set; } = МенеджерНастроек.Настройки.Мета.Группа.Value;
 
 		[XmlElement(Form = XmlSchemaForm.Unqualified)]
-		public string ДатаНачалаДействия { get; set; } = ConfigManager.МетаДатаНачалаДействия;
+		public string ДатаНачалаДействия { get; set; } = МенеджерНастроек.Настройки.Мета.ДатаНачалаДействия.Value;
 
 		[XmlElement(Form = XmlSchemaForm.Unqualified)]
-		public string ДатаОкончанияДействия { get; set; } = ConfigManager.МетаДатаОкончанияДействия;
+		public string ДатаОкончанияДействия { get; set; } = МенеджерНастроек.Настройки.Мета.ДатаОкончанияДействия.Value;
 
 		[XmlElement(Form = XmlSchemaForm.Unqualified)]
-		public string Авторство { get; set; } = ConfigManager.МетаАвторство;
+		public string Авторство { get; set; } = МенеджерНастроек.Настройки.Мета.Авторство.Value;
 
 		[XmlElement(Form = XmlSchemaForm.Unqualified)]
 		public string ДатаПоследнегоИзменения { get; set; } = "";
 
 		[XmlElement(Form = XmlSchemaForm.Unqualified)]
-		public string НомерВерсии { get; set; } = ConfigManager.МетаНомерВерсии;
+		public string НомерВерсии { get; set; } = МенеджерНастроек.Настройки.Мета.НомерВерсии.Value;
 
 		[XmlElement(Form = XmlSchemaForm.Unqualified)]
-		public string РасположениеШапки { get; set; } = ConfigManager.МетаРасположениеШапки;
+		public string РасположениеШапки { get; set; } = МенеджерНастроек.Настройки.Мета.РасположениеШапки.Value;
 
 		[XmlElement(Form = XmlSchemaForm.Unqualified)]
 		public string Хост { get; set; } = Environment.MachineName;
@@ -236,7 +237,7 @@ namespace БАРСШаблон
 		public string СсылкаНаВнешнююСправку { get; set; } = "";
 
 		[XmlElement(Form = XmlSchemaForm.Unqualified)]
-		public string ВерсияФорматаМетаструктуры { get; set; } = ConfigManager.МетаВерсияФорматаМетаструктуры;
+		public string ВерсияФорматаМетаструктуры { get; set; } = МенеджерНастроек.Настройки.Мета.ВерсияФорматаМетаструктуры.Value;
 
 		[XmlElement(Form = XmlSchemaForm.Unqualified)]
 		public string Тег { get; set; } = "";

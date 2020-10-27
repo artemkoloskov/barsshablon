@@ -1,6 +1,7 @@
 ﻿using Microsoft.Office.Interop.Excel;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using БАРСШаблон.DataTypes;
 
@@ -19,8 +20,9 @@ namespace БАРСШаблон
 
 			string[] словаНаименования = наименование.Split(' ');
 
-			int количествоСловВТеге = ConfigManager.КоличествоСловВТеге;
-			int количествоСимволовВТеге = ConfigManager.КоличествоСимволовВТеге;
+			int количествоСловВТеге = int.Parse(МенеджерНастроек.Настройки.Теги.КоличествоСловВТеге.Value);
+
+			int количествоСимволовВТеге = int.Parse(МенеджерНастроек.Настройки.Теги.КоличествоСимволовВТеге.Value);
 
 			int i = 1;
 
@@ -46,7 +48,24 @@ namespace БАРСШаблон
 
 		public static dynamic ПолучитьТип(string форматКлетки, bool являетсяКлючевым)
 		{
-			foreach (var типДанных in ConfigManager.ТипыДанных)
+			string[] маскаТипаДанныхОбщий = ConfigurationManager.AppSettings["МаскаТипаДанныхОбщий"].Split('|');
+			string[] маскаТипаДанныхЧисловой = ConfigurationManager.AppSettings["МаскаТипаДанныхЧисловой"].Split('|');
+			string[] маскаТипаДанныхЦелочисленный = ConfigurationManager.AppSettings["МаскаТипаДанныхЦелочисленный"].Split('|');
+			string[] маскаТипаДанныхФинансовый = ConfigurationManager.AppSettings["МаскаТипаДанныхФинансовый"].Split('|');
+			string[] маскаТипаДанныхДатаВремя = ConfigurationManager.AppSettings["МаскаТипаДанныхДатаВремя"].Split('|');
+			string[] маскаТипаДанныхСтроковый = ConfigurationManager.AppSettings["МаскаТипаДанныхСтроковый"].Split('|');
+
+			Dictionary<string[], Type> типыДанных = new Dictionary<string[], Type>()
+			{
+				{ маскаТипаДанныхОбщий, typeof(Финансовый) },
+				{ маскаТипаДанныхЧисловой, typeof(Числовой) },
+				{ маскаТипаДанныхЦелочисленный, typeof(Целочисленный) },
+				{ маскаТипаДанныхФинансовый, typeof(Финансовый) },
+				{ маскаТипаДанныхДатаВремя, typeof(ДатаВремя) },
+				{ маскаТипаДанныхСтроковый, typeof(Строковый) },
+			};
+
+			foreach (var типДанных in типыДанных)
 			{
 				if (типДанных.Key.Contains(форматКлетки))
 				{
@@ -138,7 +157,9 @@ namespace БАРСШаблон
 		/// <returns></returns>
 		public static bool СтрокаЯвлетсяЧастоИспользуемой(string строка)
 		{
-			foreach (string термин in ConfigManager.ЧастоИспользуемыеТермины)
+			string[] частоИспользуемыеТермины = ConfigurationManager.AppSettings["ЧастоИспользуемыеТермины"].Split(',');
+
+			foreach (string термин in частоИспользуемыеТермины)
 			{
 				if (СтрокиПриблизительноСовпадают(строка, термин))
 				{
@@ -168,16 +189,16 @@ namespace БАРСШаблон
 		{
 			List<string> метки = new List<string>()
 			{
-				ConfigManager.ТаблицаМеткаТипТаблицыДинамическая,
-				ConfigManager.ТаблицаМеткаТипТаблицыСтатическая,
-				ConfigManager.ТаблицаМеткаКодыСтрок,
-				ConfigManager.ТаблицаМеткаКодыСтрокИСтолбцов,
-				ConfigManager.ТаблицаМеткаКодыСтолбцов,
-				ConfigManager.ТаблицаМеткаНаименование,
-				ConfigManager.ТаблицаМеткаТег,
-				ConfigManager.ТаблицаМеткаКод,
-				ConfigManager.МетаМеткаНаименование,
-				ConfigManager.СвободнаяЯчейкаМеткаКодыЯчеек,
+				МенеджерНастроек.Настройки.Разметка.МеткаТипТаблицыДинамическая.Value,
+				МенеджерНастроек.Настройки.Разметка.МеткаТипТаблицыСтатическая.Value,
+				МенеджерНастроек.Настройки.Разметка.МеткаКодыСтрок.Value,
+				МенеджерНастроек.Настройки.Разметка.МеткаКодыСтрокИСтолбцов.Value,
+				МенеджерНастроек.Настройки.Разметка.МеткаКодыСтолбцов.Value,
+				МенеджерНастроек.Настройки.Разметка.МеткаНаименование.Value,
+				МенеджерНастроек.Настройки.Разметка.МеткаТег.Value,
+				МенеджерНастроек.Настройки.Разметка.МеткаКод.Value,
+				МенеджерНастроек.Настройки.Мета.МеткаНаименование.Value,
+				МенеджерНастроек.Настройки.Разметка.МеткаКодыЯчеек.Value,
 		};
 
 			return
