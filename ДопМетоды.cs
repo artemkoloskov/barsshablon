@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using БАРСШаблон.DataTypes;
 
@@ -207,11 +208,38 @@ namespace БАРСШаблон
 
 		}
 
-		public static string ПолучитьНаименованиеСтрокиИлиСтолбца(Range клеткаОбластиСКодами, bool ищемДляСтроки)
+		public static string ПолучитьНаименованиеСтрокиИлиСтолбца(Range клеткаОбластиСКодами, bool поискДляСтроки)
 		{
-			return КлеткаПустаИлиСодержитМетку(клеткаОбластиСКодами.Offset[ищемДляСтроки ? 0 : -1, ищемДляСтроки ? -1 : 0]) ?
-			"" :
-			клеткаОбластиСКодами.Offset[ищемДляСтроки ? 0 : -1, ищемДляСтроки ? -1 : 0].Value.ToString();
+			if (поискДляСтроки)
+			{
+				if (клеткаОбластиСКодами.Column == 1)
+				{
+					return КлеткаПустаИлиСодержитМетку(клеткаОбластиСКодами.Offset[0, 1]) ?
+							"" :
+							клеткаОбластиСКодами.Offset[0, 1].Value.ToString();
+				}
+				else
+				{
+					return КлеткаПустаИлиСодержитМетку(клеткаОбластиСКодами.Offset[0, -1]) ?
+							"" :
+							клеткаОбластиСКодами.Offset[0, -1].Value.ToString();
+				}
+			} 
+			else
+			{
+				if (клеткаОбластиСКодами.Row == 1)
+				{
+					return КлеткаПустаИлиСодержитМетку(клеткаОбластиСКодами.Offset[1, 0]) ?
+							"" :
+							клеткаОбластиСКодами.Offset[1, 0].Value.ToString();
+				}
+				else
+				{
+					return КлеткаПустаИлиСодержитМетку(клеткаОбластиСКодами.Offset[-1, 0]) ?
+							"" :
+							клеткаОбластиСКодами.Offset[-1, 0].Value.ToString();
+				}
+			}
 		}
 
 		public static bool ПолучитьНаименованиеПоМетке(Range метка, out string наименвание)
@@ -236,6 +264,24 @@ namespace БАРСШаблон
 			наименвание = "";
 
 			return false;
+		}
+
+		/// <summary>
+		/// Заменяет все запрещенные символы в строке на указанную строку
+		/// </summary>
+		/// <param name="путь"></param>
+		/// <param name="строкаНаЗамену"></param>
+		/// <returns></returns>
+		public static string УбратьЗапрещенныеСимволы(string путь, string строкаНаЗамену)
+		{
+			string запрещщенныеСимволы = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
+
+			foreach (char запрещенныйСимвол in запрещщенныеСимволы)
+			{
+				путь = путь.Replace(запрещенныйСимвол.ToString(), строкаНаЗамену);
+			}
+
+			return путь;
 		}
 	}
 }

@@ -1,5 +1,8 @@
 ﻿using Microsoft.Office.Interop.Excel;
+using Microsoft.Win32;
+using System;
 using System.Windows;
+using System.Windows.Media;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
@@ -27,9 +30,7 @@ namespace БАРСШаблон
 			{
 				string путьКФайлу = string.Format("{0}", ((string[])text)[0]);
 
-				fileDropLabel.Content = путьКФайлу;
-
-				КонвертироватьКнигуВШаблон(путьКФайлу);
+				Обработать(путьКФайлу);
 			}
 		}
 
@@ -97,9 +98,22 @@ namespace БАРСШаблон
 			Close();
 		}
 
+		private string OpenFileDialog()
+		{
+			OpenFileDialog openFileDialog = new OpenFileDialog();
+			
+			if (openFileDialog.ShowDialog() == true)
+			{
+				return openFileDialog.FileName;
+			}
+
+			return "";
+		}
+
 		private void RadioButton_Checked(object sender, RoutedEventArgs e)
 		{
 			fileDropGrid.IsEnabled = true;
+			DropRectangle.Stroke = Brushes.Black;
 
 			if (sender == запросRadioButton)
 			{
@@ -108,6 +122,27 @@ namespace БАРСШаблон
 			else if (sender == мониторингRadioButton)
 			{
 				МенеджерНастроек.Настройки.Мета.ЯвляетсяЗапросом.Value = false;
+			}
+		}
+
+		private void ChooseFileButton_Click(object sender, RoutedEventArgs e)
+		{
+			string путьКФайлу = OpenFileDialog();
+
+			Обработать(путьКФайлу);
+		}
+
+		private void Обработать(string путьКФайлу)
+		{
+			if (путьКФайлу.EndsWith(".xls") || путьКФайлу.EndsWith(".xlsx") || путьКФайлу.EndsWith(".xlsm"))
+			{
+				fileDropLabel.Content = $"{путьКФайлу}";
+
+				КонвертироватьКнигуВШаблон(путьКФайлу); 
+			}
+			else
+			{
+				_ = MessageBox.Show($"Ошибка в пути к файлу, указанном как: {путьКФайлу}");
 			}
 		}
 	}

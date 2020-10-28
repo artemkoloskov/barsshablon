@@ -13,17 +13,14 @@
 
         <Grid x:Name="fileDropGrid" VerticalAlignment="Center" HorizontalAlignment="Center" IsEnabled="False">
             <Viewbox Stretch="Uniform" Margin="5" VerticalAlignment="Center">
-                <Rectangle x:Name="DropRectangle" HorizontalAlignment="Center" AllowDrop="True" PreviewDragEnter="DropRectangle_PreviewDragOver" PreviewDrop="DropRectangle_PreviewDrop" PreviewDragOver="DropRectangle_PreviewDragOver" Height="80" Stroke="Black" StrokeDashArray="4 4" VerticalAlignment="Center" Cursor="AppStarting" Margin="0" Width="432" Fill="White"/>
+                <Rectangle x:Name="DropRectangle" HorizontalAlignment="Center" AllowDrop="True" PreviewDragEnter="DropRectangle_PreviewDragOver" PreviewDrop="DropRectangle_PreviewDrop" PreviewDragOver="DropRectangle_PreviewDragOver" Height="80" Stroke="LightGray" StrokeDashArray="4 4" VerticalAlignment="Center" Cursor="AppStarting" Margin="0" Width="432" Fill="White"/>
             </Viewbox>
 
-            <Button x:Name="chooseFileButton" Content="выберите файл" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="105" Margin="0,0,0,-20"/>
+            <Button x:Name="chooseFileButton" Content="выберите файл" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="105" Margin="0,0,0,-20" Click="ChooseFileButton_Click"/>
             <Label x:Name="fileDropLabel" Content="Перетяните файл сюда или" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center"/>
         </Grid>
 
-        <Grid HorizontalAlignment="Right" VerticalAlignment="Top">
-            <Button x:Name="SettingsButton" Content="⚙️" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Top" Width="60" RenderTransformOrigin="0.435,0.532" Click="SettingsButton_Click" FontSize="24"/>
-        </Grid>
-
+        <Button x:Name="SettingsButton" Content="Настройки" HorizontalAlignment="Right" Margin="0,21,5,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.435,0.532" Click="SettingsButton_Click"/>
         
     </Grid>
 </Window>
