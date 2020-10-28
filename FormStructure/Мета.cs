@@ -171,7 +171,7 @@ namespace БАРСШаблон
 			return вероятность;
 		}
 
-		private static int ПолучитьКоличествоЯчеекВОбъединении(Range cell)
+		private int ПолучитьКоличествоЯчеекВОбъединении(Range cell)
 		{
 			if (cell.MergeCells)
 			{

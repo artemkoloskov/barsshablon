@@ -9,7 +9,14 @@ namespace БАРСШаблон
 {
 	public static class МенеджерНастроек
 	{
-		public static Настройки Настройки = (Настройки)ConfigurationManager.GetSection("барсШаблонНастройки");
+		private static readonly Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+		public static Настройки Настройки = (Настройки)config.GetSection("барсШаблонНастройки");
+
+		public static void СохранитьНастройки()
+		{
+			config.Save(ConfigurationSaveMode.Full);
+		}
 	}
 
 	public class Настройки : ConfigurationSection

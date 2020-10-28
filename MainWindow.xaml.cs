@@ -27,9 +27,7 @@ namespace БАРСШаблон
 			{
 				string путьКФайлу = string.Format("{0}", ((string[])text)[0]);
 
-				DropHereTextBlock.Text = путьКФайлу;
-				DropHereTextBlock.Width = DropRectangle.Width;
-				DropHereTextBlock.Height = DropRectangle.Height;
+				fileDropLabel.Content = путьКФайлу;
 
 				КонвертироватьКнигуВШаблон(путьКФайлу);
 			}
@@ -97,6 +95,20 @@ namespace БАРСШаблон
 			settingsWindow.Show();
 
 			Close();
+		}
+
+		private void RadioButton_Checked(object sender, RoutedEventArgs e)
+		{
+			fileDropGrid.IsEnabled = true;
+
+			if (sender == запросRadioButton)
+			{
+				МенеджерНастроек.Настройки.Мета.ЯвляетсяЗапросом.Value = true;
+			}
+			else if (sender == мониторингRadioButton)
+			{
+				МенеджерНастроек.Настройки.Мета.ЯвляетсяЗапросом.Value = false;
+			}
 		}
 	}
 }
