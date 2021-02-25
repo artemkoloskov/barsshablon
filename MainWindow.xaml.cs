@@ -1,6 +1,7 @@
 ﻿using Microsoft.Office.Interop.Excel;
 using Microsoft.Win32;
 using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media;
 using System.Xml;
@@ -50,7 +51,14 @@ namespace БАРСШаблон
 			{
 				ОписаниеФормы описаниеФормы = ОписаниеФормы.ПолучитьОписаниеФормыИзКнигиExcel(книгаExcel);
 
-				СеарилизоватьВXMLИСохранить(описаниеФормы);
+				СеарилизоватьВXMLИСохранить(описаниеФормы, out string путьКПапкеШаблона);
+
+				if (путьКПапкеШаблона != "")
+				{
+					fileDropLabel.Content = $"Сконвертировано успешно. Путь к сгенерированному файлу:\n\n{путьКПапкеШаблона}";
+
+					_ = Process.Start(fileName: путьКПапкеШаблона);
+				}
 			}
 			catch (System.Exception e)
 			{
@@ -64,9 +72,9 @@ namespace БАРСШаблон
 			excelApp.Quit();
 		}
 
-		private void СеарилизоватьВXMLИСохранить(ОписаниеФормы описаниеФормы)
+		private void СеарилизоватьВXMLИСохранить(ОписаниеФормы описаниеФормы, out string путьКПапкеШаблона)
 		{
-			string путьКПапкеШаблона =
+			путьКПапкеШаблона =
 				МенеджерНастроек.Настройки.ПутьКПапкеСгенерированныхШаблонов.Value +
 				описаниеФормы.Мета.Идентификатор + "\\" +
 				описаниеФормы.Мета.ДатаНачалаДействия.Substring(0, 10) + "-" +
