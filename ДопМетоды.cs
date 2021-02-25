@@ -19,7 +19,7 @@ namespace БАРСШаблон
 		{
 			string тег = "";
 
-			string[] словаНаименования = наименование.Split(' ');
+			string[] словаНаименования = наименование.Trim().Split(' ');
 
 			int количествоСловВТеге = int.Parse(МенеджерНастроек.Настройки.Теги.КоличествоСловВТеге.Value);
 
@@ -296,9 +296,14 @@ namespace БАРСШаблон
 		/// <param name="путь"></param>
 		/// <param name="строкаНаЗамену"></param>
 		/// <returns></returns>
-		public static string УбратьЗапрещенныеСимволы(string путь, string строкаНаЗамену)
+		public static string УбратьЗапрещенныеСимволы(string путь, string строкаНаЗамену, bool убиратьПунктуацию = false)
 		{
 			string запрещщенныеСимволы = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
+
+			if (убиратьПунктуацию)
+			{
+				запрещщенныеСимволы += ",.-;:\"'?!";
+			}
 
 			foreach (char запрещенныйСимвол in запрещщенныеСимволы)
 			{
