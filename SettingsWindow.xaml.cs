@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -51,6 +52,7 @@ namespace БАРСШаблон
 			МеткаТегТаблицыTextBox.Text = МенеджерНастроек.Настройки.Разметка.МеткаТег.Value;
 			МеткаКодТаблицыTextBox.Text = МенеджерНастроек.Настройки.Разметка.МеткаКод.Value;
 
+			ВерсияLabel.Content = Assembly.GetEntryAssembly().GetName().Version;
 		}
 
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

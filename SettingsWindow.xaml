@@ -126,6 +126,10 @@
         <Button x:Name="ResetSettingsButton" Content="Восстановить значения&#xD;&#xA;по умолчанию" HorizontalAlignment="Left" Margin="458,427,0,0" VerticalAlignment="Top" Width="145" Height="43" Click="ResetSettingsButton_Click"/>
         <Button x:Name="SaveButton" Content="Сохранить" HorizontalAlignment="Left" Margin="608,427,0,0" VerticalAlignment="Top" Width="144" Height="43" Click="SaveButton_Click"/>
         <Button x:Name="CancelButton" Content="Отменить" HorizontalAlignment="Left" Margin="757,427,0,0" VerticalAlignment="Top" Width="144" Height="43" Click="CancelButton_Click"/>
+        <Grid Height="29" Margin="458,0,10,17" VerticalAlignment="Bottom">
+            <Label x:Name="versionTitleLabel" Content="Версия:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="ВерсияLabel" Content="" HorizontalAlignment="Left" Margin="66,0,0,0" VerticalAlignment="Top" Width="96"/>
+        </Grid>
 
     </Grid>
 </Window>
