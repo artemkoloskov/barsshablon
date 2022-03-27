@@ -5,14 +5,14 @@ using System.Xml.Serialization;
 namespace БАРСШаблон.DataTypes
 {
 	[XmlType(TypeName = "ОписаниеТипаЯчейкиАбстракт")]
-	public abstract class ОписаниеТипаЯчейки
+	public abstract class CellTypeDescription
 	{
-		public bool ОбязательноДляЗаполнения = false;
-		public bool ТолькоЧтение = false;
-		public string Комментарий = "";
-		public bool ЯвляетсяКлючевым = false;
-		public string ЗначениеПоУмолчанию = "";
-		public string ДействиеСПолем = "БезИтогов";
+		public bool Mandatory = false;
+		public bool ReadOnly = false;
+		public string Comment = "";
+		public bool IsKey = false;
+		public string DefaultValue = "";
+		public string Action = "БезИтогов";
 
 		public string ToXML()
 		{

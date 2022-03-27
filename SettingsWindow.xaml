@@ -5,52 +5,56 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:БАРСШаблон"
         mc:Ignorable="d"
-        Title="Настройки" Height="698.337" Width="926.783" ResizeMode="NoResize"
+        Title="Settings" Height="698.337" Width="926.783" ResizeMode="NoResize"
         Closing="Window_Closing">
     <Grid>
         <Border Margin="10,10,0,0" BorderBrush="LightGray" BorderThickness="1" Height="412" VerticalAlignment="Top" HorizontalAlignment="Left" Width="443">
             <Grid>
                 <Grid Margin="24,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-                    <TextBox x:Name="МетаВерсияTextBox" HorizontalAlignment="Left" Text="" VerticalAlignment="Top" Width="54" Margin="239,0,0,0" Height="26"/>
-                    <Label x:Name="МетаВерсияLabel" Content="Версия метаописания" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="227*"/>
+                        <ColumnDefinition Width="66*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="МетаВерсияTextBox" HorizontalAlignment="Left" Text="" VerticalAlignment="Top" Width="54" Margin="11.99,0,0,0" Height="26" Grid.Column="1"/>
+                    <Label x:Name="МетаВерсияLabel" Content="Metadescription version" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </Grid>
                 <Grid Margin="24,61,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <TextBox x:Name="МетаИдентификаторTextBox" HorizontalAlignment="Left" Text="" VerticalAlignment="Top" Width="153" Margin="239,0,0,0" Height="26"/>
-                    <Label x:Name="МетаИдентификаторLabel" Content="Префикс идентификатора метаописания" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Label x:Name="МетаИдентификаторLabel" Content="Metadescription title prefix" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </Grid>
                 <Grid Margin="24,92,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <TextBox x:Name="МетаГруппаTextBox" HorizontalAlignment="Left" Text="" VerticalAlignment="Top" Width="153" Margin="239,0,0,0" Height="26"/>
-                    <Label x:Name="МетаГруппаLabel" Content="Группа (к ней подставится текущий год)" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Label x:Name="МетаГруппаLabel" Content="Group" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </Grid>
                 <Grid Margin="24,123,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <TextBox x:Name="МетаДатаНачалаTextBox" HorizontalAlignment="Left" Text="" VerticalAlignment="Top" Width="153" Margin="239,0,0,0" Height="26" IsEnabled="False"/>
-                    <Label x:Name="МетаДатаНачалаLabel" Content="Дата начала действия" HorizontalAlignment="Left" VerticalAlignment="Top" IsEnabled="False"/>
+                    <Label x:Name="МетаДатаНачалаLabel" Content="Start date" HorizontalAlignment="Left" VerticalAlignment="Top" IsEnabled="False"/>
                 </Grid>
                 <Grid Margin="24,154,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <TextBox x:Name="МетаДатаОкончанияTextBox" HorizontalAlignment="Left" Text="" VerticalAlignment="Top" Width="153" Margin="239,0,0,0" Height="26" IsEnabled="False"/>
-                    <Label x:Name="МетаДатаОкончанияLabel" Content="Дата окончания действия" HorizontalAlignment="Left" VerticalAlignment="Top" IsEnabled="False"/>
+                    <Label x:Name="МетаДатаОкончанияLabel" Content="End date" HorizontalAlignment="Left" VerticalAlignment="Top" IsEnabled="False"/>
                 </Grid>
                 <Grid Margin="24,185,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <TextBox x:Name="МетаАвторствоTextBox" HorizontalAlignment="Left" Text="" VerticalAlignment="Top" Width="153" Margin="239,0,0,0" Height="26"/>
-                    <Label x:Name="МетаАвторствоLabel" Content="Авторство" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Label x:Name="МетаАвторствоLabel" Content="Author" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </Grid>
                 <Grid Margin="24,216,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <TextBox x:Name="МетаНомерВерсииTextBox" HorizontalAlignment="Left" Text="" VerticalAlignment="Top" Width="54" Margin="239,0,0,0" Height="26"/>
-                    <Label x:Name="МетаНомерВерсииLabel" Content="Номер версии" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Label x:Name="МетаНомерВерсииLabel" Content="Version" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </Grid>
                 <Grid Margin="24,247,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <TextBox IsEnabled="False" x:Name="МетаРасположениеШапкиTextBox" HorizontalAlignment="Left" Text="" VerticalAlignment="Top" Width="153" Margin="239,0,0,0" Height="26"/>
-                    <Label IsEnabled="False" x:Name="МетаРасположениеШапкиLabel" Content="Расположение шапки" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Label IsEnabled="False" x:Name="МетаРасположениеШапкиLabel" Content="Header location" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </Grid>
                 <Grid Margin="24,278,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <TextBox x:Name="МетаВерсияФорматаTextBox" HorizontalAlignment="Left" Text="" VerticalAlignment="Top" Width="54" Margin="239,0,0,0" Height="26" IsEnabled="False"/>
-                    <Label x:Name="МетаВерсияФорматаLabel" Content="Версия формата метаструктуры" HorizontalAlignment="Left" VerticalAlignment="Top" IsEnabled="False"/>
+                    <Label x:Name="МетаВерсияФорматаLabel" Content="Metadescription format version" HorizontalAlignment="Left" VerticalAlignment="Top" IsEnabled="False"/>
                 </Grid>
                 <Grid Margin="24,309,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <TextBox x:Name="МетаМеткаНаименованиеTextBox" HorizontalAlignment="Left" Text="" VerticalAlignment="Center" Width="153" Margin="239,0,0,0" Height="26"/>
-                    <Label x:Name="МетаМеткаНаименованиеLabel" Content="Метка, отмечающая ячейку под или&#xA;справа от текущей, как содержащую&#xA;название отчета" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Label x:Name="МетаМеткаНаименованиеLabel" Content="Title mark" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </Grid>
-                <Label x:Name="МетаЗаголовокГруппыНастроекLabel" Content="Значения по умолчанию для метаописаний" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <Label x:Name="МетаЗаголовокГруппыНастроекLabel" Content="Default metadescription values" HorizontalAlignment="Center" VerticalAlignment="Top"/>
             </Grid>
         </Border>
         <Border BorderBrush="LightGray" BorderThickness="1" Margin="10,427,0,0" Height="225" VerticalAlignment="Top" HorizontalAlignment="Left" Width="443">
@@ -58,30 +62,30 @@
                 <Grid Margin="24,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
 
                     <TextBox x:Name="ПрефиксыТаблицаTextBox" HorizontalAlignment="Left" Text="" VerticalAlignment="Top" Width="54" Height="26" Margin="239,0,0,0"/>
-                    <Label x:Name="ПрефиксыТаблицаLabel" Content="Префикс тегов таблиц" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Label x:Name="ПрефиксыТаблицаLabel" Content="Table tag prefix" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </Grid>
                 <Grid Margin="24,61,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <TextBox x:Name="ПрефиксыСвободнаяЯчейкаTextBox" HorizontalAlignment="Left" Text="" VerticalAlignment="Top" Width="54" Height="26" Margin="239,0,0,0"/>
-                    <Label x:Name="ПрефиксыСвободнаяЯчейкаLabel" Content="Префикс тегов свободных ячеек" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Label x:Name="ПрефиксыСвободнаяЯчейкаLabel" Content="Free cell tag prefix" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </Grid>
                 <Grid Margin="24,92,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <TextBox x:Name="ПрефиксыСтолбецTextBox" HorizontalAlignment="Left" Text="" VerticalAlignment="Top" Width="54" Height="26" Margin="239,0,0,0"/>
-                    <Label x:Name="ПрефиксыСтолбецЯчейкаLabel" Content="Префикс тегов столбцов/граф" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Label x:Name="ПрефиксыСтолбецЯчейкаLabel" Content="Column tag prefix" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </Grid>
                 <Grid Margin="24,123,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <TextBox x:Name="ПрефиксыСтрокаTextBox" HorizontalAlignment="Left" Text="" VerticalAlignment="Top" Width="54" Height="26" Margin="239,0,0,0"/>
-                    <Label x:Name="ПрефиксыСтрокаLabel" Content="Префикс тегов строк" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Label x:Name="ПрефиксыСтрокаLabel" Content="Row tag prefix" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </Grid>
                 <Grid Margin="24,154,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <TextBox x:Name="КоличествоСловТегаTextBox" HorizontalAlignment="Left" Text="" VerticalAlignment="Top" Width="54" Height="26" Margin="239,0,0,0"/>
-                    <Label x:Name="КоличествоСловТегаLabel" Content="Количество слов в тегах" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Label x:Name="КоличествоСловТегаLabel" Content="Max tag word count" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </Grid>
                 <Grid Margin="24,185,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <TextBox x:Name="КоличествоСимволовТегаTextBox" HorizontalAlignment="Left" Text="" VerticalAlignment="Top" Width="54" Height="26" Margin="239,0,0,0"/>
-                    <Label x:Name="КоличествоСимволовТегаLabel" Content="Макс. количество символов в тегах" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Label x:Name="КоличествоСимволовТегаLabel" Content="Max tag length" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
                 </Grid>
-                <Label x:Name="НастройкиТеговLabel" Content="Настройки тегов элементов формы" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <Label x:Name="НастройкиТеговLabel" Content="Tags settings" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
             </Grid>
         </Border>
@@ -90,42 +94,42 @@
             <Grid>
                 <Grid Margin="8,30,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
                     <TextBox x:Name="МеткаДинамическаяTextBox" HorizontalAlignment="Left" Text="" VerticalAlignment="Top" Width="153" Margin="271,0,0,0" Height="26"/>
-                    <Label x:Name="МеткаДинамическаяLabel" Content="Метка для таблицы, &quot;Динамическая&quot;" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Label x:Name="МеткаДинамическаяLabel" Content="&quot;Dynamic&quot; mark" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </Grid>
                 <Grid Margin="8,62,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
                     <TextBox x:Name="МеткаСтатическаяTextBox" HorizontalAlignment="Left" Text="" VerticalAlignment="Top" Width="153" Margin="271,0,0,0" Height="26"/>
-                    <Label x:Name="МеткаСтатическаяLabel" Content="Метка, для таблицы, &quot;Статическая&quot;" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Label x:Name="МеткаСтатическаяLabel" Content="&quot;Static&quot; mark" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </Grid>
                 <Grid Margin="8,92,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
                     <TextBox x:Name="МеткаКодыСтрокИСтолбцовTextBox" HorizontalAlignment="Left" Text="" VerticalAlignment="Center" Width="153" Margin="271,0,0,0" Height="26"/>
-                    <Label x:Name="МеткаКодыСтрокИСтолбцовLabel" Content="Метка, отмечающая строку и столбец&#xA;данной ячейки, как содержащие коды&#xA;строк и столбцов" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Label x:Name="МеткаКодыСтрокИСтолбцовLabel" Content="Rows and columns codes mark" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </Grid>
                 <Grid Margin="8,156,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
                     <TextBox x:Name="МеткаКодыСтолбцовTextBox" HorizontalAlignment="Left" Text="" VerticalAlignment="Center" Width="153" Margin="271,0,0,0" Height="26"/>
-                    <Label x:Name="МеткаКодыСтолбцовLabel" Content="Метка, отмечающая строку данной ячейки, &#xA;как содержащюю коды столбцов" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Label x:Name="МеткаКодыСтолбцовLabel" Content="Column codes mark" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </Grid>
                 <Grid Margin="8,202,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
                     <TextBox x:Name="МеткаКодыСтрокTextBox" HorizontalAlignment="Left" Text="" VerticalAlignment="Center" Width="153" Margin="271,0,0,0" Height="26"/>
-                    <Label x:Name="МеткаКодыСтрокLabel" Content="Метка, отмечающая столбец данной ячейки, &#xA;как содержащий коды строк" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Label x:Name="МеткаКодыСтрокLabel" Content="Row codes mark" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </Grid>
                 <Grid Margin="8,250,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
                     <TextBox x:Name="МеткаНаименованиеТаблицыTextBox" HorizontalAlignment="Left" Text="" VerticalAlignment="Center" Width="153" Margin="271,0,0,0" Height="26"/>
-                    <Label x:Name="МеткаНаименованиеLabel" Content="Метка, отмечающая ячейку снизу или справа&#xD;&#xA;от текущей, как содержащую наименование&#xA;таблицы" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Label x:Name="МеткаНаименованиеLabel" Content="Table title mark" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </Grid>
                 <Grid Margin="8,312,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
                     <TextBox x:Name="МеткаТегТаблицыTextBox" HorizontalAlignment="Left" Text="" VerticalAlignment="Center" Width="153" Margin="271,0,0,0" Height="26"/>
-                    <Label x:Name="МеткаТегLabel" Content="Метка, отмечающая ячейку снизу или справа&#xD;&#xA;от текущей, как содержащую тег таблицы" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Label x:Name="МеткаТегLabel" Content="Table tag mark" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </Grid>
                 <Grid Margin="8,360,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
                     <TextBox x:Name="МеткаКодТаблицыTextBox" HorizontalAlignment="Left" Text="" VerticalAlignment="Center" Width="153" Margin="271,0,0,0" Height="26"/>
-                    <Label x:Name="МеткаКодLabel" Content="Метка, отмечающая ячейку снизу или справа &#xD;&#xA;от текущей, как содержащую код таблицы" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Label x:Name="МеткаКодLabel" Content="Table code mark" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </Grid>
-                <Label x:Name="НастройкиМетокLabel" Content="Метки, используемые для разметки шаблона в Excel" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <Label x:Name="НастройкиМетокLabel" Content="Mark up settings" HorizontalAlignment="Center" VerticalAlignment="Top"/>
             </Grid>
         </Border>
-        <Button x:Name="ResetSettingsButton" Content="Восстановить значения&#xD;&#xA;по умолчанию" HorizontalAlignment="Left" Margin="458,427,0,0" VerticalAlignment="Top" Width="145" Height="43" Click="ResetSettingsButton_Click"/>
-        <Button x:Name="SaveButton" Content="Сохранить" HorizontalAlignment="Left" Margin="608,427,0,0" VerticalAlignment="Top" Width="144" Height="43" Click="SaveButton_Click"/>
-        <Button x:Name="CancelButton" Content="Отменить" HorizontalAlignment="Left" Margin="757,427,0,0" VerticalAlignment="Top" Width="144" Height="43" Click="CancelButton_Click"/>
+        <Button x:Name="ResetSettingsButton" Content="Reset to default" HorizontalAlignment="Left" Margin="458,427,0,0" VerticalAlignment="Top" Width="145" Height="43" Click="ResetSettingsButton_Click"/>
+        <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Left" Margin="608,427,0,0" VerticalAlignment="Top" Width="144" Height="43" Click="SaveButton_Click"/>
+        <Button x:Name="CancelButton" Content="Cancel" HorizontalAlignment="Left" Margin="757,427,0,0" VerticalAlignment="Top" Width="144" Height="43" Click="CancelButton_Click"/>
         <Grid Height="29" Margin="458,0,10,17" VerticalAlignment="Bottom">
             <Label x:Name="versionTitleLabel" Content="Версия:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"/>
             <Label x:Name="ВерсияLabel" Content="" HorizontalAlignment="Left" Margin="66,0,0,0" VerticalAlignment="Top" Width="96"/>

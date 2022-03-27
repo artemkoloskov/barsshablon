@@ -3,10 +3,10 @@
 namespace БАРСШаблон.DataTypes
 {
 	[XmlType(TypeName = "ОписаниеТипаЯчейки")]
-	public class Числовой : ОписаниеТипаЯчейки
+	public class IntegerType : CellTypeDescription
 	{
-		public new string ДействиеСПолем = "Суммировать";
-		public int Точность = 2;
+		public new string Action = "Суммировать";
+		public int Precision = 0;
 		public string ValueRange = "";
 	}
 }

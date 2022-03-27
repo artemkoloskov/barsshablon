@@ -3,10 +3,10 @@
 namespace БАРСШаблон.DataTypes
 {
 	[XmlType(TypeName = "ОписаниеТипаЯчейки")]
-	public class ДатаВремя : ОписаниеТипаЯчейки
+	public class DateTimeType : CellTypeDescription
 	{
-		public new bool ЯвляетсяКлючевым = true;
-		public string ФорматОтображения = "";
+		public new bool IsKey = true;
+		public string ViewingFormat = "";
 		public string DateAttributes = "";
 		public string DateRangeBegin = "";
 		public string DateRangeEnd = "";

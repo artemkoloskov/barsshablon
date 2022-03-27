@@ -99,22 +99,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="DataTypes\ОписаниеТипаЯчейки.cs" />
-    <Compile Include="DataTypes\Числовой.cs" />
+    <Compile Include="DataTypes\CellTypeDescription.cs" />
+    <Compile Include="DataTypes\NumericType.cs" />
     <Compile Include="SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ДопМетоды.cs" />
-    <Compile Include="FormStructure\Мета.cs" />
-    <Compile Include="FormStructure\ОписаниеФормы.cs" />
-    <Compile Include="FormStructure\СвободнаяЯчейка.cs" />
-    <Compile Include="FormStructure\Справочник.cs" />
-    <Compile Include="FormStructure\Столбец.cs" />
-    <Compile Include="FormStructure\Строка.cs" />
-    <Compile Include="FormStructure\Структура.cs" />
-    <Compile Include="FormStructure\Таблица.cs" />
-    <Compile Include="FormStructure\ЭлементСправочника.cs" />
-    <Compile Include="МенеджерНастроек.cs" />
+    <Compile Include="CommonMethods.cs" />
+    <Compile Include="FormStructure\Meta.cs" />
+    <Compile Include="FormStructure\FormDescription.cs" />
+    <Compile Include="FormStructure\FreeCell.cs" />
+    <Compile Include="FormStructure\Dictionary.cs" />
+    <Compile Include="FormStructure\Column.cs" />
+    <Compile Include="FormStructure\Row.cs" />
+    <Compile Include="FormStructure\Structure.cs" />
+    <Compile Include="FormStructure\Table.cs" />
+    <Compile Include="FormStructure\DictionaryElement.cs" />
+    <Compile Include="SettingsManager.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -123,12 +123,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataTypes\ДатаВремя.cs" />
-    <Compile Include="DataTypes\Логический.cs" />
-    <Compile Include="DataTypes\Строковый.cs" />
-    <Compile Include="DataTypes\Учреждение.cs" />
-    <Compile Include="DataTypes\Финансовый.cs" />
-    <Compile Include="DataTypes\Целочисленный.cs" />
+    <Compile Include="DataTypes\DateTimeType.cs" />
+    <Compile Include="DataTypes\LogicalType.cs" />
+    <Compile Include="DataTypes\TextType.cs" />
+    <Compile Include="DataTypes\OrganisationType.cs" />
+    <Compile Include="DataTypes\MoneyType.cs" />
+    <Compile Include="DataTypes\IntegerType.cs" />
     <Compile Include="LevenshteinDistance.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

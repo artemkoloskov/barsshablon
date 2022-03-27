@@ -3,8 +3,10 @@
 namespace БАРСШаблон.DataTypes
 {
 	[XmlType(TypeName = "ОписаниеТипаЯчейки")]
-	public class Учреждение : ОписаниеТипаЯчейки
+	public class LogicalType : CellTypeDescription
 	{
-		public new bool ЯвляетсяКлючевым = true;
+
+		public new bool IsKey = true;
+		public new bool DefaultValue;
 	}
 }

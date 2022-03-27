@@ -19,7 +19,7 @@ namespace БАРСШаблон
 		/// <summary>
 		/// Подсчитать дистанцию между двумя строками
 		/// </summary>
-		public static int РасстояниеМеждуСтроками(string s, string t)
+		public static int DistanceBetweenStrings(string s, string t)
 		{
 			var bounds = new { Height = s.Length + 1, Width = t.Length + 1 };
 

@@ -29,9 +29,9 @@ namespace БАРСШаблон
 
 			if (sender is System.Windows.Shapes.Rectangle)
 			{
-				string путьКФайлу = string.Format("{0}", ((string[])text)[0]);
+				string filePath = string.Format("{0}", ((string[])text)[0]);
 
-				Обработать(путьКФайлу);
+				ProcessFile(filePath);
 			}
 		}
 
@@ -41,61 +41,61 @@ namespace БАРСШаблон
 			e.Handled = true;
 		}
 
-		private void КонвертироватьКнигуВШаблон(string путьККнигеExcel)
+		private void ConvertWorkbookToTemplate(string workbookPath)
 		{
 			Excel.Application excelApp = new Excel.Application();
 
-			Workbook книгаExcel = excelApp.Workbooks.Open(путьККнигеExcel);
+			Workbook workbook = excelApp.Workbooks.Open(workbookPath);
 
 			try
 			{
-				ОписаниеФормы описаниеФормы = ОписаниеФормы.ПолучитьОписаниеФормыИзКнигиExcel(книгаExcel);
+				FormDescription fromDescription = FormDescription.GetDescription(workbook);
 
-				СеарилизоватьВXMLИСохранить(описаниеФормы, out string путьКПапкеШаблона);
+				SerializeAndSaveTemplate(fromDescription, out string templatePath);
 
-				if (путьКПапкеШаблона != "")
+				if (templatePath != "")
 				{
-					fileDropLabel.Content = $"Сконвертировано успешно. Путь к сгенерированному файлу:\n\n{путьКПапкеШаблона}";
+					fileDropLabel.Content = $"Successfully converted. Result file path:\n\n{templatePath}";
 
-					_ = Process.Start(fileName: путьКПапкеШаблона);
+					_ = Process.Start(fileName: templatePath);
 				}
 			}
-			catch (System.Exception e)
+			catch (Exception e)
 			{
-				_ = MessageBox.Show($"Возникла ошибка при получении метаструктуры из файла. Текст ошибки:\n\n{e.Message}");
+				_ = MessageBox.Show($"Error getting metastructure:\n\n{e.Message}");
 
 				throw;
 			}
 
-			книгаExcel.Close();
+			workbook.Close();
 
 			excelApp.Quit();
 		}
 
-		private void СеарилизоватьВXMLИСохранить(ОписаниеФормы описаниеФормы, out string путьКПапкеШаблона)
+		private void SerializeAndSaveTemplate(FormDescription formDescription, out string templatePath)
 		{
-			путьКПапкеШаблона =
-				МенеджерНастроек.Настройки.ПутьКПапкеСгенерированныхШаблонов.Value +
-				описаниеФормы.Мета.Идентификатор + "\\" +
-				описаниеФормы.Мета.ДатаНачалаДействия.Substring(0, 10) + "-" +
-				описаниеФормы.Мета.ДатаОкончанияДействия.Substring(0, 10);
+			templatePath =
+				SettingsManager.Settings.GeneratedTemplatesPath.Value +
+				formDescription.Meta.Id + "\\" +
+				formDescription.Meta.DateFrom.Substring(0, 10) + "-" +
+				formDescription.Meta.DateTo.Substring(0, 10);
 
-			System.IO.Directory.CreateDirectory(путьКПапкеШаблона);
+			_ = System.IO.Directory.CreateDirectory(templatePath);
 
-			string имяФайла = описаниеФормы.Мета.Идентификатор + ".xml";
+			string fileName = formDescription.Meta.Id + ".xml";
 
-			XmlSerializer xmlSerializer = new XmlSerializer(описаниеФормы.GetType());
+			XmlSerializer xmlSerializer = new XmlSerializer(formDescription.GetType());
 
 			XDocument xDocument = new XDocument();
 
 			using (XmlWriter xmlWriter = xDocument.CreateWriter())
 			{
-				xmlSerializer.Serialize(xmlWriter, описаниеФормы);
+				xmlSerializer.Serialize(xmlWriter, formDescription);
 			}
 
 			XElement mainXmlStream = xDocument.Root;
 
-			mainXmlStream.Save(путьКПапкеШаблона + "\\" + имяФайла);
+			mainXmlStream.Save(templatePath + "\\" + fileName);
 		}
 
 		private void SettingsButton_Click(object sender, RoutedEventArgs e)
@@ -109,13 +109,8 @@ namespace БАРСШаблон
 		private string OpenFileDialog()
 		{
 			OpenFileDialog openFileDialog = new OpenFileDialog();
-			
-			if (openFileDialog.ShowDialog() == true)
-			{
-				return openFileDialog.FileName;
-			}
 
-			return "";
+			return openFileDialog.ShowDialog() == true ? openFileDialog.FileName : "";
 		}
 
 		private void RadioButton_Checked(object sender, RoutedEventArgs e)
@@ -125,32 +120,32 @@ namespace БАРСШаблон
 
 			if (sender == запросRadioButton)
 			{
-				МенеджерНастроек.Настройки.Мета.ЯвляетсяЗапросом.Value = true;
+				SettingsManager.Settings.Meta.IsARequest.Value = true;
 			}
 			else if (sender == мониторингRadioButton)
 			{
-				МенеджерНастроек.Настройки.Мета.ЯвляетсяЗапросом.Value = false;
+				SettingsManager.Settings.Meta.IsARequest.Value = false;
 			}
 		}
 
 		private void ChooseFileButton_Click(object sender, RoutedEventArgs e)
 		{
-			string путьКФайлу = OpenFileDialog();
+			string filePath = OpenFileDialog();
 
-			Обработать(путьКФайлу);
+			ProcessFile(filePath);
 		}
 
-		private void Обработать(string путьКФайлу)
+		private void ProcessFile(string filePath)
 		{
-			if (путьКФайлу.EndsWith(".xls") || путьКФайлу.EndsWith(".xlsx") || путьКФайлу.EndsWith(".xlsm"))
+			if (filePath.EndsWith(".xls") || filePath.EndsWith(".xlsx") || filePath.EndsWith(".xlsm"))
 			{
-				fileDropLabel.Content = $"{путьКФайлу}";
+				fileDropLabel.Content = $"{filePath}";
 
-				КонвертироватьКнигуВШаблон(путьКФайлу); 
+				ConvertWorkbookToTemplate(filePath);
 			}
 			else
 			{
-				_ = MessageBox.Show($"Ошибка в пути к файлу, указанном как: {путьКФайлу}");
+				_ = MessageBox.Show($"Ошибка в пути к файлу, указанном как: {filePath}");
 			}
 		}
 	}

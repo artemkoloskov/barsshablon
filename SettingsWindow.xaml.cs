@@ -25,32 +25,32 @@ namespace БАРСШаблон
 		{
 			InitializeComponent();
 
-			МетаВерсияTextBox.Text = МенеджерНастроек.Настройки.Мета.ВерсияМетаописания.Value;
-			МетаИдентификаторTextBox.Text = МенеджерНастроек.Настройки.Мета.Идентификатор.Value;
-			МетаГруппаTextBox.Text = МенеджерНастроек.Настройки.Мета.Группа.Value;
-			МетаДатаНачалаTextBox.Text = МенеджерНастроек.Настройки.Мета.ДатаНачалаДействия.Value;
-			МетаДатаОкончанияTextBox.Text = МенеджерНастроек.Настройки.Мета.ДатаОкончанияДействия.Value;
-			МетаАвторствоTextBox.Text = МенеджерНастроек.Настройки.Мета.Авторство.Value;
-			МетаНомерВерсииTextBox.Text = МенеджерНастроек.Настройки.Мета.НомерВерсии.Value;
-			МетаРасположениеШапкиTextBox.Text = МенеджерНастроек.Настройки.Мета.РасположениеШапки.Value;
-			МетаВерсияФорматаTextBox.Text = МенеджерНастроек.Настройки.Мета.ВерсияФорматаМетаструктуры.Value;
-			МетаМеткаНаименованиеTextBox.Text = МенеджерНастроек.Настройки.Мета.МеткаНаименование.Value;
+			МетаВерсияTextBox.Text = SettingsManager.Settings.Meta.MetaVersion.Value;
+			МетаИдентификаторTextBox.Text = SettingsManager.Settings.Meta.Id.Value;
+			МетаГруппаTextBox.Text = SettingsManager.Settings.Meta.Group.Value;
+			МетаДатаНачалаTextBox.Text = SettingsManager.Settings.Meta.BeginDate.Value;
+			МетаДатаОкончанияTextBox.Text = SettingsManager.Settings.Meta.EndDate.Value;
+			МетаАвторствоTextBox.Text = SettingsManager.Settings.Meta.Author.Value;
+			МетаНомерВерсииTextBox.Text = SettingsManager.Settings.Meta.VersionNumber.Value;
+			МетаРасположениеШапкиTextBox.Text = SettingsManager.Settings.Meta.HeaderPlacement.Value;
+			МетаВерсияФорматаTextBox.Text = SettingsManager.Settings.Meta.MetaFormatVersion.Value;
+			МетаМеткаНаименованиеTextBox.Text = SettingsManager.Settings.Meta.TitleMark.Value;
 
-			ПрефиксыТаблицаTextBox.Text = МенеджерНастроек.Настройки.Теги.ПрефиксТаблицы.Value;
-			ПрефиксыСвободнаяЯчейкаTextBox.Text = МенеджерНастроек.Настройки.Теги.ПрефиксСвободнойЯчейки.Value;
-			ПрефиксыСтолбецTextBox.Text = МенеджерНастроек.Настройки.Теги.ПрефиксСтолбца.Value;
-			ПрефиксыСтрокаTextBox.Text = МенеджерНастроек.Настройки.Теги.ПрефиксСтроки.Value;
-			КоличествоСловТегаTextBox.Text = МенеджерНастроек.Настройки.Теги.КоличествоСловВТеге.Value;
-			КоличествоСимволовТегаTextBox.Text = МенеджерНастроек.Настройки.Теги.КоличествоСимволовВТеге.Value;
+			ПрефиксыТаблицаTextBox.Text = SettingsManager.Settings.Tags.TablePrefix.Value;
+			ПрефиксыСвободнаяЯчейкаTextBox.Text = SettingsManager.Settings.Tags.FreeCellPrefix.Value;
+			ПрефиксыСтолбецTextBox.Text = SettingsManager.Settings.Tags.ColumnPrefix.Value;
+			ПрефиксыСтрокаTextBox.Text = SettingsManager.Settings.Tags.RowPrefix.Value;
+			КоличествоСловТегаTextBox.Text = SettingsManager.Settings.Tags.TagWordCount.Value;
+			КоличествоСимволовТегаTextBox.Text = SettingsManager.Settings.Tags.TagCharCount.Value;
 
-			МеткаДинамическаяTextBox.Text = МенеджерНастроек.Настройки.Разметка.МеткаТипТаблицыДинамическая.Value;
-			МеткаСтатическаяTextBox.Text = МенеджерНастроек.Настройки.Разметка.МеткаТипТаблицыСтатическая.Value;
-			МеткаКодыСтрокИСтолбцовTextBox.Text = МенеджерНастроек.Настройки.Разметка.МеткаКодыСтрокИСтолбцов.Value;
-			МеткаКодыСтолбцовTextBox.Text = МенеджерНастроек.Настройки.Разметка.МеткаКодыСтолбцов.Value;
-			МеткаКодыСтрокTextBox.Text = МенеджерНастроек.Настройки.Разметка.МеткаКодыСтрок.Value;
-			МеткаНаименованиеТаблицыTextBox.Text = МенеджерНастроек.Настройки.Разметка.МеткаНаименование.Value;
-			МеткаТегТаблицыTextBox.Text = МенеджерНастроек.Настройки.Разметка.МеткаТег.Value;
-			МеткаКодТаблицыTextBox.Text = МенеджерНастроек.Настройки.Разметка.МеткаКод.Value;
+			МеткаДинамическаяTextBox.Text = SettingsManager.Settings.Markup.TableIsDynamicMark.Value;
+			МеткаСтатическаяTextBox.Text = SettingsManager.Settings.Markup.TableIsStaticMark.Value;
+			МеткаКодыСтрокИСтолбцовTextBox.Text = SettingsManager.Settings.Markup.RowAndColumnCodesMark.Value;
+			МеткаКодыСтолбцовTextBox.Text = SettingsManager.Settings.Markup.ColumnCodesMark.Value;
+			МеткаКодыСтрокTextBox.Text = SettingsManager.Settings.Markup.RowCodesMark.Value;
+			МеткаНаименованиеТаблицыTextBox.Text = SettingsManager.Settings.Markup.TitleMark.Value;
+			МеткаТегТаблицыTextBox.Text = SettingsManager.Settings.Markup.TagMark.Value;
+			МеткаКодТаблицыTextBox.Text = SettingsManager.Settings.Markup.CodeMark.Value;
 
 			ВерсияLabel.Content = Assembly.GetEntryAssembly().GetName().Version;
 		}
@@ -68,66 +68,66 @@ namespace БАРСШаблон
 
 		private void SaveButton_Click(object sender, RoutedEventArgs e)
 		{
-			МенеджерНастроек.Настройки.Мета.ВерсияМетаописания.Value = МетаВерсияTextBox.Text;
-			МенеджерНастроек.Настройки.Мета.Идентификатор.Value = МетаИдентификаторTextBox.Text;
-			МенеджерНастроек.Настройки.Мета.Группа.Value = МетаГруппаTextBox.Text;
-			МенеджерНастроек.Настройки.Мета.ДатаНачалаДействия.Value = МетаДатаНачалаTextBox.Text;
-			МенеджерНастроек.Настройки.Мета.ДатаОкончанияДействия.Value = МетаДатаОкончанияTextBox.Text;
-			МенеджерНастроек.Настройки.Мета.Авторство.Value = МетаАвторствоTextBox.Text;
-			МенеджерНастроек.Настройки.Мета.НомерВерсии.Value = МетаНомерВерсииTextBox.Text;
-			МенеджерНастроек.Настройки.Мета.РасположениеШапки.Value = МетаРасположениеШапкиTextBox.Text;
-			МенеджерНастроек.Настройки.Мета.ВерсияФорматаМетаструктуры.Value = МетаВерсияФорматаTextBox.Text;
-			МенеджерНастроек.Настройки.Мета.МеткаНаименование.Value = МетаМеткаНаименованиеTextBox.Text;
+			SettingsManager.Settings.Meta.MetaVersion.Value = МетаВерсияTextBox.Text;
+			SettingsManager.Settings.Meta.Id.Value = МетаИдентификаторTextBox.Text;
+			SettingsManager.Settings.Meta.Group.Value = МетаГруппаTextBox.Text;
+			SettingsManager.Settings.Meta.BeginDate.Value = МетаДатаНачалаTextBox.Text;
+			SettingsManager.Settings.Meta.EndDate.Value = МетаДатаОкончанияTextBox.Text;
+			SettingsManager.Settings.Meta.Author.Value = МетаАвторствоTextBox.Text;
+			SettingsManager.Settings.Meta.VersionNumber.Value = МетаНомерВерсииTextBox.Text;
+			SettingsManager.Settings.Meta.HeaderPlacement.Value = МетаРасположениеШапкиTextBox.Text;
+			SettingsManager.Settings.Meta.MetaFormatVersion.Value = МетаВерсияФорматаTextBox.Text;
+			SettingsManager.Settings.Meta.TitleMark.Value = МетаМеткаНаименованиеTextBox.Text;
 
-			МенеджерНастроек.Настройки.Теги.ПрефиксТаблицы.Value = ПрефиксыТаблицаTextBox.Text;
-			МенеджерНастроек.Настройки.Теги.ПрефиксСвободнойЯчейки.Value = ПрефиксыСвободнаяЯчейкаTextBox.Text;
-			МенеджерНастроек.Настройки.Теги.ПрефиксСтолбца.Value = ПрефиксыСтолбецTextBox.Text;
-			МенеджерНастроек.Настройки.Теги.ПрефиксСтроки.Value = ПрефиксыСтрокаTextBox.Text;
-			МенеджерНастроек.Настройки.Теги.КоличествоСловВТеге.Value = КоличествоСловТегаTextBox.Text;
-			МенеджерНастроек.Настройки.Теги.КоличествоСимволовВТеге.Value = КоличествоСимволовТегаTextBox.Text;
+			SettingsManager.Settings.Tags.TablePrefix.Value = ПрефиксыТаблицаTextBox.Text;
+			SettingsManager.Settings.Tags.FreeCellPrefix.Value = ПрефиксыСвободнаяЯчейкаTextBox.Text;
+			SettingsManager.Settings.Tags.ColumnPrefix.Value = ПрефиксыСтолбецTextBox.Text;
+			SettingsManager.Settings.Tags.RowPrefix.Value = ПрефиксыСтрокаTextBox.Text;
+			SettingsManager.Settings.Tags.TagWordCount.Value = КоличествоСловТегаTextBox.Text;
+			SettingsManager.Settings.Tags.TagCharCount.Value = КоличествоСимволовТегаTextBox.Text;
 
-			МенеджерНастроек.Настройки.Разметка.МеткаТипТаблицыДинамическая.Value = МеткаДинамическаяTextBox.Text;
-			МенеджерНастроек.Настройки.Разметка.МеткаТипТаблицыСтатическая.Value = МеткаСтатическаяTextBox.Text;
-			МенеджерНастроек.Настройки.Разметка.МеткаКодыСтрокИСтолбцов.Value = МеткаКодыСтрокИСтолбцовTextBox.Text;
-			МенеджерНастроек.Настройки.Разметка.МеткаКодыСтолбцов.Value = МеткаКодыСтолбцовTextBox.Text;
-			МенеджерНастроек.Настройки.Разметка.МеткаКодыСтрок.Value = МеткаКодыСтрокTextBox.Text;
-			МенеджерНастроек.Настройки.Разметка.МеткаНаименование.Value = МеткаНаименованиеТаблицыTextBox.Text;
-			МенеджерНастроек.Настройки.Разметка.МеткаТег.Value = МеткаТегТаблицыTextBox.Text;
-			МенеджерНастроек.Настройки.Разметка.МеткаКод.Value = МеткаКодТаблицыTextBox.Text;
+			SettingsManager.Settings.Markup.TableIsDynamicMark.Value = МеткаДинамическаяTextBox.Text;
+			SettingsManager.Settings.Markup.TableIsStaticMark.Value = МеткаСтатическаяTextBox.Text;
+			SettingsManager.Settings.Markup.RowAndColumnCodesMark.Value = МеткаКодыСтрокИСтолбцовTextBox.Text;
+			SettingsManager.Settings.Markup.ColumnCodesMark.Value = МеткаКодыСтолбцовTextBox.Text;
+			SettingsManager.Settings.Markup.RowCodesMark.Value = МеткаКодыСтрокTextBox.Text;
+			SettingsManager.Settings.Markup.TitleMark.Value = МеткаНаименованиеТаблицыTextBox.Text;
+			SettingsManager.Settings.Markup.TagMark.Value = МеткаТегТаблицыTextBox.Text;
+			SettingsManager.Settings.Markup.CodeMark.Value = МеткаКодТаблицыTextBox.Text;
 
-			МенеджерНастроек.СохранитьНастройки();
+			SettingsManager.SaveSettings();
 
 			Close();
 		}
 
 		private void ResetSettingsButton_Click(object sender, RoutedEventArgs e)
 		{
-			МетаВерсияTextBox.Text = МенеджерНастроек.Настройки.Мета.ВерсияМетаописания.Default;
-			МетаИдентификаторTextBox.Text = МенеджерНастроек.Настройки.Мета.Идентификатор.Default;
-			МетаГруппаTextBox.Text = МенеджерНастроек.Настройки.Мета.Группа.Default;
-			МетаДатаНачалаTextBox.Text = МенеджерНастроек.Настройки.Мета.ДатаНачалаДействия.Default;
-			МетаДатаОкончанияTextBox.Text = МенеджерНастроек.Настройки.Мета.ДатаОкончанияДействия.Default;
-			МетаАвторствоTextBox.Text = МенеджерНастроек.Настройки.Мета.Авторство.Default;
-			МетаНомерВерсииTextBox.Text = МенеджерНастроек.Настройки.Мета.НомерВерсии.Default;
-			МетаРасположениеШапкиTextBox.Text = МенеджерНастроек.Настройки.Мета.РасположениеШапки.Default;
-			МетаВерсияФорматаTextBox.Text = МенеджерНастроек.Настройки.Мета.ВерсияФорматаМетаструктуры.Default;
-			МетаМеткаНаименованиеTextBox.Text = МенеджерНастроек.Настройки.Мета.МеткаНаименование.Default;
+			МетаВерсияTextBox.Text = SettingsManager.Settings.Meta.MetaVersion.Default;
+			МетаИдентификаторTextBox.Text = SettingsManager.Settings.Meta.Id.Default;
+			МетаГруппаTextBox.Text = SettingsManager.Settings.Meta.Group.Default;
+			МетаДатаНачалаTextBox.Text = SettingsManager.Settings.Meta.BeginDate.Default;
+			МетаДатаОкончанияTextBox.Text = SettingsManager.Settings.Meta.EndDate.Default;
+			МетаАвторствоTextBox.Text = SettingsManager.Settings.Meta.Author.Default;
+			МетаНомерВерсииTextBox.Text = SettingsManager.Settings.Meta.VersionNumber.Default;
+			МетаРасположениеШапкиTextBox.Text = SettingsManager.Settings.Meta.HeaderPlacement.Default;
+			МетаВерсияФорматаTextBox.Text = SettingsManager.Settings.Meta.MetaFormatVersion.Default;
+			МетаМеткаНаименованиеTextBox.Text = SettingsManager.Settings.Meta.TitleMark.Default;
 
-			ПрефиксыТаблицаTextBox.Text = МенеджерНастроек.Настройки.Теги.ПрефиксТаблицы.Default;
-			ПрефиксыСвободнаяЯчейкаTextBox.Text = МенеджерНастроек.Настройки.Теги.ПрефиксСвободнойЯчейки.Default;
-			ПрефиксыСтолбецTextBox.Text = МенеджерНастроек.Настройки.Теги.ПрефиксСтолбца.Default;
-			ПрефиксыСтрокаTextBox.Text = МенеджерНастроек.Настройки.Теги.ПрефиксСтроки.Default;
-			КоличествоСловТегаTextBox.Text = МенеджерНастроек.Настройки.Теги.КоличествоСловВТеге.Default;
-			КоличествоСимволовТегаTextBox.Text = МенеджерНастроек.Настройки.Теги.КоличествоСимволовВТеге.Default;
+			ПрефиксыТаблицаTextBox.Text = SettingsManager.Settings.Tags.TablePrefix.Default;
+			ПрефиксыСвободнаяЯчейкаTextBox.Text = SettingsManager.Settings.Tags.FreeCellPrefix.Default;
+			ПрефиксыСтолбецTextBox.Text = SettingsManager.Settings.Tags.ColumnPrefix.Default;
+			ПрефиксыСтрокаTextBox.Text = SettingsManager.Settings.Tags.RowPrefix.Default;
+			КоличествоСловТегаTextBox.Text = SettingsManager.Settings.Tags.TagWordCount.Default;
+			КоличествоСимволовТегаTextBox.Text = SettingsManager.Settings.Tags.TagCharCount.Default;
 
-			МеткаДинамическаяTextBox.Text = МенеджерНастроек.Настройки.Разметка.МеткаТипТаблицыДинамическая.Default;
-			МеткаСтатическаяTextBox.Text = МенеджерНастроек.Настройки.Разметка.МеткаТипТаблицыСтатическая.Default;
-			МеткаКодыСтрокИСтолбцовTextBox.Text = МенеджерНастроек.Настройки.Разметка.МеткаКодыСтрокИСтолбцов.Default;
-			МеткаКодыСтолбцовTextBox.Text = МенеджерНастроек.Настройки.Разметка.МеткаКодыСтолбцов.Default;
-			МеткаКодыСтрокTextBox.Text = МенеджерНастроек.Настройки.Разметка.МеткаКодыСтрок.Default;
-			МеткаНаименованиеТаблицыTextBox.Text = МенеджерНастроек.Настройки.Разметка.МеткаНаименование.Default;
-			МеткаТегТаблицыTextBox.Text = МенеджерНастроек.Настройки.Разметка.МеткаТег.Default;
-			МеткаКодТаблицыTextBox.Text = МенеджерНастроек.Настройки.Разметка.МеткаКод.Default;
+			МеткаДинамическаяTextBox.Text = SettingsManager.Settings.Markup.TableIsDynamicMark.Default;
+			МеткаСтатическаяTextBox.Text = SettingsManager.Settings.Markup.TableIsStaticMark.Default;
+			МеткаКодыСтрокИСтолбцовTextBox.Text = SettingsManager.Settings.Markup.RowAndColumnCodesMark.Default;
+			МеткаКодыСтолбцовTextBox.Text = SettingsManager.Settings.Markup.ColumnCodesMark.Default;
+			МеткаКодыСтрокTextBox.Text = SettingsManager.Settings.Markup.RowCodesMark.Default;
+			МеткаНаименованиеТаблицыTextBox.Text = SettingsManager.Settings.Markup.TitleMark.Default;
+			МеткаТегТаблицыTextBox.Text = SettingsManager.Settings.Markup.TagMark.Default;
+			МеткаКодТаблицыTextBox.Text = SettingsManager.Settings.Markup.CodeMark.Default;
 		}
 	}
 }
